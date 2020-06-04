@@ -1,22 +1,27 @@
 <html>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-  <!-- we import arjs version without NFT but with marker + location based support -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  	<!-- we import arjs version without NFT but with marker + location based support -->
+  	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   
-  <script src="aframe-text-geometry-component.min.js"></script>
+  	<script src="aframe-text-geometry-component.min.js"></script>
 	<script src="aframe-gif-shader.js"></script>
-    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
-  <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
-  <body style="margin : 0px; overflow: hidden;">
-    <a-scene embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix;'>
+    	<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+  	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+  	
+	<body style="margin : 0px; overflow: hidden;">
+    	
+		<a-scene embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix;'>
       
-      <a-marker preset='custom' type='pattern' smooth='true' smoothCount='15' url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/CTQRTest.patt'>
+      			<a-marker preset='custom' type='pattern' smooth='true' smoothCount='15' url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/CTQRTest.patt'>
      
-        <a-entity rotation="-90 0 0" scale="12 12 1" geometry="primitive:plane" material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-ts/master/LilTykesPreKClassOf2020Quarantine.gif);" gif="" transparent="true"></a-entity>
+        			<a-entity rotation="-90 0 0" scale="12 12 1" geometry="primitive:plane" material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-ts/master/LilTykesPreKClassOf2020Quarantine.gif);" gif="" transparent="true"></a-entity>
 
-      </a-marker>
+     	 		</a-marker>
       
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
+      			<a-entity camera></a-entity>
+    			
+		</a-scene>
+  
+	</body>
+
 </html>
