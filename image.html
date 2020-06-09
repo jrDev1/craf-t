@@ -1,27 +1,5 @@
 <html>
- <!-- Register an aframe component that allows reacting to marker events -->
- <script>
- 	AFRAME.registerComponent('registerevents', {
- 		init: function () {
- 			var marker = this.el;
 
- 			// Make the element emit events when found and when lost.
- 			marker.setAttribute('emitevents', 'true');
-
- 			marker.addEventListener('markerFound', function() {
- 				var markerId = marker.id;
- 				console.log('markerFound', markerId);
- 				// TODO: Add your own code here to react to the marker being found.
- 			});
-
- 			marker.addEventListener('markerLost', function() {
- 				var markerId = marker.id;
- 				console.log('markerLost', markerId);
- 				// TODO: Add your own code here to react to the marker being lost.
- 			});
- 		}
- 	});
- </script>
 <!-- import aframe and then ar.js with image tracking / location based features -->
 <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
@@ -64,7 +42,7 @@
     vr-mode-ui="enabled: false;"
     renderer="logarithmicDepthBuffer: true;"
     embedded
-    arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
+    arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: true;"
   >
     <!-- a-nft is the anchor that defines an Image Tracking entity -->
     <!-- on 'url' use the path to the Image Descriptors created before. -->
