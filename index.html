@@ -14,7 +14,29 @@
 	</script>
 	
 	<script src="https://raw.githubusercontent.com/jrDev1/craf-ts/master/html2canvas.min.js"></script>
-	
+	<script>
+	    
+		function makeScreenshot()
+	    {
+		html2canvas(document.getElementById("screenshot"), {scale: 2}).then(canvas =>
+		{
+		    canvas.id = "canvasID";
+		    var main = document.getElementById("main");
+		    while (main.firstChild) { main.removeChild(main.firstChild); }
+		    main.appendChild(canvas);
+		});
+	    }
+
+	    document.getElementById("a-make").addEventListener('click', function()
+	    {
+		document.getElementById("a-make").style.display = "none";
+		makeScreenshot();
+		document.getElementById("a-download").style.display = "inline";
+		    this.href = document.getElementById("canvasID").toDataURL();
+		this.download = "Preschool-image.png";
+	    }, false);
+
+	</script>
 	
   	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 	
@@ -28,14 +50,6 @@
   	
 	<body style="margin : 0px; overflow: hidden;">
     	
-		<script>
-		    function makeScreenshot() {
-			html2canvas(document.getElementById("screenshot"), {scale: 1}).then(canvas => {
-			    document.body.appendChild(canvas);
-			});
-		    }
-		</script>
-		
 		<!-- Open the Webcab to Start Scanning -->
 		<a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; patternRatio: 0.9; vr-mode-ui="enabled: false'>
       
