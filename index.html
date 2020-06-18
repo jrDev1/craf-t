@@ -14,7 +14,7 @@
 	</script>
 	
 	<script src="https://raw.githubusercontent.com/jrDev1/craf-ts/master/html2canvas.min.js"></script>
-	<script>
+	<script
 	    
 		function makeScreenshot()
 	    {
@@ -35,9 +35,20 @@
 		    this.href = document.getElementById("canvasID").toDataURL();
 		this.download = "Preschool-image.png";
 	    }, false);
-
+	>
 	</script>
 	
+	<script
+		var s = document.querySelector("a-scene")
+		
+		m.addEventListener("screenshot", (e)=>{
+		
+			s.components.screenshot.capture('perspective')
+			
+		})
+		
+	>
+	</script>
   	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 	
   	<!-- we import arjs version without NFT but with marker + location based support -->
