@@ -1,4 +1,15 @@
 <html>
+	
+  	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+	
+  	<!-- we import arjs version without NFT but with marker + location based support -->
+  	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  
+  	<script src="aframe-text-geometry-component.min.js"></script>
+	<script src="aframe-gif-shader.js"></script>
+    	<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+  	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+  	
 	<!-- Send Marker Lost and Found Events -->
 	<script
 	var m = document.querySelector("a-marker")
@@ -49,16 +60,18 @@
 		
 	>
 	</script>
-  	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 	
-  	<!-- we import arjs version without NFT but with marker + location based support -->
-  	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-  
-  	<script src="aframe-text-geometry-component.min.js"></script>
-	<script src="aframe-gif-shader.js"></script>
-    	<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
-  	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
-  	
+	<script
+		document.querySelector("button").addEventListener("click", (e)=> {
+		  
+			// do stuff here.
+			document.querySelector("a-scene").components.screenshot.capture('perspective')
+			
+		})
+		
+	>
+	</script>
+	
 	<body style="margin : 0px; overflow: hidden;">
     	
 		<!-- Open the Webcab to Start Scanning -->
@@ -103,6 +116,13 @@
      	 		</a-marker>
 			<a-entity camera></a-entity>
       			<!--<a-camera-static/> -->
+			
+			<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+			    <button>
+				SCREENSHOT
+			    </button>
+			</div>
+													    
 		</a-scene>
   
 	</body>
