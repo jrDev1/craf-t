@@ -10,6 +10,9 @@
     	<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
   	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
   	
+	<!-- Launch Mobile Console -->
+	<script src="https://gist.github.com/c-kick/2d717790aadd3aa86884ee0b07c3119f.js"></script>
+	
 	<!-- Send Marker Lost and Found Events -->
 	<script
 	var m = document.querySelector("a-marker")
@@ -23,90 +26,17 @@
 	})
 	>
 	</script>
-	
-<!-- 	<script src="https://raw.githubusercontent.com/jrDev1/craf-ts/master/html2canvas.min.js"></script>
+
 	<script
-	    
-		function makeScreenshot()
-	    {
-		html2canvas(document.getElementById("screenshot"), {scale: 2}).then(canvas =>
-		{
-		    canvas.id = "canvasID";
-		    var main = document.getElementById("main");
-		    while (main.firstChild) { main.removeChild(main.firstChild); }
-		    main.appendChild(canvas);
-		});
-	    }
-
-	    document.getElementById("a-make").addEventListener('click', function()
-	    {
-		document.getElementById("a-make").style.display = "none";
-		makeScreenshot();
-		document.getElementById("a-download").style.display = "inline";
-		    this.href = document.getElementById("canvasID").toDataURL();
-		this.download = "Preschool-image.png";
-	    }, false);
-	>
-	</script> -->
-	
-	
-	<script
-		var s = document.querySelector("a-scene")
-		
-		m.addEventListener("screenshot", (e)=>{
-		
-				
-			//s.components.screenshot.capture('perspective')
-			// open in new window like this
-		    
-			var w = window.open('', '');
-		    w.document.title = "Screenshot";
-		    //w.document.body.style.backgroundColor = "red";
-		    var img = new Image();
-		    var secondImg = new Image();
-		renderer.render(scene, camera);
-		var doubleImageCanvas = document.getElementById('doubleImage');
-		var context = doubleImageCanvas.getContext('2d');
-		var sources = {
-			firstImage: renderer.domElement.toDataURL("image/png"),
-			secondImage: arToolkitContext.arController.canvas.toDataURL("image/png")
-		};
-
-		loadImages(sources, function(images){
-			context.drawImage(images.secondImage, 0, 0);
-			context.drawImage(images.firstImage, 0, 0);
-			img.src = doubleImageCanvas.toDataURL("image/png");
-			w.document.body.appendChild(img);
-		});
-
-		    // New version of file download using toBlob.
-		    // toBlob should be faster than toDataUrl.
-		    // But maybe not because also calling createOjectURL.
-		    //
-		    renderer.render(scene, camera);
-		    renderer.domElement.toBlob(function(blob){
-			var a = document.createElement('a');
-		      var url = img.src.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-		      a.href = url;
-		      a.download = 'canvas.png';
-		      a.click();
-		    }, 'image/png', 1.0);
-		}
-		})
-		
-	>
-	</script>
-	
-<!-- 	<script
 		document.querySelector("button").addEventListener("click", (e)=> {
 		  
 			// do stuff here.
 			document.querySelector("a-scene").components.screenshot.capture('perspective')
-			
+			console.log("screenshot")
 		})
 		
 	>
-	</script> -->
+	</script>
 	
 	<body style="margin : 0px; overflow: hidden;">
     	
@@ -139,7 +69,7 @@
 				  smooth='true' 
 				  smoothCount='25'
 				  smoothTolerance='6'
-				  url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreKClassOf2020_2.patt'>
+				  url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreKClassOf2020_Color_ c99139.patt'>
      
         			<a-entity 
 					  position="0 0 -1" 
@@ -157,6 +87,25 @@
 				  smooth='true' 
 				  smoothCount='25'
 				  smoothTolerance='6'
+				  url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreKClassOf2020_Color_ f8c32d.patt'>
+     
+        			<a-entity 
+					  position="0 0 -1" 
+					  rotation="-90 0 0" 
+					  scale="3 3 1" 
+					  geometry="primitive:plane" 
+					  material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreK2020.gif);" 
+					  gif="" transparent="true">
+				</a-entity>
+
+     	 		</a-marker>
+																  
+			<a-marker 
+				  preset='custom' 
+				  type='pattern' 
+				  smooth='true' 
+				  smoothCount='25'
+				  smoothTolerance='6'
 				  url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreKClassOf2020_Color_f5b754.patt'>
      
         			<a-entity 
@@ -168,7 +117,8 @@
 					  gif="" transparent="true">
 				</a-entity>
 
-     	 		</a-marker>											      
+     	 		</a-marker>
+																  
 			<a-entity camera></a-entity>
       			<!--<a-camera-static/> -->
 													    
@@ -179,7 +129,7 @@
 				SCREENSHOT
 	    		</button>
 												    											      
-  			<p style="color:white;">Test Mode ver 0.11</p>
+  			<p style="color:white;">Test Mode ver 0.1.1</p>
 		
 		</div>
 														      
