@@ -4,15 +4,23 @@
 	<head>
 		<!-- Send Marker Lost and Found Events -->
 	<script
-	var m = document.querySelector("a-marker")
+	AFRAME.registerComponent('registerevents', {
+		init: function () {
+			var marker = this.el;
 
-	m.addEventListener("markerFound", (e)=>{
-		console.log("found")
-	})
+			marker.addEventListener('markerFound', function() {
+				var markerId = marker.id;
+				console.log('markerFound', markerId);
+				// TODO: Add your own code here to react to the marker being found.
+			});
 
-	m.addEventListener("markerLost", (e)=>{
-   		console.log("lost")
-	})
+			marker.addEventListener('markerLost', function() {
+				var markerId = marker.id;
+				console.log('markerLost', markerId);
+				// TODO: Add your own code here to react to the marker being lost.
+			});
+		}
+	});
 	>
 	</script>
 
@@ -40,7 +48,8 @@
 				  smooth='true' 
 				  smoothCount='25'
 				  smoothTolerance='6'
-				  url='https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog1.patt'>
+				  url='https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog1.patt'
+				registerevents>
      
         			<a-entity 
 					  position="0 0 -1" 
@@ -51,7 +60,7 @@
 					  gif="" transparent="true">
 				</a-entity>
 
-     	</a-marker>
+     			</a-marker>
 													  
 			<a-entity camera></a-entity>
       			<!--<a-camera-static/> -->
