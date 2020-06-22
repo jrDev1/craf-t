@@ -1,22 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script>
-    <title>mobileConsole demo - hnldesign</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap/3.2.0/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap/3.2.0/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="../fonts/OpenSans/OpenSans.css">
-    <link rel="stylesheet" type="text/css" href="../fonts/FontAwesome/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="http://code.hnldesign.nl/min/?g=OpenSans">
-    <script>
-        if (!mobileConsole.status.initialized) {
-            mobileConsole.init();
-        }
-        function traceThis() {
+	<!-- Launch Mobile Console -->
+	<head>
+	<script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script>
+	
+    	<script>
+           if (!mobileConsole.status.initialized) {
+    		mobileConsole.init();
+	}
+		function traceThis() {
             var variable = 'string';
             function bar() {
                 console.trace();
@@ -28,91 +20,17 @@
         }
 
         var testObject = { 'test' : 'one', 'func' : function() {return 'Hello world'; },'array' : [1,2,3,4,5, [1,2,3]], 'emptyArray' : [], 'object' : {'anotherObject' : 'Why not', 'emptyObject' : {}}, 'finalkey' : 'finalvalue'}
-    </script>
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-        .logo {
-            margin: 20px 0 30px;
-        }
-        h1 {
-            display: none;
-        }
-        h2 {
-            color: #0055b4;
-            font-size: 24px;
-        }
-        .btn {
-            margin-top: 5px;
-        }
-        .center {
-            float: none;
-            margin: 0 auto;
-            text-align: center;
-        }
-        small {
-            color: #AAA;
-        }
-        button code {
-            color: inherit;
-            background-color: transparent;
-        }
-    </style>
-</head>
-<body>
+		
+        </script>
+        </head>
+         
+	<body style="margin : 0px; overflow: hidden;">
+    		<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+											    											      
+  			<p style="color:black;">Test Mode ver 0.2</p>
+		
+		</div>
+	</body>
+        </html>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12" id="test">
-            <img src="http://code.hnldesign.nl/img/logos/resized/300/72/90/0/0/mobileConsole.png" width="300" height="72" data-path="http://code.hnldesign.nl/img/logos/mobileConsole.png" data-ratio="0.24" data-srcwidth="952" data-quality="90" data-crop="0" data-filters="" data-prprocess="always" data-caching="1" data-nodebug="false" title="mobileConsole - HTML based JavaScript console" class="prime-img logo prime-img-nojs" style="z-index:12;">            <h1>mobileConsole - HTML based JavaScript console</h1>
-            <p><a href="http://www.hnldesign.nl/work/code/mobileconsole-javascript-console-for-mobile-devices/">MobileConsole</a> is a script I wrote that extends the browser's (JavaScript) <code>console</code> to a visual console (in HTML).
-                Which is very useful when debugging on a mobile device with no on-screen local debugger/console access.</p>
-            <h2>Demo</h2>
-            <p>To see how it works, use the buttons below to trigger regular <code>console</code> events, and watch mobileConsole handling them.
-                You can also open your Web Inspector's console, to see what is happening over there.</p>
-            <p>MobileConsole is configured to run automatically on mobile devices, but should the mobile detection fail, it can be manually initiated with <code>mobileConsole.init();</code>, as is the case on this demo-page.</p>
-            <h2>Console input / commandline</h2>
-            <p>As of v0.5, mobileConsole features a console input (bottom field, with the <strong>></strong>), in which you can execute your own scripts, set and check f.jsiables, etc. Just like in a regular debugger.
-                Command history is stored (in session storage, if available) and can be recalled using up and down arrows. The commandline also sports an autocomplete-based pop-up, which is especially useful on mobile devices.</p>
-            <p>Read more about mobileConsole <a href="http://www.hnldesign.nl/work/code/mobileconsole-javascript-console-for-mobile-devices/">here</a>, view/fork code @ GitHub <a href="https://gist.github.com/c-kick/2d717790aadd3aa86884ee0b07c3119f">here</a>  </p>
-        </div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-4"><button class="btn btn-block btn-default" onclick="console.log('This is a log message');"><i class="fa fa-file-text-o" aria-hidden="true"></i> <code>console.log</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-default" onclick="console.log(testObject);"><i class="fa fa-file-text-o" aria-hidden="true"></i> <code>console.log</code> an object</button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-default" onclick="console.log(this);"><i class="fa fa-file-text-o" aria-hidden="true"></i> <code>console.log</code> an element</button></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4"><button class="btn btn-block btn-info" onclick="console.info('This is info');"><i class="fa fa-info-circle" aria-hidden="true"></i> <code>console.info</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-primary" onclick="traceThis()"><i class="fa fa-history" aria-hidden="true"></i> <code>console.trace</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-warning" onclick="console.warn('This is a warning');"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> <code>console.warn</code></button></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4"><button class="btn btn-block btn-danger" onclick="console.error('This is an error');"><i class="fa fa-times-circle" aria-hidden="true"></i> <code>console.error</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-danger" onclick="console.assert(window.document === undefined, 'Window.document is defined')"><i class="fa fa-question-circle" aria-hidden="true"></i> <code>console.assert</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-danger" onclick="Bullshitbingo()"><i class="fa fa-times-circle" aria-hidden="true"></i> Trigger an error</button></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4 col-sm-offset-2 col-lg-offset-2"><button class="btn btn-block btn-default" onclick="console.time('My demo timer')"><i class="fa fa-clock-o" aria-hidden="true"></i> <code>console.time</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-default" onclick="console.timeEnd('My demo timer')"><i class="fa fa-clock-o" aria-hidden="true"></i> <code>console.timeEnd</code></button></div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-4 col-sm-offset-2 col-lg-offset-2"><button class="btn btn-block btn-default" onclick="console.group('This is a group')"><i class="fa fa-indent" aria-hidden="true"></i> <code>console.group</code></button></div>
-        <div class="col-sm-4"><button class="btn btn-block btn-default" onclick="console.groupEnd()"><i class="fa fa-outdent" aria-hidden="true"></i> <code>console.groupEnd</code></button></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4 col-sm-offset-4 col-lg-offset-4"><button class="btn btn-block btn-default" onclick="console.clear()"><i class="fa fa-trash" aria-hidden="true"></i> <code>console.clear</code></button></div>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="col-sm-3 center">
-            <small>&copy; 2016 - 2020 hnldesign</small>
-        </div>
-    </div>
-</div>
 
-</body>
-</html>
