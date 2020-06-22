@@ -2,10 +2,23 @@
 
 	<!-- Launch Mobile Console -->
 	<head>
-	<script src="http://code.hnldesign.nl/hnl.mobileConsole.1.3.js"></script>
+	<script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script>
 	
     	<script 
-           mobileConsole.init()
+           if (!mobileConsole.status.initialized) {
+    		mobileConsole.init();
+	}
+		function traceThis() {
+            var variable = 'string';
+            function bar() {
+                console.trace();
+            }
+            function foo() {
+                bar(variable);
+            }
+            foo();
+        }
+
         ></script>
 	
   	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
@@ -36,7 +49,8 @@
 		document.querySelector("button").addEventListener("click", (e)=> {
 		  
 			// do stuff here.
-			document.querySelector("a-scene").components.screenshot.capture('perspective')
+			//document.querySelector("a-scene").components.screenshot.capture('perspective')
+			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular')
 			console.log("screenshot")
 		})
 		
