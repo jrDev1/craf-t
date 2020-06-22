@@ -4,25 +4,6 @@
 	<head>
 	<script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script>
 	
-    	<script>
-        	if (!mobileConsole.status.initialized) {
-            		mobileConsole.init();
-        	}
-		
-        	function traceThis() {
-            		var variable = 'string';
-            		
-			function bar() {
-                		console.trace();
-            		}
-            		function foo() {
-                		bar(variable);
-            		}
-            		foo();
-        	}
-
-        </script>
-	
   	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 	
   	<!-- we import arjs version without NFT but with marker + location based support -->
@@ -33,35 +14,6 @@
     	<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
   	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
   	
-	<!-- Send Marker Lost and Found Events -->
-	<script>
-	var m = document.querySelector("a-marker")
-
-	m.addEventListener("markerFound", (e)=>{
-		console.log("found")
-	})
-
-	m.addEventListener("markerLost", (e)=>{
-   		console.log("lost")
-	})
-	
-	</script>
-
-	<script>
-		// References to all the element we will need.,
-		var take_photo_btn = document.querySelector('#take-photo');
-
-		take_photo_btn.addEventListener("click", function(e){
-		//document.querySelector("button").addEventListener("click", (e)=> {
-		  
-			// do stuff here.
-			//document.querySelector("a-scene").components.screenshot.capture('perspective')
-			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular')
-			console.log("screenshot")
-		})
-		
-	
-	</script>
 	</head>
 	  
 	<body style="margin : 0px; overflow: hidden;">
