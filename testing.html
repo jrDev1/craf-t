@@ -187,20 +187,10 @@
 	</script>
 
 	<script>
-		// References to all the element we will need.,
-<!-- 		var take_photo_btn = document.querySelector('#take-photo');
-
-		take_photo_btn.addEventListener("click", function(e){
-		//document.querySelector("button").addEventListener("click", (e)=> {
-		  
-			// do stuff here.
-			//document.querySelector("a-scene").components.screenshot.capture('perspective')
-			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular')
-			console.log("screenshot")
-		})
 													    -->
 		document.getElementById("take_screenshot").addEventListener("click", Screenshot);											   
 		function Screenshot() {
+													   					//document.querySelector("a-scene").components.screenshot.capture('perspective')
   			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular');
 			console.log("screenshot");
 		}
