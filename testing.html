@@ -15,7 +15,7 @@
   	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
   	
 	</head>
-	  
+	 
 	<body style="margin : 0px; overflow: hidden;">
     	
 		<!-- Open the Webcam to Start Scanning -->
@@ -146,11 +146,64 @@
 			
 		<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
 			
-			    <button href="#" id="take-photo" title="Take Photo"></button>
+			    <button id="take_screenshot" Screenshot</button>
 			   									    											      
   				<p style="color:black;">Test Mode ver 0.1.5</p>
 		
 		</div>											      
 	</body>
 
+    	<script>
+        	if (!mobileConsole.status.initialized) {
+            		mobileConsole.init();
+        	}
+		
+        	function traceThis() {
+            		var variable = 'string';
+            		
+			function bar() {
+                		console.trace();
+            		}
+            		function foo() {
+                		bar(variable);
+            		}
+            		foo();
+        	}
+
+        </script>
+	
+	<!-- Send Marker Lost and Found Events -->
+	<script>
+	var m = document.querySelector("a-marker")
+
+	m.addEventListener("markerFound", (e)=>{
+		console.log("found")
+	})
+
+	m.addEventListener("markerLost", (e)=>{
+   		console.log("lost")
+	})
+	
+	</script>
+
+	<script>
+		// References to all the element we will need.,
+<!-- 		var take_photo_btn = document.querySelector('#take-photo');
+
+		take_photo_btn.addEventListener("click", function(e){
+		//document.querySelector("button").addEventListener("click", (e)=> {
+		  
+			// do stuff here.
+			//document.querySelector("a-scene").components.screenshot.capture('perspective')
+			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular')
+			console.log("screenshot")
+		})
+													    -->
+		document.getElementById("take_screenshot").addEventListener("click", Screenshot);											   
+		function Screenshot() {
+  			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular');
+			console.log("screenshot");
+		}
+	
+	</script>
 </html>
