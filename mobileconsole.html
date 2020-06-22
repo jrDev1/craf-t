@@ -8,13 +8,25 @@
            if (!mobileConsole.status.initialized) {
     		mobileConsole.init();
 	}
+		function traceThis() {
+            var variable = 'string';
+            function bar() {
+                console.trace();
+            }
+            function foo() {
+                bar(variable);
+            }
+            foo();
+        }
+
+        var testObject = { 'test' : 'one', 'func' : function() {return 'Hello world'; },'array' : [1,2,3,4,5, [1,2,3]], 'emptyArray' : [], 'object' : {'anotherObject' : 'Why not', 'emptyObject' : {}}, 'finalkey' : 'finalvalue'}
         </script>
         </head>
          
 	<body style="margin : 0px; overflow: hidden;">
     		<div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
 											    											      
-  			<p style="color:black;">Test Mode ver 0.2</p>
+  			<p style="color:black;">Test Mode ver 0.3</p>
 		
 		</div>
 	</body>
