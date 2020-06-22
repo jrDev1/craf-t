@@ -5,19 +5,21 @@
 	<script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script>
 	
     	<script>
-           if (!mobileConsole.status.initialized) {
-    		mobileConsole.init();
-	}
-		function traceThis() {
-            var variable = 'string';
-            function bar() {
-                console.trace();
-            }
-            function foo() {
-                bar(variable);
-            }
-            foo();
-        }
+        	if (!mobileConsole.status.initialized) {
+            		mobileConsole.init();
+        	}
+		
+        	function traceThis() {
+            		var variable = 'string';
+            		
+			function bar() {
+                		console.trace();
+            		}
+            		function foo() {
+                		bar(variable);
+            		}
+            		foo();
+        	}
 
         </script>
 	
@@ -32,7 +34,7 @@
   	<script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
   	
 	<!-- Send Marker Lost and Found Events -->
-	<script
+	<script>
 	var m = document.querySelector("a-marker")
 
 	m.addEventListener("markerFound", (e)=>{
@@ -42,10 +44,10 @@
 	m.addEventListener("markerLost", (e)=>{
    		console.log("lost")
 	})
-	>
+	
 	</script>
 
-	<script
+	<script>
 		document.querySelector("button").addEventListener("click", (e)=> {
 		  
 			// do stuff here.
@@ -54,7 +56,7 @@
 			console.log("screenshot")
 		})
 		
-	>
+	
 	</script>
 	</head>
 	  
