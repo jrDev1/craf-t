@@ -5,8 +5,13 @@
 	<script src="http://code.hnldesign.nl/hnl.mobileConsole.1.3.js"></script>
 	
     	<script 
-           mobileConsole.init()
+           if (!mobileConsole.status.initialized) {
+    		mobileConsole.init();
+	}
         ></script>
         </head>
-        
+         
+	<body style="margin : 0px; overflow: hidden;">
+    	
+	</body>
         </html>
