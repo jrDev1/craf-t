@@ -172,7 +172,7 @@
 		document.getElementById("take_screenshot").addEventListener("click", Screenshot);											   
 		function Screenshot() {
 													   					//document.querySelector("a-scene").components.screenshot.capture('perspective')
-  			document.querySelector('a-scene').components.screenshot.getCanvas('rectangular');
+  			document.querySelector('a-scene').components.screenshot.capture('perspective');
 			console.log("screenshot");
 		}
 	
