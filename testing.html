@@ -3,7 +3,7 @@
 	<!-- Launch Mobile Console -->
 	<head>
 <!-- 	<script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
-	
+	<script src="html2canvas.min.js"></script>
   	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 	
 	<!--Merge Images -->
@@ -151,7 +151,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   									    											      
-  				<p style="color:red;">Test Mode ver 0.1.3</p>
+  				<p style="color:red;">Test Mode ver 0.1.2</p>
 		
 		</div>											      
 	</body>
@@ -168,68 +168,21 @@
 			console.log("lost")
 		});
 		
-		function resizeCanvas(origCanvas, width, height) {
-			let resizedCanvas = document.createElement("canvas");
-			let resizedContext = resizedCanvas.getContext("2d");
-
-			resizedCanvas.height = height;
-			resizedCanvas.width = width;
-
-			resizedContext.drawImage(origCanvas, 0, 0, width, height);
-			return resizedCanvas.toDataURL();
-		}
-
 		document.getElementById("take_screenshot").addEventListener("click", Screenshot);
 												    
-		function Screenshot() {
-							       
-			let aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
-			let frame = captureVideoFrame("video", "png");
-			aScene = resizeCanvas(aScene, frame.width, frame.height);
-			frame = frame.dataUri;
-												    
-			mergeImages([frame, aScene]).then(b64 => {
-				let link = document.getElementById("download-link", "png");
-				link.setAttribute("download", "AR.png");
-				link.setAttribute("href", b64);
-				link.click();
-				console.log("screenshot");
-			});
-	
-		}
-												    
-		function captureVideoFrame(video, format, width, height) {
-		    	
-			if (typeof video === 'string') {
-			    video = document.querySelector(video);
-			}
+	function Screenshot() { 
+	    html2canvas(document.body).then(canvas => {
+		document.body.appendChild(canvas)
 
-			format = format || 'jpeg';
+		//console.log(canvas.toDataURL("image/png"));
 
-			if (!video || (format !== 'png' && format !== 'jpeg')) {
-			    return false;
-			}
+		var a = document.createElement('a');
+		a.href = canvas.toDataURL('image/png');
+		a.download = 'canvas.png';
+		a.click();
 
-			var canvas = document.createElement("CANVAS");
 
-			canvas.width = width || video.videoWidth;
-			canvas.height = height || video.videoHeight;
-			canvas.getContext('2d').drawImage(video, 0, 0);
-			var dataUri = canvas.toDataURL('image/' + format);
-			var data = dataUri.split(',')[1];
-			var mimeType = dataUri.split(';')[0].slice(5)
-
-			var bytes = window.atob(data);
-			var buf = new ArrayBuffer(bytes.length);
-			var arr = new Uint8Array(buf);
-
-			for (var i = 0; i < bytes.length; i++) {
-			    arr[i] = bytes.charCodeAt(i);
-			}
-
-			var blob = new Blob([ arr ], { type: mimeType });
-			return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
-		}
-							
+	    });
+        }					
 	</script>
 </html>
