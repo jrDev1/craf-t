@@ -20,7 +20,7 @@
 	 
 	<body style="margin : 0px; overflow: hidden;">
 
-        <a-scene embedded arjs='trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: false" screenshot='width: 480; height: 640'>
+        <a-scene embedded arjs='trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: false" screenshot='width: 480; height: 640';detectionMode: mono_and_matrix; patternRatio: 0.9>
 
 		<a-marker 
 				  preset='custom' 
@@ -50,7 +50,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   	<a id="download-link"></a>								    											      
-  				<p style="color:red;">Test Mode ver 0.1.4</p>
+  				<p style="color:red;">Test Mode ver 0.1.5</p>
 		
 		</div>		
     
