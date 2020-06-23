@@ -148,7 +148,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   									    											      
-  				<p style="color:black;">Test Mode ver 0.1.4</p>
+  				<p style="color:black;">Test Mode ver 0.1.3</p>
 		
 		</div>											      
 	</body>
@@ -165,14 +165,16 @@
    		console.log("lost")
 	})
 	
-	</script>
-
-	<script>
-													    -->
 		document.getElementById("take_screenshot").addEventListener("click", Screenshot);											   
 		function Screenshot() {
 													   					//document.querySelector("a-scene").components.screenshot.capture('perspective')
-  			document.querySelector('a-scene').components.screenshot.capture('perspective');
+  			//document.querySelector('a-scene').components.screenshot.capture('perspective');
+			var canvas = sceneEl.canvas;
+
+			// here is the most important part because if you dont replace you will get a DOM 18 exception.
+			var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  
+
+			window.location.href=image;
 			console.log("screenshot");
 		}
 	
