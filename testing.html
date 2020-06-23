@@ -155,82 +155,78 @@
 
 	<!-- Send Marker Lost and Found Events -->
 	<script>
-	var m = document.querySelector("a-marker")
+		var m = document.querySelector("a-marker");
 
-	m.addEventListener("markerFound", (e)=>{
-		console.log("found")
-	})
+		m.addEventListener("markerFound", (e)=>{
+			console.log("found")
+		});
 
-	m.addEventListener("markerLost", (e)=>{
-   		console.log("lost")
-	})
-	function resizeCanvas(origCanvas, width, height) {
-	let resizedCanvas = document.createElement("canvas");
-	let resizedContext = resizedCanvas.getContext("2d");
+		m.addEventListener("markerLost", (e)=>{
+			console.log("lost")
+		});
+		
+		function resizeCanvas(origCanvas, width, height) {
+			let resizedCanvas = document.createElement("canvas");
+			let resizedContext = resizedCanvas.getContext("2d");
 
-	resizedCanvas.height = width;
-	resizedCanvas.width = height;
+			resizedCanvas.height = height;
+			resizedCanvas.width = width;
 
-	resizedContext.drawImage(origCanvas, 0, 0, width, height);
-	return resizedCanvas.toDataURL();
-}
+			resizedContext.drawImage(origCanvas, 0, 0, width, height);
+			return resizedCanvas.toDataURL();
+		}
 
-		document.getElementById("take_screenshot").addEventListener("click", Screenshot);											   
+		document.getElementById("take_screenshot").addEventListener("click", Screenshot);
+												    
 		function Screenshot() {
-			//let aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");									   					//document.querySelector("a-scene").components.screenshot.capture('perspective')
-  			//document.querySelector('a-scene').components.screenshot.capture('perspective');
-		       //var sceneEl = document.querySelector('a-scene');
-			//var canvas = sceneEl.canvas;
-
-			// here is the most important part because if you dont replace you will get a DOM 18 exception.
-			//var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  
-
-			//window.location.href=image;
-								       
-			let aScene = document
-		.querySelector("a-scene")
-		.components.screenshot.getCanvas("perspective");
-	let frame = captureVideoFrame("video", "png");
-	aScene = resizeCanvas(aScene, frame.width, frame.height);
-	frame = frame.dataUri;
-	mergeImages([frame, aScene]).then(b64 => {
-		let link = document.getElementById("download-link", "png");
-		link.setAttribute("download", "AR.png");
-		link.setAttribute("href", b64);
-		link.click();
-			console.log("screenshot");
-	});
+							       
+			let aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
+			let frame = captureVideoFrame("video", "png");
+			aScene = resizeCanvas(aScene, frame.width, frame.height);
+			frame = frame.dataUri;
+												    
+			mergeImages([frame, aScene]).then(b64 => {
+				let link = document.getElementById("download-link", "png");
+				link.setAttribute("download", "AR.png");
+				link.setAttribute("href", b64);
+				link.click();
+				console.log("screenshot");
+			});
 	
-	function captureVideoFrame(video, format, width, height) {
-		if (typeof video === 'string') {
-		    video = document.querySelector(video);
 		}
+												    
+		function captureVideoFrame(video, format, width, height) {
+		    	
+			if (typeof video === 'string') {
+			    video = document.querySelector(video);
+			}
 
-		format = format || 'jpeg';
+			format = format || 'jpeg';
 
-		if (!video || (format !== 'png' && format !== 'jpeg')) {
-		    return false;
+			if (!video || (format !== 'png' && format !== 'jpeg')) {
+			    return false;
+			}
+
+			var canvas = document.createElement("CANVAS");
+
+			canvas.width = width || video.videoWidth;
+			canvas.height = height || video.videoHeight;
+			canvas.getContext('2d').drawImage(video, 0, 0);
+			var dataUri = canvas.toDataURL('image/' + format);
+			var data = dataUri.split(',')[1];
+			var mimeType = dataUri.split(';')[0].slice(5)
+
+			var bytes = window.atob(data);
+			var buf = new ArrayBuffer(bytes.length);
+			var arr = new Uint8Array(buf);
+
+			for (var i = 0; i < bytes.length; i++) {
+			    arr[i] = bytes.charCodeAt(i);
+			}
+
+			var blob = new Blob([ arr ], { type: mimeType });
+			return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
 		}
-
-		var canvas = document.createElement("CANVAS");
-
-		canvas.width = width || video.videoWidth;
-		canvas.height = height || video.videoHeight;
-		canvas.getContext('2d').drawImage(video, 0, 0);
-		var dataUri = canvas.toDataURL('image/' + format);
-		var data = dataUri.split(',')[1];
-		var mimeType = dataUri.split(';')[0].slice(5)
-
-		var bytes = window.atob(data);
-		var buf = new ArrayBuffer(bytes.length);
-		var arr = new Uint8Array(buf);
-
-		for (var i = 0; i < bytes.length; i++) {
-		    arr[i] = bytes.charCodeAt(i);
-		}
-
-		var blob = new Blob([ arr ], { type: mimeType });
-		return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
-	};
+							
 	</script>
 </html>
