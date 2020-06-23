@@ -20,8 +20,27 @@
 	 
 	<body style="margin : 0px; overflow: hidden;">
 
-        <a-scene embedded arjs='sourceType: webcam; trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+        <a-scene embedded arjs='sourceType: webcam; trackingMethod: best;  detectionMode: mono_and_matrix; patternRatio: 0.9; debugUIEnabled: true;' vr-mode-ui="enabled: false">
 
+		<a-marker 
+				  preset='custom' 
+				  type='pattern' 
+				  smooth='true' 
+				  smoothCount='25'
+				  smoothTolerance='6'
+				  url='https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreKClassOf2020.patt'>
+     
+        			<a-entity 
+					  position="0 0 -1" 
+					  rotation="-90 0 0" 
+					  scale="3 3 1" 
+					  geometry="primitive:plane" 
+					  material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-ts/master/PreK2020.gif);" 
+					  gif="" transparent="true">
+				</a-entity>
+
+     	 		</a-marker>
+		
 		<a-marker 
 				  preset='custom' 
 				  type='pattern' 
@@ -50,7 +69,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   	<a id="download-link"></a>								    											      
-  				<p style="color:red;">Test Mode ver 0.1.5</p>
+  				<p style="color:red;">Test Mode ver 0.1.1</p>
 		
 		</div>		
     
