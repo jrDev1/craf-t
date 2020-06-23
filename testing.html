@@ -148,30 +148,11 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   									    											      
-  				<p style="color:black;">Test Mode ver 0.1.3</p>
+  				<p style="color:black;">Test Mode ver 0.1.4</p>
 		
 		</div>											      
 	</body>
 
-    	<script>
-        	if (!mobileConsole.status.initialized) {
-            		mobileConsole.init();
-        	}
-		
-        	function traceThis() {
-            		var variable = 'string';
-            		
-			function bar() {
-                		console.trace();
-            		}
-            		function foo() {
-                		bar(variable);
-            		}
-            		foo();
-        	}
-
-        </script>
-	
 	<!-- Send Marker Lost and Found Events -->
 	<script>
 	var m = document.querySelector("a-marker")
@@ -191,7 +172,7 @@
 		document.getElementById("take_screenshot").addEventListener("click", Screenshot);											   
 		function Screenshot() {
 													   					//document.querySelector("a-scene").components.screenshot.capture('perspective')
-  			document.querySelector('a-scene').components.screenshot.getCanvas('equirectangular');
+  			document.querySelector('a-scene').components.screenshot.getCanvas('rectangular');
 			console.log("screenshot");
 		}
 	
