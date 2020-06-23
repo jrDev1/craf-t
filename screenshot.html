@@ -51,24 +51,15 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   									    											      
-  				<p style="color:red;">Test Mode ver 0.1.2</p>
+  				<p style="color:red;">Test Mode ver 0.1.3</p>
 		
 		</div>		
     
 	</body>
 
 
-    <script type="text/javascript">
-        // `click` event emitted by browser on mouse click.
-        var soundEntity = document.querySelector('[sound]');
-        var isVideoDisplay = false;
-
-        marker.addEventListener('click', (e) => {
-
-            fb.setAttribute('display', 'block');
-
-        });
-
+    <script>
+        
         function resizeCanvas(origCanvas, width, height) {
             let resizedCanvas = document.createElement("canvas");
             let resizedContext = resizedCanvas.getContext("2d");
@@ -91,15 +82,17 @@
             return resizedCanvas.toDataURL();
         }
 
-        document.querySelector('#ig').addEventListener("click", function () {
-            let aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
-            let frame = captureVideoFrame("video", "png");
+	    document.getElementById("take_screenshot").addEventListener("click", Screenshot);
+												    
+	function Screenshot() { 
+            var aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
+            var frame = captureVideoFrame("video", "png");
 
             aScene = resizeCanvas(aScene, frame.width, frame.height);
             frame = frame.dataUri;
             mergeImages([frame, aScene]).then(b64 => {
 
-                let link = document.getElementById("download-link", "png");
+                var link = document.getElementById("download-link", "png");
                 link.setAttribute("download", "AR.png");
                 link.setAttribute("href", b64);
                 link.click();
