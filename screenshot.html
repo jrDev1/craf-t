@@ -20,7 +20,7 @@
 	 
 	<body style="margin : 0px; overflow: hidden;">
 
-        <a-scene embedded arjs='trackingMethod: best; debugUIEnabled: false; detectionMode: mono_and_matrix; patternRatio: 0.9' vr-mode-ui="enabled: false" screenshot='width: 480; height: 640'>
+        <a-scene embedded arjs='sourceType: webcam; trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
 
 		<a-marker 
 				  preset='custom' 
@@ -34,7 +34,7 @@
         			<a-entity 
 					  position="0 0 -1" 
 					  rotation="-90 0 0" 
-					  scale="3 3 1" 
+					  scale="13 13 1" 
 					  geometry="primitive:plane" 
 					  material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog1.gif);" 
 					  gif="" transparent="true">
@@ -50,7 +50,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   	<a id="download-link"></a>								    											      
-  				<p style="color:red;">Test Mode ver 0.1.3</p>
+  				<p style="color:red;">Test Mode ver 0.1.5</p>
 		
 		</div>		
     
@@ -58,7 +58,16 @@
 
 
     <script>
-        
+        var m = document.querySelector("a-marker")
+
+	m.addEventListener("markerFound", (e)=>{
+		console.log("found")
+	})
+
+	m.addEventListener("markerLost", (e)=>{
+   		console.log("lost")
+	})
+	    
         function resizeCanvas(origCanvas, width, height) {
             let resizedCanvas = document.createElement("canvas");
             let resizedContext = resizedCanvas.getContext("2d");
