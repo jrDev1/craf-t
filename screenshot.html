@@ -14,19 +14,19 @@
    <script>
        document.getElementById("take_screenshot").addEventListener("click", Screenshot);
 												    
-		function Screenshot() { 
-    html2canvas(document.body).then(canvas => {
-        document.body.appendChild(canvas)
+	function Screenshot() { 
+	    html2canvas(document.body).then(canvas => {
+		document.body.appendChild(canvas)
 
-        console.log(canvas.toDataURL("image/png"));
-        
-        var a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');
-        a.download = 'canvas.png';
-       // a.click();
+		//console.log(canvas.toDataURL("image/png"));
+
+		var a = document.createElement('a');
+		a.href = canvas.toDataURL('image/png');
+		a.download = 'canvas.png';
+		a.click();
 
 
-    });
+	    });
         }
     </script>
 </html>
