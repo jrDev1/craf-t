@@ -19,8 +19,8 @@
 	</head>
 	 
 	<body style="margin : 0px; overflow: hidden;">
-        
-        <a-scene id="scene" embedded arjs='trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: false" screenshot='width: 480; height: 640'>
+
+        <a-scene vr-mode-ui='enabled: false' embedded arjs='trackingMethod: best sourceType: webcam; debugUIEnabled: false; screenshot='width: 480; height: 640'>
 
 		<a-marker 
 				  preset='custom' 
@@ -58,7 +58,16 @@
 
 
     <script>
-        
+        var m = document.querySelector("a-marker");
+
+		m.addEventListener("markerFound", (e)=>{
+			console.log("found")
+		});
+
+		m.addEventListener("markerLost", (e)=>{
+			console.log("lost")
+		});
+		
         function resizeCanvas(origCanvas, width, height) {
             let resizedCanvas = document.createElement("canvas");
             let resizedContext = resizedCanvas.getContext("2d");
