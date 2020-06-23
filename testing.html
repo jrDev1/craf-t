@@ -169,6 +169,7 @@
 		function Screenshot() {
 													   					//document.querySelector("a-scene").components.screenshot.capture('perspective')
   			//document.querySelector('a-scene').components.screenshot.capture('perspective');
+		       var sceneEl = document.querySelector('a-scene');
 			var canvas = sceneEl.canvas;
 
 			// here is the most important part because if you dont replace you will get a DOM 18 exception.
