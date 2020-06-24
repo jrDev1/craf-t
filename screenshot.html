@@ -20,7 +20,7 @@
 	 
 	<body style="margin : 0px; overflow: hidden;">
 
-        <a-scene embedded arjs='sourceType: webcam; trackingMethod: best;  detectionMode: mono_and_matrix; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+        <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
 		
 		<a-marker 
 				  preset='custom' 
@@ -37,7 +37,7 @@
 					  scale="3 3 1" 
 					  geometry="primitive:plane" 
 					  material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/PreK2020.gif);" 
-					  gif="" transparent="true">
+					  gif="" transparent="false">
 				</a-entity>
 
      		</a-marker>
@@ -50,7 +50,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   	<a id="download-link"></a>								    											      
-  				<p style="color:red;">Test Mode ver 0.1.4</p>
+  				<p style="color:red;">Test Mode ver 0.1.5</p>
 		
 		</div>		
     
