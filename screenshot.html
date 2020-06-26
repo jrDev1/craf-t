@@ -32,6 +32,7 @@
 				registerevents>
      
         			<a-entity 
+					  id="The GIF"
 					  position="0 0.1 0" 
 					  rotation="-90 0 0" 
 					  scale="1.1 1.1 1" 
@@ -53,7 +54,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   	<a id="download-link"></a>								    											      
-  				<p style="color:red;">Test Mode ver 0.2</p>
+  				<p style="color:red;">Test Mode ver 0.3</p>
 		
 		</div>		
     
@@ -92,7 +93,8 @@
 		    //resizedContext.drawImage(origCanvas, 0, 0, height, width);
 		    //resizedContext.drawImage(origCanvas, marginLeft, 0, height, width);
 		    //resizedContext.drawImage(origCanvas, 0, 0, scaledWidth, scaledHeight);
-		    resizedContext.drawImage(origCanvas, -100, 100, height*2, width*2);
+		    resizedContext.drawImage(origCanvas, -100, 100, height, scaledWidth);
+		    console.log(scaledWidth + " Scaled " + scaledHeight);
             }
 
             return resizedCanvas.toDataURL();
@@ -100,7 +102,11 @@
 
 	    document.getElementById("take_screenshot").addEventListener("click", Screenshot);
 												    
-	function Screenshot() { 
+	function Screenshot() {
+		
+		//Pause the gif
+		document.getElementById"(The GIF").pause();
+		
             var aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
             var frame = captureVideoFrame("video", "png");
 
@@ -113,6 +119,8 @@
                 link.setAttribute("href", b64);
                 link.click();
 
+		    //Pause the gif
+		document.getElementById"(The GIF").play();
             });
         }
 
