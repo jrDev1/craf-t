@@ -39,7 +39,8 @@
 
 					  material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/200w.gif);"
 					  
-					  gif="" transparent="false">
+					  gif="" 
+					  transparent="false">
 				</a-entity>
 
      		</a-marker>
@@ -52,7 +53,7 @@
 			
 			    <button id="take_screenshot"> Screenshot</button>
 			   	<a id="download-link"></a>								    											      
-  				<p style="color:red;">Test Mode ver 0.1.3</p>
+  				<p style="color:red;">Test Mode ver 0.1.4</p>
 		
 		</div>		
     
@@ -82,11 +83,13 @@
                 resizedContext.drawImage(origCanvas, 0, 0, width, height);
             } else {
                 // Portrait
-                var scale = height / width;
-                var scaledHeight = origCanvas.width * scale;
-                var scaledWidth = origCanvas.height * scale;
-                var marginLeft = (origCanvas.width - scaledWidth) / 2;
-                resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, scaledHeight);
+//                 var scale = height / width;
+//                 var scaledHeight = origCanvas.width * scale;
+//                 var scaledWidth = origCanvas.height * scale;
+//                 var marginLeft = (origCanvas.width - scaledWidth) / 2;
+//                 resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, scaledHeight);
+		     // Portrait 
+		    resizedContext.drawImage(origCanvas, 0, 0, height, width);
             }
 
             return resizedCanvas.toDataURL();
