@@ -349,7 +349,7 @@ var mobileConsole = (function () {
       margin: 0,
       border: '0 none',
       borderTop: '1px solid #808080',
-      backgroundColor: '#ffffff'
+      backgroundColor: 'transparent'
     }),
     topbar : createElem('div', 'topbar', {
       boxSizing: 'border-box',
@@ -362,7 +362,7 @@ var mobileConsole = (function () {
       overflow: 'hidden',
       webkitOverflowScrolling: 'touch',
       color: '#444444',
-      backgroundColor: '#f3f3f3',
+      backgroundColor: 'transparent',
       border: '0 none',
       borderTop: '1px solid #a3a3a3',
       borderBottom: '1px solid #a3a3a3',
@@ -439,7 +439,7 @@ var mobileConsole = (function () {
       padding: '2px 5px',
       textAlign: 'center',
       marginRight: '5px',
-      backgroundColor: '#333333',
+      backgroundColor: 'transparent',
       color: '#ffffff'
     }),
     button : createElem('button', 'button', {
@@ -513,7 +513,7 @@ var mobileConsole = (function () {
       left: 0,
       boxShadow: '1px 2px 5px rgba(0,0,0,0.1)',
       color: '#000000',
-      backgroundColor: '#FFFFFF',
+      backgroundColor: 'transparent',
       border: '1px solid #b5b5b5'
     }),
     autocompleteItem : createElem('a', 'autocompleteitem', {
