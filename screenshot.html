@@ -7,10 +7,11 @@
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
   <script>
-  window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
-  consoleLog(errorMsg, url, lineNumber); 
-}</script>
-  
+    window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+      consoleLog(errorMsg, url, lineNumber);
+    }
+  </script>
+
   <!--Merge Images -->
   <script src="https://unpkg.com/merge-images"></script>
 
@@ -19,7 +20,8 @@
 
   <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
   <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
-  
+  <!--   <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
+  <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
@@ -28,10 +30,7 @@
 
     <a-marker preset='custom' type='pattern' smooth='true' smoothCount='25' smoothTolerance='6' url='https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog1.patt' registerevents>
 
-      <a-entity 
-                rotation="-90 0 0" 
-                geometry="primitive:plane"
-                material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog600.gif); transparent: false; alphaTest: 0.5;">
+      <a-entity id="MainGIF" position="0 0.1 0" rotation="-90 0 0" geometry="primitive:plane" material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog600.gif); transparent: false; alphaTest: 0.5;">
       </a-entity>
 
     </a-marker>
@@ -44,8 +43,10 @@
 
     <button id="take_screenshot"> Screenshot</button>
     <button id="hideconsole"> Toggle Console</button>
+    <button id="minus"> Minus</button>
+    <button id="add"> Add</button>
     <a id="download-link"></a>
-    <p style="color:red;">Test Mode ver 0.1.1</p>
+    <p style="color:red;">Test Mode ver 0.1.4</p>
 
   </div>
   <div style='position: fixed; bottom: 120px; width:100%; text-align: center; z-index: 1;'>
@@ -59,8 +60,10 @@
 
 <script>
   
+  //GET ORIENTATION
   var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
 
+  //CREATE CUSTOM CONSOLE LOG
   function consoleLog(log) {
     var console = document.getElementById('log');
     if (console.value == '') {
@@ -91,7 +94,29 @@
     }
   }
   document.getElementById("hideconsole").addEventListener("click", ToggleConsole);
-
+  
+  //SIZING OF GIF
+  document.getElementById("minus").addEventListener("click", (e) => {
+   var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
+    var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
+    
+  document.querySelector('#MainGIF').setAttribute('geometry', {width : width - 0.1});
+document.querySelector('#MainGIF').setAttribute('geometry', {height : height- 0.1});
+    width = width - 0.1;
+    height = height - 0.1;
+    consoleLog(width);
+  });
+  document.getElementById("add").addEventListener("click", (e) => {
+   var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
+    var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
+    
+  document.querySelector('#MainGIF').setAttribute('geometry', {width : width + 0.1});
+document.querySelector('#MainGIF').setAttribute('geometry', {height : height + 0.1});
+    width = width + 0.1;
+    height = height + 0.1;
+    consoleLog(width);
+  });
+  //MARKER EVENTS
   var m = document.querySelector("a-marker")
   m.addEventListener("markerFound", (e) => {
     //console.log("found");
