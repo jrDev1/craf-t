@@ -1,239 +1,264 @@
 <html>
 
 <head>
-  <!--     <script src="https://jrdev1.github.io/craf-t/hnl.mobileConsole.js"></script> -->
-  <!--   <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
+    <!--     <script src="https://jrdev1.github.io/craf-t/hnl.mobileConsole.js"></script> -->
+    <!--   <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
 
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
-  <script>
-    window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
-      consoleLog(errorMsg, url, lineNumber);
-    }
-  </script>
+    <script>
+        window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+            consoleLog(errorMsg, url, lineNumber);
+        }
+    </script>
 
-  <!--Merge Images -->
-  <script src="https://unpkg.com/merge-images"></script>
+    <!--Merge Images -->
+    <script src="https://unpkg.com/merge-images"></script>
 
-  <!-- we import arjs version without NFT but with marker + location based support -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <!-- we import arjs version without NFT but with marker + location based support -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-  <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
-  <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
-  <!--   <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
-  <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+    <!--   <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
+    <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
 
-  <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
 
-    <a-marker id="MainMarker" preset='custom' type='pattern' smooth='true' smoothCount='25' smoothTolerance='6' url='https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog1.patt' registerevents>
+        <a-assets>
+            <img id="my-gif" src="https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog600.gif">
+        </a-assets>
 
-      <a-entity id="MainGIF"
-                rotation="-90 0 0" 
-                geometry="primitive:plane" 
-               material="shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog600.gif); transparent: false; alphaTest: 0.5;">
-      </a-entity>
+        <a-marker id="MainMarker" preset='custom' type='pattern' smooth='true' smoothCount='25' smoothTolerance='6' url='https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog1.patt' registerevents>
 
-    </a-marker>   
+            <a-entity id="MainGIF" rotation="-90 0 0" geometry="primitive:plane" material="shader:gif;src: #my-gif; transparent: false; alphaTest: 0.5;">
+            </a-entity>
 
-    <a-entity camera></a-entity>
+        </a-marker>
 
-  </a-scene>
+        <a-entity camera></a-entity>
 
-  <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+    </a-scene>
 
-    <button id="take_screenshot"> Screenshot</button>
-    <button id="hideconsole"> Toggle Console</button>
-    <button id="minus"> Minus</button>
-    <button id="add"> Add</button>
-    <a id="download-link"></a>
-    <p style="color:red;">Test Mode ver 0.1.4</p>
+    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
 
-  </div>
-  <div style='position: fixed; bottom: 120px; width:100%; text-align: center; z-index: 1;'>
-    <textarea id='log' rows=50 cols=60 autofocus readonly style='border-color:black; width:99%; display:none;'></textarea>
-    <div style='position: fixed; bottom: 100px; width:100%; text-align: center; z-index: 1; '>
-      <button id='clearbutton' style='float:right; display:none;'>Clear
-      </button>
+        <button id="take_screenshot"> Screenshot</button>
+        <button id="hideconsole"> Toggle Console</button>
+        <button id="minus"> Minus</button>
+        <button id="add"> Add</button>
+        <a id="download-link"></a>
+        <p style="color:red;">Test Mode ver 0.1.4</p>
+
+    </div>
+
+    <textarea id='log' rows=50 cols=60 autofocus readonly></textarea>
+    <div style='position: fixed; bottom: 105px; width:99%; text-align: center; z-index: 1; '>
+        <button id='clearbutton' style='float:right; display:none;'>Clear
+        </button>
     </div>
 
 </body>
 
 <script>
-  //GET ORIENTATION
-  var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
-  //CREATE CUSTOM CONSOLE LOG
-  function consoleLog(log) {
-    var console = document.getElementById('log');
-    if (console.value == '') {
-      console.value += log;
-      console.focus();
-    } else {
-      console.value += '\n' + log;
-      console.focus();
+    //GET ORIENTATION
+    var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
+    //CREATE CUSTOM CONSOLE LOG
+    function consoleLog(log) {
+        var console = document.getElementById('log');
+        if (console.value == '') {
+            console.value += log;
+            console.focus();
+        } else {
+            console.value += '\n' + log;
+            console.focus();
+        }
     }
-  }
-  document.getElementById("clearbutton").addEventListener("click", (e) => {
-    var console = document.getElementById('log');
-    console.value = '';
-  });
-  var consoleHidden = true;
-
-  function ToggleConsole() {
-    var console = document.getElementById("log");
-    var cb = document.getElementById("clearbutton");
-    if (consoleHidden) {
-      console.style.display = "block";
-      cb.style.display = "block";
-      consoleHidden = false;
-    } else {
-      console.style.display = "none";
-      cb.style.display = "none";
-      consoleHidden = true;
-    }
-  }
-  document.getElementById("hideconsole").addEventListener("click", ToggleConsole);
-  //SIZING OF GIF
-  document.getElementById("minus").addEventListener("click", (e) => {
-    var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
-    var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
-    document.querySelector('#MainGIF').setAttribute('geometry', {
-      width: width - 0.1
+    document.getElementById("clearbutton").addEventListener("click", (e) => {
+        var console = document.getElementById('log');
+        console.value = '';
     });
-    document.querySelector('#MainGIF').setAttribute('geometry', {
-      height: height - 0.1
-    });
-    width = width - 0.1;
-    height = height - 0.1;
-    consoleLog(width);
-  });
-  document.getElementById("add").addEventListener("click", (e) => {
-    var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
-    var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
-    document.querySelector('#MainGIF').setAttribute('geometry', {
-      width: width + 0.1
-    });
-    document.querySelector('#MainGIF').setAttribute('geometry', {
-      height: height + 0.1
-    });
-    width = width + 0.1;
-    height = height + 0.1;
-    consoleLog(width);
-  });
-  //MARKER EVENTS
-  document.querySelector("a-marker").addEventListener("markerFound", (e) => {
-    
-    consoleLog("found");
-    
-    if (orientation == -90 || orientation == 90) {
-      // Landscape
-      consoleLog(window.screen.width + " landscape " + window.screen.height + " orient " + orientation)
-    } else {
-      consoleLog(window.screen.width + " portrait " + window.screen.height + " orient " + orientation);
-    }
-   
-document.querySelector('#MainMarker').innerHTML = "<a-entity id='MainGIF' rotation='-90 0 0' geometry='primitive:plane' material='shader:gif;src:url(https://raw.githubusercontent.com/jrDev1/craf-t/master/FathersDayDog600.gif); transparent: false; alphaTest: 0.5;'></a-entity>"
+    var consoleHidden = true;
 
-  });
-
-  document.querySelector("a-marker").addEventListener("markerLost", (e) => {
-    
-    consoleLog("lost");
-    
-    if (orientation == -90 || orientation == 90) {
-      // Landscape
-      consoleLog(window.screen.width + " landscape " + window.screen.height)
-    } else {
-      consoleLog(window.screen.width + " portrait " + window.screen.height);
+    function ToggleConsole() {
+        var console = document.getElementById("log");
+        var cb = document.getElementById("clearbutton");
+        if (consoleHidden) {
+            console.style.display = "block";
+            cb.style.display = "block";
+            consoleHidden = false;
+        } else {
+            console.style.display = "none";
+            cb.style.display = "none";
+            consoleHidden = true;
+        }
     }
-    document.querySelector('#MainGIF').removeAttribute('material'); // remove it
-  })
-
-  function resizeCanvas(origCanvas, width, height) {
-    let resizedCanvas = document.createElement("canvas");
-    let resizedContext = resizedCanvas.getContext("2d");
-    resizedCanvas.height = height;
-    resizedCanvas.width = width;
-    consoleLog(width + " dimensions " + height);
-    if (orientation == -90 || orientation == 90) {
-      //if (width > height) {
-      // Landscape
-      resizedContext.drawImage(origCanvas, 0, 0, width, height);
-    } else {
-      // Portrait
-      var scale = height / width;
-      var scaledHeight = origCanvas.width * scale;
-      var scaledWidth = origCanvas.height * scale;
-      var marginLeft = (origCanvas.width - scaledWidth) / 2;
-      resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, scaledHeight);
-      consoleLog(scaledWidth + " " + scaledHeight);
-    }
-    return resizedCanvas.toDataURL();
-  }
-  document.getElementById("take_screenshot").addEventListener("click", Screenshot);
-
-  function Screenshot() {
-    document.querySelector('a-entity').pause();
-    var aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
-    var frame = captureVideoFrame("video", "png");
-    aScene = resizeCanvas(aScene, frame.width, frame.height);
-    frame = frame.dataUri;
-    mergeImages([frame, aScene]).then(b64 => {
-      var link = document.getElementById("download-link", "png");
-      link.setAttribute("download", "AR.png");
-      link.setAttribute("href", b64);
-      link.click();
-      document.querySelector('a-entity').play();
+    document.getElementById("hideconsole").addEventListener("click", ToggleConsole);
+    //SIZING OF GIF
+    document.getElementById("minus").addEventListener("click", (e) => {
+        var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
+        var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
+        document.querySelector('#MainGIF').setAttribute('geometry', {
+            width: width - 0.1
+        });
+        document.querySelector('#MainGIF').setAttribute('geometry', {
+            height: height - 0.1
+        });
+        width = width - 0.1;
+        height = height - 0.1;
+        consoleLog(width);
     });
-  }
-
-  function captureVideoFrame(video, format, width, height) {
-    if (typeof video === 'string') {
-      video = document.querySelector(video);
-      consoleLog('Video:' + video);
-    }
-    format = format || 'jpeg';
-    if (!video || (format !== 'png' && format !== 'jpeg')) {
-      return false;
-    }
-    var canvas = document.createElement("CANVAS");
-    canvas.width = width || video.videoWidth;
-    canvas.height = height || video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0);
-    var dataUri = canvas.toDataURL('image/' + format);
-    var data = dataUri.split(',')[1];
-    var mimeType = dataUri.split(';')[0].slice(5)
-    var bytes = window.atob(data);
-    var buf = new ArrayBuffer(bytes.length);
-    var arr = new Uint8Array(buf);
-    for (var i = 0; i < bytes.length; i++) {
-      arr[i] = bytes.charCodeAt(i);
-    }
-    var blob = new Blob([arr], {
-      type: mimeType
+    document.getElementById("add").addEventListener("click", (e) => {
+        var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
+        var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
+        document.querySelector('#MainGIF').setAttribute('geometry', {
+            width: width + 0.1
+        });
+        document.querySelector('#MainGIF').setAttribute('geometry', {
+            height: height + 0.1
+        });
+        width = width + 0.1;
+        height = height + 0.1;
+        consoleLog(width);
     });
-    return {
-      blob: blob,
-      dataUri: dataUri,
-      format: format,
-      width: canvas.width,
-      height: canvas.height
+    var markerChecked;
+    //MARKER EVENTS
+    document.querySelector("a-marker").addEventListener("markerFound", (e) => {
+        consoleLog("found");
+        console.log("found");
+        if (orientation == -90 || orientation == 90) {
+            // Landscape
+            consoleLog(window.screen.width + " landscape " + window.screen.height + " orient " + orientation)
+        } else {
+            consoleLog(window.screen.width + " portrait " + window.screen.height + " orient " + orientation);
+        }
+        markerChecked = true;
+        document.querySelector('#MainGIF').play();
+    });
+    document.querySelector("a-marker").addEventListener("markerLost", (e) => {
+        consoleLog("lost");
+        console.log("lost");
+        if (orientation == -90 || orientation == 90) {
+            // Landscape
+            consoleLog(window.screen.width + " landscape " + window.screen.height)
+        } else {
+            consoleLog(window.screen.width + " portrait " + window.screen.height);
+        }
+        //3 second timer
+        setTimeout(MarkerCheck, 3000);
+        markerChecked = false;
+        document.querySelector('#MainGIF').pause();
+        console.log("pause");
+    })
+
+    function MarkerCheck() {
+        console.log("marker checked");
+        if (markerChecked == false) {
+            //Restart GIF - Remove and Readd it
+            document.querySelector('#MainGIF').removeAttribute('material');
+            document.querySelector('#MainGIF').setAttribute('material', {
+                shader: "gif",
+                src: "#my-gif"
+            });
+            console.log("Checked");
+        }
+    }
+
+    function resizeCanvas(origCanvas, width, height) {
+        let resizedCanvas = document.createElement("canvas");
+        let resizedContext = resizedCanvas.getContext("2d");
+        resizedCanvas.height = height;
+        resizedCanvas.width = width;
+        consoleLog(width + " dimensions " + height);
+        if (orientation == -90 || orientation == 90) {
+            // Landscape
+            resizedContext.drawImage(origCanvas, 0, 0, width, height);
+        } else {
+            // Portrait
+            var scale = height / width;
+            var scaledHeight = origCanvas.width * scale;
+            var scaledWidth = origCanvas.height * scale;
+            var marginLeft = (origCanvas.width - scaledWidth) / 2;
+            resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, scaledHeight);
+            consoleLog(scaledWidth + " " + scaledHeight);
+        }
+        return resizedCanvas.toDataURL();
+    }
+    document.getElementById("take_screenshot").addEventListener("click", Screenshot);
+
+    function Screenshot() {
+        document.querySelector('#MainGIF').pause();
+        var aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
+        var frame = captureVideoFrame("video", "png");
+        aScene = resizeCanvas(aScene, frame.width, frame.height);
+        frame = frame.dataUri;
+        mergeImages([frame, aScene]).then(b64 => {
+            var link = document.getElementById("download-link", "png");
+            link.setAttribute("download", "AR.png");
+            link.setAttribute("href", b64);
+            link.click();
+            document.querySelector('#MainGIF').play();
+        });
+    }
+
+    function captureVideoFrame(video, format, width, height) {
+        if (typeof video === 'string') {
+            video = document.querySelector(video);
+            consoleLog('Video:' + video);
+        }
+        format = format || 'jpeg';
+        if (!video || (format !== 'png' && format !== 'jpeg')) {
+            return false;
+        }
+        var canvas = document.createElement("CANVAS");
+        canvas.width = width || video.videoWidth;
+        canvas.height = height || video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        var dataUri = canvas.toDataURL('image/' + format);
+        var data = dataUri.split(',')[1];
+        var mimeType = dataUri.split(';')[0].slice(5)
+        var bytes = window.atob(data);
+        var buf = new ArrayBuffer(bytes.length);
+        var arr = new Uint8Array(buf);
+        for (var i = 0; i < bytes.length; i++) {
+            arr[i] = bytes.charCodeAt(i);
+        }
+        var blob = new Blob([arr], {
+            type: mimeType
+        });
+        return {
+            blob: blob,
+            dataUri: dataUri,
+            format: format,
+            width: canvas.width,
+            height: canvas.height
+        };
     };
-  };
-  //       if (!mobileConsole.status.initialized) {
-  //     mobileConsole.init();
-  // }
+    //       if (!mobileConsole.status.initialized) {
+    //     mobileConsole.init();
+    // }
 </script>
 
 <style>
-  textarea {
-    width: 80%;
-    height: 100px;
-    resize: none;
-    position: fixed;
-  }
+    #log {
+        position: fixed;
+        width: 98%;
+        height: 120px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+        z-index: 1;
+        bottom: 2%;
+        left: 1%;
+        display: none;
+
+    }
 </style>
 
 </html>
