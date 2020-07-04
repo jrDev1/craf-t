@@ -1,6 +1,11 @@
 <html>
 
+<!-- Add the use of fonts from FontAwesome -->
+
 <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://raw.githack.com/l-lin/font-awesome-animation/master/dist/font-awesome-animation.min.css">
     <!--     <script src="https://jrdev1.github.io/craf-t/hnl.mobileConsole.js"></script> -->
     <!--   <script src="https://code.hnldesign.nl/hnl.mobileConsole.1.3.js?f004ea15"></script> -->
 
@@ -45,7 +50,10 @@
 
     <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
 
-        <button id="take_screenshot"> Screenshot</button>
+        <!--         <button id="take_screenshot"> Screenshot</button> -->
+
+        <a id="take_screenshot" class="faa-float animated btn-floating btn-lg"><i class="fas fa-camera"></i></a>
+        <a id="menu" class="faa-float animated btn-floating btn-lg "><i class="fas fa-bars "></i></a>
         <button id="hideconsole"> Toggle Console</button>
         <button id="minus"> Minus</button>
         <button id="add"> Add</button>
@@ -56,209 +64,272 @@
 
     <textarea id='log' rows=50 cols=60 autofocus readonly></textarea>
     <div style='position: fixed; bottom: 105px; width:99%; text-align: center; z-index: 1; '>
-        <button id='clearbutton' style='float:right; display:none;'>Clear
+        <button id='clearbutton' style='position: fixed;left: 94%; display:none;'>Clear
         </button>
     </div>
 
-</body>
+    <script>
+        //GET ORIENTATION
+        var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
+        //CREATE CUSTOM CONSOLE LOG
+        function consoleLog(log) {
+            var console = document.getElementById('log');
+            if (console.value == '') {
+                console.value += log;
+                console.focus();
+            } else {
+                console.value += '\n' + log;
+                console.focus();
+            }
+        }
+        document.getElementById("clearbutton").addEventListener("click", (e) => {
+            var console = document.getElementById('log');
+            console.value = '';
+        });
+        var consoleHidden = true;
 
-<script>
-    //GET ORIENTATION
-    var orientation = (screen.orientation || {}).type || screen.mozOrientation || screen.msOrientation;
-    //CREATE CUSTOM CONSOLE LOG
-    function consoleLog(log) {
-        var console = document.getElementById('log');
-        if (console.value == '') {
-            console.value += log;
-            console.focus();
-        } else {
-            console.value += '\n' + log;
-            console.focus();
+        function ToggleConsole() {
+            var console = document.getElementById("log");
+            var cb = document.getElementById("clearbutton");
+            if (consoleHidden) {
+                console.style.display = "block";
+                cb.style.display = "block";
+                consoleHidden = false;
+            } else {
+                console.style.display = "none";
+                cb.style.display = "none";
+                consoleHidden = true;
+            }
         }
-    }
-    document.getElementById("clearbutton").addEventListener("click", (e) => {
-        var console = document.getElementById('log');
-        console.value = '';
-    });
-    var consoleHidden = true;
-
-    function ToggleConsole() {
-        var console = document.getElementById("log");
-        var cb = document.getElementById("clearbutton");
-        if (consoleHidden) {
-            console.style.display = "block";
-            cb.style.display = "block";
-            consoleHidden = false;
-        } else {
-            console.style.display = "none";
-            cb.style.display = "none";
-            consoleHidden = true;
-        }
-    }
-    document.getElementById("hideconsole").addEventListener("click", ToggleConsole);
-    //SIZING OF GIF
-    document.getElementById("minus").addEventListener("click", (e) => {
-        var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
-        var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
-        document.querySelector('#MainGIF').setAttribute('geometry', {
-            width: width - 0.1
-        });
-        document.querySelector('#MainGIF').setAttribute('geometry', {
-            height: height - 0.1
-        });
-        width = width - 0.1;
-        height = height - 0.1;
-        consoleLog(width);
-    });
-    document.getElementById("add").addEventListener("click", (e) => {
-        var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
-        var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
-        document.querySelector('#MainGIF').setAttribute('geometry', {
-            width: width + 0.1
-        });
-        document.querySelector('#MainGIF').setAttribute('geometry', {
-            height: height + 0.1
-        });
-        width = width + 0.1;
-        height = height + 0.1;
-        consoleLog(width);
-    });
-    var markerChecked;
-    //MARKER EVENTS
-    document.querySelector("a-marker").addEventListener("markerFound", (e) => {
-        consoleLog("found");
-        console.log("found");
-        if (orientation == -90 || orientation == 90) {
-            // Landscape
-            consoleLog(window.screen.width + " landscape " + window.screen.height + " orient " + orientation)
-        } else {
-            consoleLog(window.screen.width + " portrait " + window.screen.height + " orient " + orientation);
-        }
-        markerChecked = true;
-        document.querySelector('#MainGIF').play();
-    });
-    document.querySelector("a-marker").addEventListener("markerLost", (e) => {
-        consoleLog("lost");
-        console.log("lost");
-        if (orientation == -90 || orientation == 90) {
-            // Landscape
-            consoleLog(window.screen.width + " landscape " + window.screen.height)
-        } else {
-            consoleLog(window.screen.width + " portrait " + window.screen.height);
-        }
-        //3 second timer
-        setTimeout(MarkerCheck, 3000);
-        markerChecked = false;
-        document.querySelector('#MainGIF').pause();
-        console.log("pause");
-    })
-
-    function MarkerCheck() {
-        console.log("marker checked");
-        if (markerChecked == false) {
-            //Restart GIF - Remove and Readd it
-            document.querySelector('#MainGIF').removeAttribute('material');
-            document.querySelector('#MainGIF').setAttribute('material', {
-                shader: "gif",
-                src: "#my-gif"
+        document.getElementById("hideconsole").addEventListener("click", ToggleConsole);
+        //SIZING OF GIF
+        document.getElementById("minus").addEventListener("click", (e) => {
+            var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
+            var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
+            document.querySelector('#MainGIF').setAttribute('geometry', {
+                width: width - 0.1
             });
-            console.log("Checked");
-        }
-    }
-
-    function resizeCanvas(origCanvas, width, height) {
-        let resizedCanvas = document.createElement("canvas");
-        let resizedContext = resizedCanvas.getContext("2d");
-        resizedCanvas.height = height;
-        resizedCanvas.width = width;
-        consoleLog(width + " dimensions " + height);
-        if (orientation == -90 || orientation == 90) {
-            // Landscape
-            resizedContext.drawImage(origCanvas, 0, 0, width, height);
-        } else {
-            // Portrait
-            var scale = height / width;
-            var scaledHeight = origCanvas.width * scale;
-            var scaledWidth = origCanvas.height * scale;
-            var marginLeft = (origCanvas.width - scaledWidth) / 2;
-            resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, scaledHeight);
-            consoleLog(scaledWidth + " " + scaledHeight);
-        }
-        return resizedCanvas.toDataURL();
-    }
-    document.getElementById("take_screenshot").addEventListener("click", Screenshot);
-
-    function Screenshot() {
-        document.querySelector('#MainGIF').pause();
-        var aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
-        var frame = captureVideoFrame("video", "png");
-        aScene = resizeCanvas(aScene, frame.width, frame.height);
-        frame = frame.dataUri;
-        mergeImages([frame, aScene]).then(b64 => {
-            var link = document.getElementById("download-link", "png");
-            link.setAttribute("download", "AR.png");
-            link.setAttribute("href", b64);
-            link.click();
+            document.querySelector('#MainGIF').setAttribute('geometry', {
+                height: height - 0.1
+            });
+            width = width - 0.1;
+            height = height - 0.1;
+            consoleLog(width);
+        });
+        document.getElementById("add").addEventListener("click", (e) => {
+            var width = document.querySelector('#MainGIF').getAttribute('geometry').width;
+            var height = document.querySelector('#MainGIF').getAttribute('geometry').height;
+            document.querySelector('#MainGIF').setAttribute('geometry', {
+                width: width + 0.1
+            });
+            document.querySelector('#MainGIF').setAttribute('geometry', {
+                height: height + 0.1
+            });
+            width = width + 0.1;
+            height = height + 0.1;
+            consoleLog(width);
+        });
+        var markerChecked;
+        //MARKER EVENTS
+        document.querySelector("a-marker").addEventListener("markerFound", (e) => {
+            consoleLog("found");
+            console.log("found");
+            if (orientation == -90 || orientation == 90) {
+                // Landscape
+                consoleLog(window.screen.width + " landscape " + window.screen.height + " orient " + orientation)
+            } else {
+                consoleLog(window.screen.width + " portrait " + window.screen.height + " orient " + orientation);
+            }
+            markerChecked = true;
             document.querySelector('#MainGIF').play();
         });
-    }
+        document.querySelector("a-marker").addEventListener("markerLost", (e) => {
+            consoleLog("lost");
+            console.log("lost");
+            if (orientation == -90 || orientation == 90) {
+                // Landscape
+                consoleLog(window.screen.width + " landscape " + window.screen.height)
+            } else {
+                consoleLog(window.screen.width + " portrait " + window.screen.height);
+            }
+            //3 second timer
+            setTimeout(MarkerCheck, 3000);
+            markerChecked = false;
+            document.querySelector('#MainGIF').pause();
+            console.log("pause");
+        })
 
-    function captureVideoFrame(video, format, width, height) {
-        if (typeof video === 'string') {
-            video = document.querySelector(video);
-            consoleLog('Video:' + video);
+        function MarkerCheck() {
+            console.log("marker checked");
+            if (markerChecked == false) {
+                //Restart GIF - Remove and Readd it
+                document.querySelector('#MainGIF').removeAttribute('material');
+                document.querySelector('#MainGIF').setAttribute('material', {
+                    shader: "gif",
+                    src: "#my-gif"
+                });
+                console.log("Checked");
+            }
         }
-        format = format || 'jpeg';
-        if (!video || (format !== 'png' && format !== 'jpeg')) {
-            return false;
+
+        function resizeCanvas(origCanvas, width, height) {
+            let resizedCanvas = document.createElement("canvas");
+            let resizedContext = resizedCanvas.getContext("2d");
+            resizedCanvas.height = height;
+            resizedCanvas.width = width;
+            consoleLog(width + " dimensions " + height);
+            if (orientation == -90 || orientation == 90) {
+                // Landscape
+                resizedContext.drawImage(origCanvas, 0, 0, width, height);
+            } else {
+                // Portrait
+                var scale = height / width;
+                var scaledHeight = origCanvas.width * scale;
+                var scaledWidth = origCanvas.height * scale;
+                var marginLeft = (origCanvas.width - scaledWidth) / 2;
+                resizedContext.drawImage(origCanvas, 0, 0, width, height);
+                consoleLog(width + " SCALED " + height);
+            }
+            return resizedCanvas.toDataURL();
         }
-        var canvas = document.createElement("CANVAS");
-        canvas.width = width || video.videoWidth;
-        canvas.height = height || video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        var dataUri = canvas.toDataURL('image/' + format);
-        var data = dataUri.split(',')[1];
-        var mimeType = dataUri.split(';')[0].slice(5)
-        var bytes = window.atob(data);
-        var buf = new ArrayBuffer(bytes.length);
-        var arr = new Uint8Array(buf);
-        for (var i = 0; i < bytes.length; i++) {
-            arr[i] = bytes.charCodeAt(i);
+        document.getElementById("take_screenshot").addEventListener("click", Screenshot);
+
+        function Screenshot() {
+            document.querySelector('#MainGIF').pause();
+            var aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
+            var frame = captureVideoFrame("video", "png");
+            aScene = resizeCanvas(aScene, frame.width, frame.height);
+            frame = frame.dataUri;
+            mergeImages([frame, aScene]).then(b64 => {
+                var link = document.getElementById("download-link", "png");
+                link.setAttribute("download", "AR.png");
+                link.setAttribute("href", b64);
+                window.open(link.getAttribute("href"));
+                //link.click();
+                document.querySelector('#MainGIF').play();
+            });
         }
-        var blob = new Blob([arr], {
-            type: mimeType
-        });
-        return {
-            blob: blob,
-            dataUri: dataUri,
-            format: format,
-            width: canvas.width,
-            height: canvas.height
+
+        function captureVideoFrame(video, format, width, height) {
+            if (typeof video === 'string') {
+                video = document.querySelector(video);
+                consoleLog('Video:' + video);
+            }
+            format = format || 'jpeg';
+            if (!video || (format !== 'png' && format !== 'jpeg')) {
+                return false;
+            }
+            var canvas = document.createElement("CANVAS");
+            canvas.width = width || video.videoWidth;
+            canvas.height = height || video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            var dataUri = canvas.toDataURL('image/' + format);
+            var data = dataUri.split(',')[1];
+            var mimeType = dataUri.split(';')[0].slice(5)
+            var bytes = window.atob(data);
+            var buf = new ArrayBuffer(bytes.length);
+            var arr = new Uint8Array(buf);
+            for (var i = 0; i < bytes.length; i++) {
+                arr[i] = bytes.charCodeAt(i);
+            }
+            var blob = new Blob([arr], {
+                type: mimeType
+            });
+            return {
+                blob: blob,
+                dataUri: dataUri,
+                format: format,
+                width: canvas.width,
+                height: canvas.height
+            };
         };
-    };
-    //       if (!mobileConsole.status.initialized) {
-    //     mobileConsole.init();
-    // }
-</script>
+        //       if (!mobileConsole.status.initialized) {
+        //     mobileConsole.init();
+        // }
+    </script>
 
-<style>
-    #log {
-        position: fixed;
-        width: 98%;
-        height: 120px;
-        padding: 12px 20px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-        font-size: 16px;
-        resize: none;
-        z-index: 1;
-        bottom: 2%;
-        left: 1%;
-        display: none;
+    <style>
+        #log {
+            position: fixed;
+            width: 98%;
+            height: 120px;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+            z-index: 1;
+            bottom: 2%;
+            left: 1%;
+            display: none;
 
-    }
-</style>
+        }
+
+        #take_screenshot {
+            background-color: red;
+            border: 2px solid white;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 26px;
+            margin: 4px 2px;
+            width: 30px;
+            border-radius: 50%;
+            text-shadow: 1px 1px black;
+            transition-duration: 0.2s;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #take_screenshot:hover {
+            background-color: white;
+            color: red;
+            border: 2px solid red;
+            text-shadow: 1px 1px black;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transform: translateY(2px);
+            animation-play-state: paused;
+        }
+
+        #take_screenshot:active {
+            background-color: white;
+            color: red;
+            border: 2px solid red;
+            text-shadow: 1px 1px black;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transform: translateY(2px);
+            animation-play-state: play;
+        }
+
+        #menu {
+            background-color: blue;
+            border: 2px solid white;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 26px;
+            margin: 4px 2px;
+            width: 30px;
+            border-radius: 50%;
+            text-shadow: 1px 1px black;
+            transition-duration: 0.2s;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #menu:hover {
+            background-color: white;
+            color: blue;
+            border: 2px solid blue;
+            text-shadow: 1px 1px black;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transform: translateY(2px);
+            animation-play-state: paused;
+        }
+    </style>
 
 </html>
