@@ -58,7 +58,7 @@
         <button id="minus"> Minus</button>
         <button id="add"> Add</button>
         <a id="download-link"></a>
-        <p style="color:red;">Test Mode ver 0.1.1</p>
+        <p style="color:red;">Test Mode ver 0.1.2</p>
 
     </div>
 
@@ -183,12 +183,12 @@
                 resizedContext.drawImage(origCanvas, 0, 0, width, height);
             } else {
                 // Portrait
-                var scale = height / width;
-                var scaledHeight = origCanvas.width * scale;
-                var scaledWidth = origCanvas.height * scale;
-                var marginLeft = (origCanvas.width - scaledWidth) / 2;
-                resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, scaledHeight);
-                consoleLog(width + " SCALED " + height);
+                var scale = width / height;
+                var scaledHeight = width * scale;
+                var scaledWidth = height * scale;
+                var marginLeft = (width - scaledWidth) / 2;
+     resizedContext.drawImage(origCanvas, 0, 0, scaledWidth, scaledHeight);
+                consoleLog("MARGIN- " + marginLeft + " NORMAL- " + width + " " + height + " SCALED- "  + scaledWidth + " " + scaledHeight + " " + scale);
             }
             return resizedCanvas.toDataURL();
         }
@@ -204,7 +204,7 @@
                 var link = document.getElementById("download-link", "png");
                 link.setAttribute("download", "AR.png");
                 link.setAttribute("href", b64);
-                window.open(link.getAttribute("href"));
+                //window.open(link.getAttribute("href"));
                 //link.click();
                 document.querySelector('#MainGIF').play();
             });
