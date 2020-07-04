@@ -183,11 +183,11 @@
                 resizedContext.drawImage(origCanvas, 0, 0, width, height);
             } else {
                 // Portrait
-                var scale = width / height;
+                var scale = height / width;
                 var scaledHeight = width * scale;
                 var scaledWidth = height * scale;
                 var marginLeft = (width - scaledWidth) / 2;
-     resizedContext.drawImage(origCanvas, 0, 0, scaledWidth, scaledHeight);
+                resizedContext.drawImage(origCanvas, marginLeft, 0, width, height);
                 consoleLog("MARGIN- " + marginLeft + " NORMAL- " + width + " " + height + " SCALED- "  + scaledWidth + " " + scaledHeight + " " + scale);
             }
             return resizedCanvas.toDataURL();
@@ -204,7 +204,7 @@
                 var link = document.getElementById("download-link", "png");
                 link.setAttribute("download", "AR.png");
                 link.setAttribute("href", b64);
-                window.open(link.getAttribute("href"));
+                //window.open(link.getAttribute("href"));
                 //link.click();
                 document.querySelector('#MainGIF').play();
             });
