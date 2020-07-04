@@ -58,7 +58,7 @@
         <button id="minus"> Minus</button>
         <button id="add"> Add</button>
         <a id="download-link"></a>
-        <p style="color:red;">Test Mode ver 0.1.4</p>
+        <p style="color:red;">Test Mode ver 0.1.5</p>
 
     </div>
 
@@ -204,7 +204,7 @@
                 var link = document.getElementById("download-link", "png");
                 link.setAttribute("download", "AR.png");
                 link.setAttribute("href", b64);
-                //window.open(link.getAttribute("href"));
+                window.open(link.getAttribute("href"));
                 //link.click();
                 document.querySelector('#MainGIF').play();
             });
