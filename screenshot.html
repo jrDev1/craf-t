@@ -58,7 +58,7 @@
         <button id="minus"> Minus</button>
         <button id="add"> Add</button>
         <a id="download-link"></a>
-        <p style="color:red;">Test Mode ver 0.1.2</p>
+        <p style="color:red;">Test Mode ver 0.1.3</p>
 
     </div>
 
@@ -187,7 +187,7 @@
                 var scaledHeight = width * scale;
                 var scaledWidth = height * scale;
                 var marginLeft = (width - height);
-                resizedContext.drawImage(origCanvas, marginLeft, 0, scaledWidth, height);
+                resizedContext.drawImage(origCanvas, -180, 0, scaledWidth, height);
                 consoleLog("MARGIN- " + marginLeft + " NORMAL- " + width + " " + height + " SCALED- "  + scaledWidth + " " + scaledHeight + " " + scale);
             }
             return resizedCanvas.toDataURL();
