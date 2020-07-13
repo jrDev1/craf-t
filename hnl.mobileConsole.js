@@ -352,22 +352,22 @@ var mobileConsole = (function () {
 //       backgroundColor: '#ffffff'
     }),
     topbar : createElem('div', 'topbar', {
-//       boxSizing: 'border-box',
-//       position: 'absolute',
-//       height: '28px',
-//       left: 0,
-//       right: 0,
-//       display: 'block',
-//       padding: '0 2px',
-//       overflow: 'hidden',
-//       webkitOverflowScrolling: 'touch',
-//       color: '#444444',
-//       backgroundColor: '#f3f3f3',
-//       border: '0 none',
-//       borderTop: '1px solid #a3a3a3',
-//       borderBottom: '1px solid #a3a3a3',
-//       whiteSpace: 'nowrap',
-//       overflowX: 'auto'
+      boxSizing: 'border-box',
+      position: 'absolute',
+      height: '28px',
+      left: 0,
+      right: 0,
+      display: 'block',
+      padding: '0 2px',
+      overflow: 'hidden',
+      webkitOverflowScrolling: 'touch',
+      color: '#444444',
+      backgroundColor: '#f3f3f3',
+      border: '0 none',
+      borderTop: '1px solid #a3a3a3',
+      borderBottom: '1px solid #a3a3a3',
+      whiteSpace: 'nowrap',
+      overflowX: 'auto'
     }),
     scrollcontainer : createElem('div', 'scroller', {
       boxSizing: 'border-box',
@@ -399,7 +399,7 @@ var mobileConsole = (function () {
       marginTop: options.browserinfo.isMobile ? '8px' : '4px',
       tableLayout: 'auto',
       maxWidth: '100%',
-//       color: '#333333'
+      color: '#333333'
     }),
     tr : createElem('tr', 'table_row', {
       verticalAlign: 'top'
@@ -439,8 +439,8 @@ var mobileConsole = (function () {
       padding: '2px 5px',
       textAlign: 'center',
       marginRight: '5px',
-//       backgroundColor: '#333333',
-//       color: '#ffffff'
+      backgroundColor: '#333333',
+      color: '#ffffff'
     }),
     button : createElem('button', 'button', {
       display: 'inline-block',
