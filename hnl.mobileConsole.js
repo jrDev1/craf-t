@@ -334,7 +334,7 @@ var mobileConsole = (function () {
     lines: [],
     acItems: [],
     base: createElem('div', 'base', {
-      boxSizing: 'border-box',
+//       boxSizing: 'border-box',
       position: 'fixed',
       resize: 'none',
       fontSize: '12px',
@@ -343,7 +343,7 @@ var mobileConsole = (function () {
       top: 'auto',
       right: 0,
       width: '100%',
-      zIndex: 10000,
+//       zIndex: 10000,
       padding: 0,
       paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
       margin: 0,
@@ -362,7 +362,7 @@ var mobileConsole = (function () {
       overflow: 'hidden',
       webkitOverflowScrolling: 'touch',
       color: '#444444',
-      backgroundColor: '#f3f3f3',
+//       backgroundColor: '#f3f3f3',
       border: '0 none',
       borderTop: '1px solid #a3a3a3',
       borderBottom: '1px solid #a3a3a3',
@@ -399,7 +399,7 @@ var mobileConsole = (function () {
       marginTop: options.browserinfo.isMobile ? '8px' : '4px',
       tableLayout: 'auto',
       maxWidth: '100%',
-      color: '#333333'
+//       color: '#333333'
     }),
     tr : createElem('tr', 'table_row', {
       verticalAlign: 'top'
@@ -439,8 +439,8 @@ var mobileConsole = (function () {
       padding: '2px 5px',
       textAlign: 'center',
       marginRight: '5px',
-      backgroundColor: '#333333',
-      color: '#ffffff'
+//       backgroundColor: '#333333',
+//       color: '#ffffff'
     }),
     button : createElem('button', 'button', {
       display: 'inline-block',
