@@ -335,39 +335,39 @@ var mobileConsole = (function () {
     acItems: [],
     base: createElem('div', 'base', {
 //       boxSizing: 'border-box',
-      position: 'fixed',
-      resize: 'none',
-      fontSize: '12px',
-      lineHeight: '14px',
-      bottom: 0,
-      top: 'auto',
-      right: 0,
-      width: '100%',
+//       position: 'fixed',
+//       resize: 'none',
+//       fontSize: '12px',
+//       lineHeight: '14px',
+//       bottom: 0,
+//       top: 'auto',
+//       right: 0,
+//       width: '100%',
 //       zIndex: 10000,
-      padding: 0,
-      paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
-      margin: 0,
-      border: '0 none',
-      borderTop: '1px solid #808080',
+//       padding: 0,
+//       paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
+//       margin: 0,
+//       border: '0 none',
+//       borderTop: '1px solid #808080',
 //       backgroundColor: '#ffffff'
     }),
     topbar : createElem('div', 'topbar', {
-      boxSizing: 'border-box',
-      position: 'absolute',
-      height: '28px',
-      left: 0,
-      right: 0,
-      display: 'block',
-      padding: '0 2px',
-      overflow: 'hidden',
-      webkitOverflowScrolling: 'touch',
-      color: '#444444',
+//       boxSizing: 'border-box',
+//       position: 'absolute',
+//       height: '28px',
+//       left: 0,
+//       right: 0,
+//       display: 'block',
+//       padding: '0 2px',
+//       overflow: 'hidden',
+//       webkitOverflowScrolling: 'touch',
+//       color: '#444444',
 //       backgroundColor: '#f3f3f3',
-      border: '0 none',
-      borderTop: '1px solid #a3a3a3',
-      borderBottom: '1px solid #a3a3a3',
-      whiteSpace: 'nowrap',
-      overflowX: 'auto'
+//       border: '0 none',
+//       borderTop: '1px solid #a3a3a3',
+//       borderBottom: '1px solid #a3a3a3',
+//       whiteSpace: 'nowrap',
+//       overflowX: 'auto'
     }),
     scrollcontainer : createElem('div', 'scroller', {
       boxSizing: 'border-box',
@@ -531,104 +531,104 @@ var mobileConsole = (function () {
 
   //shared functions
 
-  var setLineStyle = (function () {
-      var lineStyles = function (style) {
-        switch (style) {
-          case 'log':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#000000'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#8097bd'
-              }
-            };
-          case 'info':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#1f3dc4'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#367AB4'
-              }
-            };
-          case 'warn':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#CE8724',
-                backgroundColor : '#fff6e0'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#e8a400'
-              }
-            };
-          case 'error':
-          case 'table':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#FF0000',
-                backgroundColor :  '#ffe5e5'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#FF0000'
-              }
-            };
-          case 'assert':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#FF0000',
-                backgroundColor :  '#ffe5e5'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#FF0000'
-              }
-            };
-          case 'trace':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#000000'
-              },
-              dot : {
-                //will not happen
-              }
-            };
-          case 'time':
-          case 'timeEnd':
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#0000ff'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#0000ff'
-              }
-            };
-          default:
-            return {
-              text : {
-                borderBottom: '1px solid #DDDDDD',
-                color: '#000000'
-              },
-              dot : {
-                color: '#FFFFFF',
-                backgroundColor: '#8097bd'
-              }
-            };
-        }
+//   var setLineStyle = (function () {
+//       var lineStyles = function (style) {
+//         switch (style) {
+//           case 'log':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#000000'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#8097bd'
+//               }
+//             };
+//           case 'info':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#1f3dc4'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#367AB4'
+//               }
+//             };
+//           case 'warn':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#CE8724',
+//                 backgroundColor : '#fff6e0'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#e8a400'
+//               }
+//             };
+//           case 'error':
+//           case 'table':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#FF0000',
+//                 backgroundColor :  '#ffe5e5'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#FF0000'
+//               }
+//             };
+//           case 'assert':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#FF0000',
+//                 backgroundColor :  '#ffe5e5'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#FF0000'
+//               }
+//             };
+//           case 'trace':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#000000'
+//               },
+//               dot : {
+//                 //will not happen
+//               }
+//             };
+//           case 'time':
+//           case 'timeEnd':
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#0000ff'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#0000ff'
+//               }
+//             };
+//           default:
+//             return {
+//               text : {
+//                 borderBottom: '1px solid #DDDDDD',
+//                 color: '#000000'
+//               },
+//               dot : {
+//                 color: '#FFFFFF',
+//                 backgroundColor: '#8097bd'
+//               }
+//             };
+//         }
 
-      };
+//       };
       var color, dot;
 
       return function (element, type, msg) {
