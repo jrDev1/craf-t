@@ -541,8 +541,8 @@ var mobileConsole = (function () {
                 color: '#000000'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#8097bd'
+                color: '#FFFFFF',
+                backgroundColor: '#8097bd'
               }
             };
           case 'info':
@@ -552,20 +552,20 @@ var mobileConsole = (function () {
                 color: '#1f3dc4'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#367AB4'
+                color: '#FFFFFF',
+                backgroundColor: '#367AB4'
               }
             };
           case 'warn':
             return {
               text : {
                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#CE8724',
-//                 backgroundColor : '#fff6e0'
+                color: '#CE8724',
+                backgroundColor : '#fff6e0'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#e8a400'
+                color: '#FFFFFF',
+                backgroundColor: '#e8a400'
               }
             };
           case 'error':
@@ -573,31 +573,31 @@ var mobileConsole = (function () {
             return {
               text : {
                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#FF0000',
-//                 backgroundColor :  '#ffe5e5'
+                color: '#FF0000',
+                backgroundColor :  '#ffe5e5'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#FF0000'
+                color: '#FFFFFF',
+                backgroundColor: '#FF0000'
               }
             };
           case 'assert':
             return {
               text : {
                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#FF0000',
-//                 backgroundColor :  '#ffe5e5'
+                color: '#FF0000',
+                backgroundColor :  '#ffe5e5'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#FF0000'
+                color: '#FFFFFF',
+                backgroundColor: '#FF0000'
               }
             };
           case 'trace':
             return {
               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#000000'
+                borderBottom: '1px solid #DDDDDD',
+                color: '#000000'
               },
               dot : {
                 //will not happen
@@ -607,23 +607,23 @@ var mobileConsole = (function () {
           case 'timeEnd':
             return {
               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#0000ff'
+                borderBottom: '1px solid #DDDDDD',
+                color: '#0000ff'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#0000ff'
+                color: '#FFFFFF',
+                backgroundColor: '#0000ff'
               }
             };
           default:
             return {
               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#000000'
+                borderBottom: '1px solid #DDDDDD',
+                color: '#000000'
               },
               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#8097bd'
+                color: '#FFFFFF',
+                backgroundColor: '#8097bd'
               }
             };
         }
