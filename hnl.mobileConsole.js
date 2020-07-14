@@ -343,7 +343,7 @@ var mobileConsole = (function () {
 //       top: 'auto',
 //       right: 0,
 //       width: '100%',
-//       zIndex: 10000,
+//        : 10000,
 //       padding: 0,
 //       paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
 //       margin: 0,
@@ -735,13 +735,13 @@ var mobileConsole = (function () {
     }
     function attach(console) {
       document.body.appendChild(console);
-      setCSS(elements.topbar, {
-        top: -Math.abs(elements.topbar.offsetHeight) + 'px'
-      });
+//       setCSS(elements.topbar, {
+//         top: -Math.abs(elements.topbar.offsetHeight) + 'px'
+//       });
       var existingPadding = isNaN(parseInt(document.body.style.paddingBottom, 10)) ? 0 : parseInt(document.body.style.paddingBottom, 10);
-      setCSS(document.body, {
-        paddingBottom: existingPadding + Math.abs(console.offsetHeight + elements.topbar.offsetHeight) + 'px'
-      });
+//       setCSS(document.body, {
+//         paddingBottom: existingPadding + Math.abs(console.offsetHeight + elements.topbar.offsetHeight) + 'px'
+//       });
       elements.scrollcontainer.scrollTop = elements.scrollcontainer.scrollHeight;
 
       return elements.base;
@@ -751,10 +751,10 @@ var mobileConsole = (function () {
       var logType = button.innerHTML.toLowerCase();
       var elems = elements.lines[logType], i = elems.length;
       button.toggled = (typeof button.toggled === 'undefined') ? true : !button.toggled;
-      setCSS(button, { opacity: (button.toggled) ? '0.5' : '' });
-      while (i--) {
-        setCSS(elems[i], { display: (button.toggled) ? 'none' : '' });
-      }
+//       setCSS(button, { opacity: (button.toggled) ? '0.5' : '' });
+//       while (i--) {
+//         setCSS(elems[i], { display: (button.toggled) ? 'none' : '' });
+//       }
       toggleScroll();
       button.blur();
       return button;
