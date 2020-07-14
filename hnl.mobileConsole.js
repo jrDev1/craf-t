@@ -405,31 +405,31 @@ var mobileConsole = (function () {
       verticalAlign: 'top'
     }),
     td : createElem('td', 'table_row', {
-      border: '0 none',
-      padding: '2px 4px',
-      verticalAlign: 'top'
+//       border: '0 none',
+//       padding: '2px 4px',
+//       verticalAlign: 'top'
     }),
     msgContainer : createElem('span', 'msgContainer', {
-      border: '0 none',
-      margin: 0,
-      display: 'inline',
-      overflow: 'hidden'
+//       border: '0 none',
+//       margin: 0,
+//       display: 'inline',
+//       overflow: 'hidden'
     }),
     tdLeft : createElem('td', 'table_row_data', {
-      border: '0 none',
-      textAlign: 'left',
-      padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px'
+//       border: '0 none',
+//       textAlign: 'left',
+//       padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px'
     }),
     tdRight : createElem('td', 'table_row_data', {
-      border: '0 none',
-      textAlign: 'left',
-      padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden'
+//       border: '0 none',
+//       textAlign: 'left',
+//       padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px',
+//       whiteSpace: 'nowrap',
+//       overflow: 'hidden'
     }),
     link : createElem('a', 'link', {
-      color: '#1155cc',
-      textDecoration: 'underline'
+//       color: '#1155cc',
+//       textDecoration: 'underline'
     }),
     dot : createElem('div', 'table_row_data_dot', {
 //       display: 'inline',
@@ -735,9 +735,9 @@ var mobileConsole = (function () {
     }
     function attach(console) {
       document.body.appendChild(console);
-//       setCSS(elements.topbar, {
-//         top: -Math.abs(elements.topbar.offsetHeight) + 'px'
-//       });
+      setCSS(elements.topbar, {
+        top: -Math.abs(elements.topbar.offsetHeight) + 'px'
+      });
       var existingPadding = isNaN(parseInt(document.body.style.paddingBottom, 10)) ? 0 : parseInt(document.body.style.paddingBottom, 10);
 //       setCSS(document.body, {
 //         paddingBottom: existingPadding + Math.abs(console.offsetHeight + elements.topbar.offsetHeight) + 'px'
@@ -751,10 +751,10 @@ var mobileConsole = (function () {
       var logType = button.innerHTML.toLowerCase();
       var elems = elements.lines[logType], i = elems.length;
       button.toggled = (typeof button.toggled === 'undefined') ? true : !button.toggled;
-//       setCSS(button, { opacity: (button.toggled) ? '0.5' : '' });
-//       while (i--) {
-//         setCSS(elems[i], { display: (button.toggled) ? 'none' : '' });
-//       }
+      setCSS(button, { opacity: (button.toggled) ? '0.5' : '' });
+      while (i--) {
+        setCSS(elems[i], { display: (button.toggled) ? 'none' : '' });
+      }
       toggleScroll();
       button.blur();
       return button;
