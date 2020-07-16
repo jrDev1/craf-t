@@ -334,195 +334,195 @@ var mobileConsole = (function () {
     lines: [],
     acItems: [],
     base: createElem('div', 'base', {
-//       boxSizing: 'border-box',
-//       position: 'fixed',
-//       resize: 'none',
-//       fontSize: '12px',
-//       lineHeight: '14px',
-//       bottom: 0,
-//       top: 'auto',
-//       right: 0,
-//       width: '100%',
-//        : 10000,
-//       padding: 0,
-//       paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
-//       margin: 0,
-//       border: '0 none',
-//       borderTop: '1px solid #808080',
-//       backgroundColor: '#ffffff'
+      boxSizing: 'border-box',
+      position: 'fixed',
+      resize: 'none',
+      fontSize: '12px',
+      lineHeight: '14px',
+      bottom: 0,
+      top: 'auto',
+      right: 0,
+      width: '100%',
+       : 10000,
+      padding: 0,
+      paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
+      margin: 0,
+      border: '0 none',
+      borderTop: '1px solid #808080',
+      backgroundColor: '#ffffff'
     }),
     topbar : createElem('div', 'topbar', {
-//       boxSizing: 'border-box',
-//       position: 'absolute',
-//       height: '28px',
-//       left: 0,
-//       right: 0,
-//       display: 'block',
-//       padding: '0 2px',
-//       overflow: 'hidden',
-//       webkitOverflowScrolling: 'touch',
-//       color: '#444444',
-//       backgroundColor: '#f3f3f3',
-//       border: '0 none',
-//       borderTop: '1px solid #a3a3a3',
-//       borderBottom: '1px solid #a3a3a3',
-//       whiteSpace: 'nowrap',
-//       overflowX: 'auto'
+      boxSizing: 'border-box',
+      position: 'absolute',
+      height: '28px',
+      left: 0,
+      right: 0,
+      display: 'block',
+      padding: '0 2px',
+      overflow: 'hidden',
+      webkitOverflowScrolling: 'touch',
+      color: '#444444',
+      backgroundColor: '#f3f3f3',
+      border: '0 none',
+      borderTop: '1px solid #a3a3a3',
+      borderBottom: '1px solid #a3a3a3',
+      whiteSpace: 'nowrap',
+      overflowX: 'auto'
     }),
     scrollcontainer : createElem('div', 'scroller', {
-//       boxSizing: 'border-box',
-//       border: '0 none',
-//       fontFamily: 'Consolas, monaco, monospace',
-//       position: 'relative',
-//       display: 'block',
-//       height: getMaxHeight() + 'px',
-//       overflow: 'auto',
-//       webkitOverflowScrolling: 'touch',
-//       '-webkit-transition': options.animParams,
-//       '-moz-transition': options.animParams,
-//       '-o-transition': options.animParams,
-//       'transition': options.animParams
+      boxSizing: 'border-box',
+      border: '0 none',
+      fontFamily: 'Consolas, monaco, monospace',
+      position: 'relative',
+      display: 'block',
+      height: getMaxHeight() + 'px',
+      overflow: 'auto',
+      webkitOverflowScrolling: 'touch',
+      '-webkit-transition': options.animParams,
+      '-moz-transition': options.animParams,
+      '-o-transition': options.animParams,
+      'transition': options.animParams
     }),
     table : createElem('table', 'table', {
-//       border: '0 none',
-//       margin: 0,
-//       position: 'relative',
-//       tableLayout: 'auto',
-//       width: '100%',
-//       borderCollapse: 'collapse'
+      border: '0 none',
+      margin: 0,
+      position: 'relative',
+      tableLayout: 'auto',
+      width: '100%',
+      borderCollapse: 'collapse'
     }),
     stackTraceTable : createElem('table', 'stackTraceTable', {
-//       border: '0 none',
-//       margin: 0,
-//       display: 'none',
-//       marginLeft: '10px',
-//       marginTop: options.browserinfo.isMobile ? '8px' : '4px',
-//       tableLayout: 'auto',
-//       maxWidth: '100%',
-//       color: '#333333'
+      border: '0 none',
+      margin: 0,
+      display: 'none',
+      marginLeft: '10px',
+      marginTop: options.browserinfo.isMobile ? '8px' : '4px',
+      tableLayout: 'auto',
+      maxWidth: '100%',
+      color: '#333333'
     }),
     tr : createElem('tr', 'table_row', {
       verticalAlign: 'top'
     }),
     td : createElem('td', 'table_row', {
-//       border: '0 none',
-//       padding: '2px 4px',
-//       verticalAlign: 'top'
+      border: '0 none',
+      padding: '2px 4px',
+      verticalAlign: 'top'
     }),
     msgContainer : createElem('span', 'msgContainer', {
-//       border: '0 none',
-//       margin: 0,
-//       display: 'inline',
-//       overflow: 'hidden'
+      border: '0 none',
+      margin: 0,
+      display: 'inline',
+      overflow: 'hidden'
     }),
     tdLeft : createElem('td', 'table_row_data', {
-//       border: '0 none',
-//       textAlign: 'left',
-//       padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px'
+      border: '0 none',
+      textAlign: 'left',
+      padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px'
     }),
     tdRight : createElem('td', 'table_row_data', {
-//       border: '0 none',
-//       textAlign: 'left',
-//       padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px',
-//       whiteSpace: 'nowrap',
-//       overflow: 'hidden'
+      border: '0 none',
+      textAlign: 'left',
+      padding: options.browserinfo.isMobile ? '8px 12px' : '4px 8px',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden'
     }),
     link : createElem('a', 'link', {
-//       color: '#1155cc',
-//       textDecoration: 'underline'
+      color: '#1155cc',
+      textDecoration: 'underline'
     }),
     dot : createElem('div', 'table_row_data_dot', {
-//       display: 'inline',
-//       borderRadius: '50%',
-//       fontSize: '80%',
-//       fontWeight: 'bold',
-//       padding: '2px 5px',
-//       textAlign: 'center',
-//       marginRight: '5px',
-//       backgroundColor: '#333333',
-//       color: '#ffffff'
+      display: 'inline',
+      borderRadius: '50%',
+      fontSize: '80%',
+      fontWeight: 'bold',
+      padding: '2px 5px',
+      textAlign: 'center',
+      marginRight: '5px',
+      backgroundColor: '#333333',
+      color: '#ffffff'
     }),
     button : createElem('button', 'button', {
-//       display: 'inline-block',
-//       fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
-//       fontWeight: 'normal',
-//       textTransform: 'capitalize',
-//       fontSize: '12px',
-//       lineHeight: '26px',
-//       height: '26px',
-//       padding: '0 8px',
-//       margin: 0,
-//       textAlign: 'center',
-//       marginRight: '5px',
-//       border: '0 none',
-//       backgroundColor: 'transparent',
-//       color: 'inherit',
-//       cursor: 'pointer'
+      display: 'inline-block',
+      fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
+      fontWeight: 'normal',
+      textTransform: 'capitalize',
+      fontSize: '12px',
+      lineHeight: '26px',
+      height: '26px',
+      padding: '0 8px',
+      margin: 0,
+      textAlign: 'center',
+      marginRight: '5px',
+      border: '0 none',
+      backgroundColor: 'transparent',
+      color: 'inherit',
+      cursor: 'pointer'
     }),
     buttons : {
     },
     input : createElem('div', 'input', {
-//       boxSizing: 'border-box',
-//       height: options.browserinfo.isMobile ? '35px' : '29px',
-//       fontFamily: 'Consolas, monaco, monospace',
-//       position: 'absolute',
-//       bottom: 0,
-//       left: 0,
-//       right: 0,
-//       margin: 0,
-//       border: '0 none',
-//       borderTop: '1px solid #EEEEEE'
+      boxSizing: 'border-box',
+      height: options.browserinfo.isMobile ? '35px' : '29px',
+      fontFamily: 'Consolas, monaco, monospace',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      margin: 0,
+      border: '0 none',
+      borderTop: '1px solid #EEEEEE'
     }),
     gt : createElem('DIV', 'gt', {
-//       position: 'absolute',
-//       bottom: 0,
-//       width: '25px',
-//       lineHeight: options.browserinfo.isMobile ? '34px' : '28px',
-//       height: options.browserinfo.isMobile ? '34px' : '28px',
-//       textAlign: 'center',
-//       fontSize: '16px',
-//       fontFamily: 'Consolas, monaco, monospace',
-//       fontWeight: 'bold',
-//       color: '#3577B1',
-//       zIndex: 2
+      position: 'absolute',
+      bottom: 0,
+      width: '25px',
+      lineHeight: options.browserinfo.isMobile ? '34px' : '28px',
+      height: options.browserinfo.isMobile ? '34px' : '28px',
+      textAlign: 'center',
+      fontSize: '16px',
+      fontFamily: 'Consolas, monaco, monospace',
+      fontWeight: 'bold',
+      color: '#3577B1',
+      zIndex: 2
     }),
     consoleinput : createElem('input', 'consoleinput', {
-//       boxSizing: 'border-box',
-//       position: 'absolute',
-//       bottom: 0,
-//       width : '100%',
-//       fontSize: options.browserinfo.isMobile ? '16px' : 'inherit', //prevents ios safari's zoom on focus
-//       fontFamily: 'Consolas, monaco, monospace',
-//       paddingLeft: '25px',
-//       margin: 0,
-//       height: options.browserinfo.isMobile ? '35px' : '25px',
-//       border: '0 none',
-//       outline: 'none',
-//       outlineWidth: 0,
-//       boxShadow: 'none',
-//       '-moz-appearance': 'none',
-//       '-webkit-appearance': 'none',
-//       backgroundColor: 'transparent',
-//       color: '#000000',
-//       zIndex: 1
+      boxSizing: 'border-box',
+      position: 'absolute',
+      bottom: 0,
+      width : '100%',
+      fontSize: options.browserinfo.isMobile ? '16px' : 'inherit', //prevents ios safari's zoom on focus
+      fontFamily: 'Consolas, monaco, monospace',
+      paddingLeft: '25px',
+      margin: 0,
+      height: options.browserinfo.isMobile ? '35px' : '25px',
+      border: '0 none',
+      outline: 'none',
+      outlineWidth: 0,
+      boxShadow: 'none',
+      '-moz-appearance': 'none',
+      '-webkit-appearance': 'none',
+      backgroundColor: 'transparent',
+      color: '#000000',
+      zIndex: 1
     }),
     autocomplete : createElem('div', 'autocomplete', {
-//       display: 'none',
-//       position: 'absolute',
-//       bottom: options.browserinfo.isMobile ? '35px' : '28px',
-//       left: 0,
-//       boxShadow: '1px 2px 5px rgba(0,0,0,0.1)',
-//       color: '#000000',
-//       backgroundColor: '#FFFFFF',
-//       border: '1px solid #b5b5b5'
+      display: 'none',
+      position: 'absolute',
+      bottom: options.browserinfo.isMobile ? '35px' : '28px',
+      left: 0,
+      boxShadow: '1px 2px 5px rgba(0,0,0,0.1)',
+      color: '#000000',
+      backgroundColor: '#FFFFFF',
+      border: '1px solid #b5b5b5'
     }),
     autocompleteItem : createElem('a', 'autocompleteitem', {
-//       display: 'block',
-//       textDecoration: 'none',
-//       fontSize: options.browserinfo.isMobile ? '16px' : 'inherit',
-//       padding: '5px 8px',
-//       wordWrap: 'break-word',
-//       whiteSpace: 'nowrap'
+      display: 'block',
+      textDecoration: 'none',
+      fontSize: options.browserinfo.isMobile ? '16px' : 'inherit',
+      padding: '5px 8px',
+      wordWrap: 'break-word',
+      whiteSpace: 'nowrap'
     }),
     arrowUp: '<img width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAACVBMVEUAAAD///93d3eMZ/YKAAAAAnRSTlMAAHaTzTgAAAAdSURBVHgBY2CEAAYgYAJiEMXEBKHADCYIgKmD0QAFdAA2OHJXEwAAAABJRU5ErkJggg==">',
     arrowDown: '<img width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVR42mNgwAfKy8v/48I4FeA0AacVDFQBAP9wJkE/KhUMAAAAAElFTkSuQmCC">',
@@ -533,100 +533,100 @@ var mobileConsole = (function () {
 
   var setLineStyle = (function () {
       var lineStyles = function (style) {
-//         switch (style) {
-//           case 'log':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#000000'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#8097bd'
-//               }
-//             };
-//           case 'info':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#1f3dc4'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#367AB4'
-//               }
-//             };
-//           case 'warn':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#CE8724',
-//                 backgroundColor : '#fff6e0'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#e8a400'
-//               }
-//             };
-//           case 'error':
-//           case 'table':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#FF0000',
-//                 backgroundColor :  '#ffe5e5'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#FF0000'
-//               }
-//             };
-//           case 'assert':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#FF0000',
-//                 backgroundColor :  '#ffe5e5'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#FF0000'
-//               }
-//             };
-//           case 'trace':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#000000'
-//               },
-//               dot : {
-//                 //will not happen
-//               }
-//             };
-//           case 'time':
-//           case 'timeEnd':
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#0000ff'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#0000ff'
-//               }
-//             };
-//           default:
-//             return {
-//               text : {
-//                 borderBottom: '1px solid #DDDDDD',
-//                 color: '#000000'
-//               },
-//               dot : {
-//                 color: '#FFFFFF',
-//                 backgroundColor: '#8097bd'
-//               }
-//             };
-//         }
+        switch (style) {
+          case 'log':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#000000'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#8097bd'
+              }
+            };
+          case 'info':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#1f3dc4'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#367AB4'
+              }
+            };
+          case 'warn':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#CE8724',
+                backgroundColor : '#fff6e0'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#e8a400'
+              }
+            };
+          case 'error':
+          case 'table':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#FF0000',
+                backgroundColor :  '#ffe5e5'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#FF0000'
+              }
+            };
+          case 'assert':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#FF0000',
+                backgroundColor :  '#ffe5e5'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#FF0000'
+              }
+            };
+          case 'trace':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#000000'
+              },
+              dot : {
+                //will not happen
+              }
+            };
+          case 'time':
+          case 'timeEnd':
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#0000ff'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#0000ff'
+              }
+            };
+          default:
+            return {
+              text : {
+                borderBottom: '1px solid #DDDDDD',
+                color: '#000000'
+              },
+              dot : {
+                color: '#FFFFFF',
+                backgroundColor: '#8097bd'
+              }
+            };
+        }
 
       };
       var color, dot;
@@ -739,9 +739,9 @@ var mobileConsole = (function () {
         top: -Math.abs(elements.topbar.offsetHeight) + 'px'
       });
       var existingPadding = isNaN(parseInt(document.body.style.paddingBottom, 10)) ? 0 : parseInt(document.body.style.paddingBottom, 10);
-//       setCSS(document.body, {
-//         paddingBottom: existingPadding + Math.abs(console.offsetHeight + elements.topbar.offsetHeight) + 'px'
-//       });
+      setCSS(document.body, {
+        paddingBottom: existingPadding + Math.abs(console.offsetHeight + elements.topbar.offsetHeight) + 'px'
+      });
       elements.scrollcontainer.scrollTop = elements.scrollcontainer.scrollHeight;
 
       return elements.base;
