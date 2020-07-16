@@ -787,6 +787,7 @@ var mobileConsole = (function () {
     }
     //init
     function init() {
+      consoleLog(width);
       var element = assemble();
       docReady(function () {
         setBinds();
