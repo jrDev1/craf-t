@@ -177,51 +177,51 @@
 //       }
 //     }
 
-//     function readyStateChange() {
-//       if (document.readyState === 'complete') {
-//         ready();
-//       }
-//     }
+    function readyStateChange() {
+      if (document.readyState === 'complete') {
+        ready();
+      }
+    }
 
-//     // This is the one public interface
-//     // docReady(fn, context);
-//     // the context argument is optional - if present, it will be passed
-//     // as an argument to the callback
-//     baseObj[funcName] = function (callback, context) {
-//       // if ready has already fired, then just schedule the callback
-//       // to fire asynchronously, but right away
-//       if (readyFired) {
-//         setTimeout(function () {callback(context); }, 1);
-//         return;
-//       }
-//       // add the function and context to the list
-//       readyList.push({fn: callback, ctx: context});
-//       // if document already ready to go, schedule the ready function to run
-//       if (document.readyState === 'complete') {
-//         setTimeout(ready, 1);
-//       } else if (!readyEventHandlersInstalled) {
-//         // otherwise if we don't have event handlers installed, install them
-//         if (document.addEventListener) {
-//           // first choice is DOMContentLoaded event
-//           document.addEventListener('DOMContentLoaded', ready, false);
-//           // backup is window load event
-//           window.addEventListener('load', ready, false);
-//         } else {
-//           // must be IE
-//           document.attachEvent('onreadystatechange', readyStateChange);
-//           window.attachEvent('onload', ready);
-//         }
-//         readyEventHandlersInstalled = true;
-//       }
-//     };
-//   }('docReady', window));
-// }
-// 
-// //define console variable
-// var console = window.console;
+    // This is the one public interface
+    // docReady(fn, context);
+    // the context argument is optional - if present, it will be passed
+    // as an argument to the callback
+    baseObj[funcName] = function (callback, context) {
+      // if ready has already fired, then just schedule the callback
+      // to fire asynchronously, but right away
+      if (readyFired) {
+        setTimeout(function () {callback(context); }, 1);
+        return;
+      }
+      // add the function and context to the list
+      readyList.push({fn: callback, ctx: context});
+      // if document already ready to go, schedule the ready function to run
+      if (document.readyState === 'complete') {
+        setTimeout(ready, 1);
+      } else if (!readyEventHandlersInstalled) {
+        // otherwise if we don't have event handlers installed, install them
+        if (document.addEventListener) {
+          // first choice is DOMContentLoaded event
+          document.addEventListener('DOMContentLoaded', ready, false);
+          // backup is window load event
+          window.addEventListener('load', ready, false);
+        } else {
+          // must be IE
+          document.attachEvent('onreadystatechange', readyStateChange);
+          window.attachEvent('onload', ready);
+        }
+        readyEventHandlersInstalled = true;
+      }
+    };
+  }('docReady', window));
+}
 
-// var mobileConsole = (function () {
-//   'use strict';
+//define console variable
+var console = window.console;
+
+var mobileConsole = (function () {
+  'use strict';
 
   //options and other variable containers
   var options = {
