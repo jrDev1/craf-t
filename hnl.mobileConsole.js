@@ -16,166 +16,166 @@
 
 //Polyfills
 
-//Date.now polyfill
-// if (!Date.now) {
-//   Date.now = function now() {
-//     return new Date().getTime();
-//   };
-// }
-// //Array.isArray polyfill
-// if (typeof Array.isArray === 'undefined') {
-//   Array.isArray = function(obj) {
-//     return Object.prototype.toString.call(obj) === '[object Array]';
-//   };
-// }
-// //Array.filter polyfill
-// if (!Array.prototype.filter) {
-//   Array.prototype.filter = function(fun/*, thisArg*/) {
-//     if (this === void 0 || this === null) {
-//       throw new TypeError();
-//     }
-//     var t = Object(this);
-//     var len = t.length >>> 0;
-//     if (typeof fun !== 'function') {
-//       throw new TypeError();
-//     }
-//     var res = [];
-//     var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-//     for (var i = 0; i < len; i++) {
-//       if (i in t) {
-//         var val = t[i];
-//         if (fun.call(thisArg, val, i, t)) {
-//           res.push(val);
-//         }
-//       }
-//     }
+Date.now polyfill
+if (!Date.now) {
+  Date.now = function now() {
+    return new Date().getTime();
+  };
+}
+//Array.isArray polyfill
+if (typeof Array.isArray === 'undefined') {
+  Array.isArray = function(obj) {
+    return Object.prototype.toString.call(obj) === '[object Array]';
+  };
+}
+//Array.filter polyfill
+if (!Array.prototype.filter) {
+  Array.prototype.filter = function(fun/*, thisArg*/) {
+    if (this === void 0 || this === null) {
+      throw new TypeError();
+    }
+    var t = Object(this);
+    var len = t.length >>> 0;
+    if (typeof fun !== 'function') {
+      throw new TypeError();
+    }
+    var res = [];
+    var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+    for (var i = 0; i < len; i++) {
+      if (i in t) {
+        var val = t[i];
+        if (fun.call(thisArg, val, i, t)) {
+          res.push(val);
+        }
+      }
+    }
 
-//     return res;
-//   };
-// }
-// //Function.bind polyfill
-// if (!Function.prototype.bind) {
-//   Function.prototype.bind = function(oThis) {
-//     if (typeof this !== 'function') {
-//       // closest thing possible to the ECMAScript 5
-//       // internal IsCallable function
-//       throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
-//     }
-//     var aArgs   = Array.prototype.slice.call(arguments, 1),
-//       fToBind = this,
-//       fNOP    = function() {},
-//       fBound  = function() {
-//         return fToBind.apply(this instanceof fNOP
-//           ? this
-//           : oThis,
-//           aArgs.concat(Array.prototype.slice.call(arguments)));
-//       };
-//     if (this.prototype) {
-//       // Function.prototype doesn't have a prototype property
-//       fNOP.prototype = this.prototype;
-//     }
-//     fBound.prototype = new fNOP();
-//     return fBound;
-//   };
-// }
-// //Array.prototype.indexOf polyfill
-// // Production steps of ECMA-262, Edition 5, 15.4.4.14
-// // Referentie: http://es5.github.io/#x15.4.4.14
-// if (!Array.prototype.indexOf) {
-//   Array.prototype.indexOf = function(searchElement, fromIndex) {
-//     var k;
-//     if (this == null) {
-//       throw new TypeError('"this" is null or not defined');
-//     }
-//     var o = Object(this);
-//     var len = o.length >>> 0;
-//     if (len === 0) {
-//       return -1;
-//     }
-//     var n = +fromIndex || 0;
-//     if (Math.abs(n) === Infinity) {
-//       n = 0;
-//     }
-//     if (n >= len) {
-//       return -1;
-//     }
-//     k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-//     while (k < len) {
-//       if (k in o && o[k] === searchElement) {
-//         return k;
-//       }
-//       k++;
-//     }
-//     return -1;
-//   };
-// }
-// //String.prototype.trim polyfill
-// if (!String.prototype.trim) {
-//   String.prototype.trim = function () {
-//     return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-//   };
-// }
-// //Array.prototype.map polyfill
-// // Production steps of ECMA-262, Edition 5, 15.4.4.19
-// // Reference: http://es5.github.io/#x15.4.4.19
-// if (!Array.prototype.map) {
-//   Array.prototype.map = function(callback/*, thisArg*/) {
-//     var T, A, k;
-//     if (this == null) {
-//       throw new TypeError('this is null or not defined');
-//     }
-//     var O = Object(this);
-//     var len = O.length >>> 0;
-//     if (typeof callback !== 'function') {
-//       throw new TypeError(callback + ' is not a function');
-//     }
-//     if (arguments.length > 1) {
-//       T = arguments[1];
-//     }
-//     A = new Array(len);
-//     k = 0;
-//     while (k < len) {
-//       var kValue, mappedValue;
-//       if (k in O) {
-//         kValue = O[k];
-//         mappedValue = callback.call(T, kValue, k, O);
-//         A[k] = mappedValue;
-//       }
-//       k++;
-//     }
-//     return A;
-//   };
-// }
+    return res;
+  };
+}
+//Function.bind polyfill
+if (!Function.prototype.bind) {
+  Function.prototype.bind = function(oThis) {
+    if (typeof this !== 'function') {
+      // closest thing possible to the ECMAScript 5
+      // internal IsCallable function
+      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+    }
+    var aArgs   = Array.prototype.slice.call(arguments, 1),
+      fToBind = this,
+      fNOP    = function() {},
+      fBound  = function() {
+        return fToBind.apply(this instanceof fNOP
+          ? this
+          : oThis,
+          aArgs.concat(Array.prototype.slice.call(arguments)));
+      };
+    if (this.prototype) {
+      // Function.prototype doesn't have a prototype property
+      fNOP.prototype = this.prototype;
+    }
+    fBound.prototype = new fNOP();
+    return fBound;
+  };
+}
+//Array.prototype.indexOf polyfill
+// Production steps of ECMA-262, Edition 5, 15.4.4.14
+// Referentie: http://es5.github.io/#x15.4.4.14
+if (!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function(searchElement, fromIndex) {
+    var k;
+    if (this == null) {
+      throw new TypeError('"this" is null or not defined');
+    }
+    var o = Object(this);
+    var len = o.length >>> 0;
+    if (len === 0) {
+      return -1;
+    }
+    var n = +fromIndex || 0;
+    if (Math.abs(n) === Infinity) {
+      n = 0;
+    }
+    if (n >= len) {
+      return -1;
+    }
+    k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+    while (k < len) {
+      if (k in o && o[k] === searchElement) {
+        return k;
+      }
+      k++;
+    }
+    return -1;
+  };
+}
+//String.prototype.trim polyfill
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+  };
+}
+//Array.prototype.map polyfill
+// Production steps of ECMA-262, Edition 5, 15.4.4.19
+// Reference: http://es5.github.io/#x15.4.4.19
+if (!Array.prototype.map) {
+  Array.prototype.map = function(callback/*, thisArg*/) {
+    var T, A, k;
+    if (this == null) {
+      throw new TypeError('this is null or not defined');
+    }
+    var O = Object(this);
+    var len = O.length >>> 0;
+    if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' is not a function');
+    }
+    if (arguments.length > 1) {
+      T = arguments[1];
+    }
+    A = new Array(len);
+    k = 0;
+    while (k < len) {
+      var kValue, mappedValue;
+      if (k in O) {
+        kValue = O[k];
+        mappedValue = callback.call(T, kValue, k, O);
+        A[k] = mappedValue;
+      }
+      k++;
+    }
+    return A;
+  };
+}
 
-// // DocReady - Fires supplied function when document is ready
-// if (typeof 'docReady' !== 'function') {
-//   (function (funcName, baseObj) {
-//     // The public function name defaults to window.docReady
-//     // but you can pass in your own object and own function name and those will be used
-//     // if you want to put them in a different namespace
-//     funcName = funcName || 'docReady';
-//     baseObj = baseObj || window;
-//     var i, len, readyList = [], readyFired = false, readyEventHandlersInstalled = false;
+// DocReady - Fires supplied function when document is ready
+if (typeof 'docReady' !== 'function') {
+  (function (funcName, baseObj) {
+    // The public function name defaults to window.docReady
+    // but you can pass in your own object and own function name and those will be used
+    // if you want to put them in a different namespace
+    funcName = funcName || 'docReady';
+    baseObj = baseObj || window;
+    var i, len, readyList = [], readyFired = false, readyEventHandlersInstalled = false;
 
-//     // call this when the document is ready
-//     // this function protects itself against being called more than once
-//     function ready() {
-//       if (!readyFired) {
-//         // this must be set to true before we start calling callbacks
-//         readyFired = true;
-//         for (i = 0, len = readyList.length; i < len; i = i + 1) {
-//           // if a callback here happens to add new ready handlers,
-//           // the docReady() function will see that it already fired
-//           // and will schedule the callback to run right after
-//           // this event loop finishes so all handlers will still execute
-//           // in order and no new ones will be added to the readyList
-//           // while we are processing the list
-//           readyList[i].fn.call(window, readyList[i].ctx);
-//         }
-//         // allow any closures held by these functions to free
-//         readyList = [];
-//       }
-//     }
+    // call this when the document is ready
+    // this function protects itself against being called more than once
+    function ready() {
+      if (!readyFired) {
+        // this must be set to true before we start calling callbacks
+        readyFired = true;
+        for (i = 0, len = readyList.length; i < len; i = i + 1) {
+          // if a callback here happens to add new ready handlers,
+          // the docReady() function will see that it already fired
+          // and will schedule the callback to run right after
+          // this event loop finishes so all handlers will still execute
+          // in order and no new ones will be added to the readyList
+          // while we are processing the list
+          readyList[i].fn.call(window, readyList[i].ctx);
+        }
+        // allow any closures held by these functions to free
+        readyList = [];
+      }
+    }
 
     function readyStateChange() {
       if (document.readyState === 'complete') {
