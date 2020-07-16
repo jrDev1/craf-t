@@ -336,22 +336,22 @@ var mobileConsole = (function () {
     lines: [],
     acItems: [],
     base: createElem('div', 'base', {
-//       boxSizing: 'border-box',
-//       position: 'fixed',
-//       resize: 'none',
-//       fontSize: '12px',
-//       lineHeight: '14px',
-//       bottom: 0,
-//       top: 'auto',
-//       right: 0,
-//       width: '100%',
-//       zIndex: 10000,
-//       padding: 0,
-//       paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
-//       margin: 0,
-//       border: '0 none',
-//       borderTop: '1px solid #808080',
-//       backgroundColor: '#ffffff'
+      boxSizing: 'border-box',
+      position: 'fixed',
+      resize: 'none',
+      fontSize: '12px',
+      lineHeight: '14px',
+      bottom: 0,
+      top: 'auto',
+      right: 0,
+      width: '100%',
+      zIndex: 10000,
+      padding: 0,
+      paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
+      margin: 0,
+      border: '0 none',
+      borderTop: '1px solid #808080',
+      backgroundColor: '#ffffff'
     }),
     topbar : createElem('div', 'topbar', {
       boxSizing: 'border-box',
@@ -1420,7 +1420,7 @@ var mobileConsole = (function () {
     }
     //init
     function init() {
-//       assemble();
+      assemble();
       setBinds();
       return {
         //nothing  to expose
@@ -1448,7 +1448,7 @@ var mobileConsole = (function () {
         }
         if (!consoleElement && mobileConsole) {
           //creates the new HTML console element and attaches it to document
-          consoleElement =  initConsoleElement();
+//           consoleElement =  initConsoleElement();
         }
         if (!commandLine && consoleElement && mobileConsole) {
           //creates an HTML commandline and attaches it to existing console element
