@@ -1420,7 +1420,7 @@ var mobileConsole = (function () {
     }
     //init
     function init() {
-      assemble();
+//       assemble();
       setBinds();
       return {
         //nothing  to expose
