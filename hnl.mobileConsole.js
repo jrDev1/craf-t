@@ -16,7 +16,7 @@
 
 //Polyfills
 
-Date.now polyfill
+//Date.now polyfill
 if (!Date.now) {
   Date.now = function now() {
     return new Date().getTime();
