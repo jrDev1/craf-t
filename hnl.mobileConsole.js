@@ -1448,7 +1448,7 @@ var mobileConsole = (function () {
         }
         if (!consoleElement && mobileConsole) {
           //creates the new HTML console element and attaches it to document
-//           consoleElement =  initConsoleElement();
+          consoleElement =  initConsoleElement();
         }
         if (!commandLine && consoleElement && mobileConsole) {
           //creates an HTML commandline and attaches it to existing console element
