@@ -350,8 +350,8 @@ var mobileConsole = (function () {
       paddingBottom: options.browserinfo.isMobile ? '35px' : '25px',
       margin: 0,
       border: '0 none',
-      borderTop: '1px solid #808080'
-
+      borderTop: '1px solid #808080',
+      backgroundColor: '#ffffff'
     }),
     topbar : createElem('div', 'topbar', {
       boxSizing: 'border-box',
