@@ -287,21 +287,21 @@
 //   // reference variables
 //   mobileConsole, consoleElement, commandLine;
 
-//   //helpers for all sub functions
-//   function setCSS(el, css) {
-//     var i;
-//     for (i in css) {
-//       if (css.hasOwnProperty(i)) {
-//         el.style[i] = css[i];
-//       }
-//     }
-//     return el;
-//   }
-//   function htmlToString(html) {
-//     var string;
-//     try { string = String(html); } catch(e) { string = JSON.stringify(html); } //this should be done differently, but works for now
-//     return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/ /g, '\u00a0').replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
-//   }
+  //helpers for all sub functions
+  function setCSS(el, css) {
+    var i;
+    for (i in css) {
+      if (css.hasOwnProperty(i)) {
+        el.style[i] = css[i];
+      }
+    }
+    return el;
+  }
+  function htmlToString(html) {
+    var string;
+    try { string = String(html); } catch(e) { string = JSON.stringify(html); } //this should be done differently, but works for now
+    return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/ /g, '\u00a0').replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
+  }
   function createElem(type, className, css) {
     if (!type) { return; }
     var element = setCSS(document.createElement(type), css);
