@@ -351,8 +351,7 @@ var mobileConsole = (function () {
       margin: 0,
       border: '0 none',
       borderTop: '1px solid #808080'
-//       ,
-//       backgroundColor: '#ffffff'
+
     }),
     topbar : createElem('div', 'topbar', {
       boxSizing: 'border-box',
