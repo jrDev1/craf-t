@@ -302,34 +302,34 @@
 //     try { string = String(html); } catch(e) { string = JSON.stringify(html); } //this should be done differently, but works for now
 //     return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/ /g, '\u00a0').replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
 //   }
-//   function createElem(type, className, css) {
-//     if (!type) { return; }
-//     var element = setCSS(document.createElement(type), css);
-//     if (className) { element.className = options.baseClass + className; }
-//     return setCSS(element, css);
-//   }
-//   function storeCommand(command) {
-//     if (history) {
-//       history.input.commands.push(encodeURI(command.trim()));
-//       history.input.commandIdx = history.input.commands.length;
-//       if (window.sessionStorage) { sessionStorage.setItem('mobileConsoleCommandHistory', JSON.stringify(history.input.commands)); }
-//     }
-//   }
-//   function valBetween(val, min, max) {
-//     return (Math.min(max, Math.max(min, val)));
-//   }
-//   function getMaxHeight() {
-//     return valBetween(Math.floor((window.innerHeight || document.documentElement.clientHeight) * options.ratio), 55, 300);
-//   }
-//   function getClass(item) {
-//     var returnVal = '';
-//     if (item && item.constructor) {
-//       returnVal = item.constructor.name;
-//     } else {
-//       returnVal = Object.prototype.toString.call(item);
-//     }
-//     return String(returnVal);
-//   }
+  function createElem(type, className, css) {
+    if (!type) { return; }
+    var element = setCSS(document.createElement(type), css);
+    if (className) { element.className = options.baseClass + className; }
+    return setCSS(element, css);
+  }
+  function storeCommand(command) {
+    if (history) {
+      history.input.commands.push(encodeURI(command.trim()));
+      history.input.commandIdx = history.input.commands.length;
+      if (window.sessionStorage) { sessionStorage.setItem('mobileConsoleCommandHistory', JSON.stringify(history.input.commands)); }
+    }
+  }
+  function valBetween(val, min, max) {
+    return (Math.min(max, Math.max(min, val)));
+  }
+  function getMaxHeight() {
+    return valBetween(Math.floor((window.innerHeight || document.documentElement.clientHeight) * options.ratio), 55, 300);
+  }
+  function getClass(item) {
+    var returnVal = '';
+    if (item && item.constructor) {
+      returnVal = item.constructor.name;
+    } else {
+      returnVal = Object.prototype.toString.call(item);
+    }
+    return String(returnVal);
+  }
 
   // elements
   var elements = {
