@@ -1,1 +1,112 @@
 
+<html>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, shrink-to-fit=no,user-scalable=no,minimal-ui,viewport-fit=cover">
+
+<head>
+
+    <link rel="stylesheet" media="all and (orientation:portrait)" href="portrait.css">
+    <link rel="stylesheet" media="all and (orientation:landscape)" href="landscape.css">
+    <!-- Add Quick Animations for buttons plugin-->
+    <link rel="stylesheet" href="https://raw.githack.com/l-lin/font-awesome-animation/master/dist/font-awesome-animation.min.css">
+
+    <!-- FOR CODEPEN TESTING -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <!-- Add Font Awesome Icons plugin-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css">
+
+    <!-- Add Fast Click plugin to prevent delays it click on mobile -->
+    <script src="https://raw.githack.com/ftlabs/fastclick/master/lib/fastclick.js"></script>
+
+    <!-- PREVENT SCROLLING -->
+    <script src="https://raw.githack.com/willmcpo/body-scroll-lock/master/lib/bodyScrollLock.js"></script>
+
+    <!-- we import arjs version without NFT but with marker + location based support -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script>
+        window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+            consoleLog(errorMsg, url, lineNumber);
+        }
+    </script>
+    <!--Merge Images -->
+    <script src="https://unpkg.com/merge-images"></script>
+
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+
+    <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script>
+</head>
+
+<body id="Main" onload="Init()">
+
+    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+
+        <a-assets>
+            <img id="dog-gif" src="https://media.giphy.com/media/hDymuEvXXBIuA/giphy.gif">
+        </a-assets>
+
+        <a-marker id="MainMarker" preset='custom' type='pattern' smooth='true' smoothCount='0.1' smoothTolerance='0.1' smoothThreshold='0.2' url='https://raw.githubusercontent.com/jrDev1/craf-t/master/ItsMyBirthday.patt' registerevents>
+
+
+            <a-entity id="MainGIF" rotation="-90 0 0" geometry="primitive:plane" material="shader:gif;src:#dog-gif;" gif="">
+                </entity>
+
+        </a-marker>
+
+        <a-entity camera></a-entity>
+
+    </a-scene>
+    <!-- Setup the Main Menu -->
+    <div id="mainMenu" class="main-menu">
+
+        <!--Show the Main Menu button with floating animation -->
+        <a class="faa-float animated floating-btn" onclick="MainClick();">
+            <i id="menu" class="fa fa-plus"></i>
+        </a>
+
+        <!--Setup Main Menu buttons -->
+        <menu class="main-menu-options">
+            <a href="#" id="share" class="menu-item fas fa-share-square" onclick="shareClick();"></a>
+            <a href="#" id="camera" class="menu-item fas fa-camera" onclick="Screenshot();"></a>
+            <a href="#" id="cart" class="menu-item fas fa-cart-plus"></a>
+        </menu>
+
+        <!--     Setup Share Menu buttons -->
+        <menu id="shareMenu" class="share-menu-options">
+            <a href=" #" id="download-share" class="share-menu-item fas fa-download"></a>
+            <a href="sms:?&body=Check%20out%20my%20smARtee%20pic!%20Get%20your%20own%20smARtee%20from%3A%20https%3A%2F%2Fcraf-t.us%2Fcreations%2FsmARtee" id="sms-share" class="share-menu-item fas fa-sms"></a>
+            <a href=" #" id="instagram-share" class="share-menu-item fab fa-instagram"></a>
+            <a href="#" id="facebook-share" class="share-menu-item fab fa-facebook-square"></a>
+            <a href="#" id="twitter-share" class="share-menu-item fab fa-twitter-square"></a>
+
+        </menu>
+
+    </div>
+
+    <!-- Setup the Social Menu -->
+    <div id="socialMenu" class="social-menu">
+
+        <a class="faa-float animated floating-btn" onclick="socialMenu();">
+            <i class="fas fa-comments"></i>
+        </a>
+
+        <menu class="main-menu-options">
+            <a href="#" class="menu-item fab fa-facebook"></a>
+            <a href="#" class="menu-item fab fa-twitter"></a>
+            <a href="#" class="menu-item"><i class="fab fa-instagram-square"></i></a>
+            <a href="#" class="menu-item fas fa-at"></a>
+        </menu>
+
+    </div>
+
+    <script>
+        
+    </script>
+
+    <style>
+        
+    </style>
+
+</html>
