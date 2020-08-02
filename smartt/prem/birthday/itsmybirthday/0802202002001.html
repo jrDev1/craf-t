@@ -102,11 +102,955 @@
     </div>
 
     <script>
-        
+        // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav).
+// Specifically, the target element is the one we would like to allow scroll on (NOT a parent of that element).
+// This is also the element to apply the CSS '-webkit-overflow-scrolling: touch;' if desired.
+const targetElement = document.querySelector("#Main");
+
+// 2. ...in some event handler after showing the target element...disable body scroll
+bodyScrollLock.disableBodyScroll(targetElement);
+
+//Hide the Download Button on default
+var theDownload = document.getElementById("download-share");
+theDownload.style.display = "none";
+
+var scrollingElement = document.scrollingElement || document.body;
+scrollingElement.scrollTop = 1000;
+
+//Prevent finger zooming
+document.addEventListener(
+    "touchmove",
+    function (e) {
+        e.preventDefault();
+    },
+    { passive: false }
+);
+//Hide the Social Menu if Main Menu is opened
+function MainClick() {
+    //Toggle the state of the Main Menu Button
+    document.getElementById("mainMenu").classList.toggle("active");
+    var theDownload = document.getElementById("download-share");
+    var theShare = document.getElementById("share");
+    var theMenu = document.getElementById("menu");
+
+    //If the Download Button is showing
+    if (theDownload.style.display != "none") {
+        //Close the Share Menu
+        //CHANGE MENU BUTTON BACK TO PLUS BUTTON
+        theMenu.className = "fa fa-plus";
+        theMenu.style.transform = "rotate(-45deg)";
+        document.getElementById("shareMenu").classList.remove("active");
+        document.getElementById("mainMenu").classList.add("active");
+
+        shareClick();
+    } else {
+        //Reset to no transition delay
+        document.getElementById("share").style.transitionDelay = "0s";
+        document.getElementById("cart").style.transitionDelay = "0s";
+        document.getElementById("camera").style.transitionDelay = "0s";
+
+        if (
+            document.getElementById("mainMenu").classList.contains("active") ==
+            false
+        ) {
+            theMenu.style.transform = "rotate(0deg)";
+        } else {
+            theMenu.style.transform = "rotate(-45deg)";
+        }
+    }
+
+    //Show the share button
+    theShare.style.visibility = "visible";
+
+    //Close the Social Menu
+    document.getElementById("socialMenu").classList.remove("active");
+}
+//Hide the Social Menu if Main Menu is opened
+function shareClick() {
+    document.getElementById("cart").style.transitionDelay = "0.2s";
+    document.getElementById("camera").style.transitionDelay = "0.25s";
+    var theShare = document.getElementById("share");
+    var theDownload = document.getElementById("download-share");
+    var theMenu = document.getElementById("menu");
+    if (theDownload.style.display === "none") {
+        document.getElementById("shareMenu").classList.add("active");
+        theDownload.style.display = "block";
+
+        theShare.style.visibility = "hidden";
+        //CHANGE MENU BUTTON TO WINDOW CLOSE BUTTON
+        theMenu.className = "fas fa-window-close";
+        theMenu.style.transform = "rotate(-90deg)";
+    } else {
+        theDownload.style.display = "none";
+    }
+    var theCart = document.getElementById("cart");
+    if (theCart.className == "menu-item fas fa-cart-plus") {
+        theCart.className = "";
+        //Set initial delay timing when opening share menu
+        document.getElementById("sms-share").style.transitionDelay = "0s";
+        document.getElementById("instagram-share").style.transitionDelay =
+            "0.05s";
+        document.getElementById("facebook-share").style.transitionDelay =
+            "0.1s";
+        document.getElementById("twitter-share").style.transitionDelay =
+            "0.15s";
+    } else {
+        theCart.className = "menu-item fas fa-cart-plus";
+        //Set delay timing when closing share menu
+        document.getElementById("share").style.transitionDelay = "0.25s";
+        document.getElementById("sms-share").style.transitionDelay = "0.2s";
+        document.getElementById("instagram-share").style.transitionDelay =
+            "0.15s";
+        document.getElementById("facebook-share").style.transitionDelay =
+            "0.1s";
+        document.getElementById("twitter-share").style.transitionDelay =
+            "0.05s";
+    }
+    var theCam = document.getElementById("camera");
+    if (theCam.className == "menu-item fas fa-camera") {
+        theCam.className = "";
+    } else {
+        theCam.className = "menu-item fas fa-camera";
+    }
+}
+
+function socialMenu() {
+    var theMenu = document.getElementById("menu");
+    document.getElementById("share").style.transitionDelay = "0s";
+    document.getElementById("cart").style.transitionDelay = "0s";
+    document.getElementById("camera").style.transitionDelay = "0s";
+    var theShare = document.getElementById("share");
+    theShare.style.display = "initial";
+
+    if (theDownload.style.display != "none") {
+        //Close the Share Menu
+        //CHANGE MENU BUTTON TO PLUS BUTTON
+        theMenu.className = "fa fa-plus";
+        theMenu.style.transform = "rotate(0deg)";
+        theDownload.style.display = "none";
+
+        document.getElementById("shareMenu").classList.remove("active");
+    } else {
+        theMenu.style.transform = "rotate(0deg)";
+    }
+    //Hide the Main Menu if Social Menu is opened
+    document.getElementById("mainMenu").classList.remove("active");
+
+    //Toggle t
+    document.getElementById("socialMenu").classList.toggle("active");
+    var theCart = document.getElementById("cart");
+    if (theCart.className == "menu-item fas fa-cart-plus") {
+        if (
+            document.getElementById("shareMenu").classList.contains("active") ==
+            true
+        ) {
+            theCart.className = "";
+        }
+    } else {
+        theCart.className = "menu-item fas fa-cart-plus";
+    }
+    var theCam = document.getElementById("camera");
+    if (theCam.className == "menu-item fas fa-camera") {
+        if (
+            document.getElementById("shareMenu").classList.contains("active") ==
+            true
+        ) {
+            theCam.className = "";
+        }
+    } else {
+        if (
+            document.getElementById("shareMenu").classList.contains("active") ==
+            false
+        ) {
+            theCam.className = "menu-item fas fa-camera";
+        }
+    }
+}
+
+function Init() {
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.1;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty("--vh", `${vh}%`);
+    
+    //FOR USING CODEPEN WINDOW VIEWPORT - REMOVE IN OFFICIAL
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    
+    if (typeof window.orientation === "undefined") {
+    }
+    if (Math.abs(window.orientation) === 90) {
+    } else if (Math.abs(window.orientation) === 0) {
+        // Portrait
+    }
+
+    isMobileDevice();
+}
+//Activate the Fast Click Plugin to prevent delays in buttons activating on click for mobile
+if ("addEventListener" in document) {
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+            FastClick.attach(document.body);
+        },
+        false
+    );
+}
+
+//Check if using mobile
+function isMobileDevice() {
+    return (
+        typeof window.orientation !== "undefined" ||
+        navigator.userAgent.indexOf("IEMobile") !== -1
+    );
+}
+function hasGetUserMedia() {
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+}
+
+if (hasGetUserMedia()) {
+    // Good to go!
+    // alert("getUserMedia() is supported by your browser");
+} else {
+    // alert("getUserMedia() is not supported by your browser");
+}
+function Screenshot() {
+    document.querySelector("#MainGIF").pause();
+    var aScene = document
+        .querySelector("a-scene")
+        .components.screenshot.getCanvas("perspective");
+    var frame = CaptureVideoFrame("video", "png");
+    aScene = resizeCanvas(aScene, frame.width, frame.height);
+    frame = frame.dataUri;
+    mergeImages([frame, aScene]).then((b64) => {
+        var link = document.getElementById("download-link", "png");
+        link.setAttribute("download", "AR.png");
+        link.setAttribute("href", b64);
+        //window.open(link.getAttribute("href"));
+        //link.click();
+        document.querySelector("#MainGIF").play();
+    });
+}
+
+function CaptureVideoFrame(video, format, width, height) {
+    if (typeof video === "string") {
+        video = document.querySelector(video);
+        consoleLog("Video:" + video);
+    }
+    format = format || "jpeg";
+    if (!video || (format !== "png" && format !== "jpeg")) {
+        return false;
+    }
+    var canvas = document.createElement("CANVAS");
+    canvas.width = width || video.videoWidth;
+    canvas.height = height || video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0);
+    var dataUri = canvas.toDataURL("image/" + format);
+    var data = dataUri.split(",")[1];
+    var mimeType = dataUri.split(";")[0].slice(5);
+    var bytes = window.atob(data);
+    var buf = new ArrayBuffer(bytes.length);
+    var arr = new Uint8Array(buf);
+    for (var i = 0; i < bytes.length; i++) {
+        arr[i] = bytes.charCodeAt(i);
+    }
+    var blob = new Blob([arr], {
+        type: mimeType
+    });
+    return {
+        blob: blob,
+        dataUri: dataUri,
+        format: format,
+        width: canvas.width,
+        height: canvas.height
+    };
+}
+
+function Screenshot() {
+    document.querySelector("#MainGIF").pause();
+    var aScene = document
+        .querySelector("a-scene")
+        .components.screenshot.getCanvas("perspective");
+    var frame = CaptureVideoFrame("video", "png");
+    aScene = resizeCanvas(aScene, frame.width, frame.height);
+    frame = frame.dataUri;
+    mergeImages([frame, aScene]).then((b64) => {
+        var link = document.getElementById("download-link", "png");
+        link.setAttribute("download", "AR.png");
+        link.setAttribute("href", b64);
+        //window.open(link.getAttribute("href"));
+        //link.click();
+        document.querySelector("#MainGIF").play();
+    });
+}
+
+function CaptureVideoFrame(video, format, width, height) {
+    if (typeof video === "string") {
+        video = document.querySelector(video);
+        consoleLog("Video:" + video);
+    }
+    format = format || "jpeg";
+    if (!video || (format !== "png" && format !== "jpeg")) {
+        return false;
+    }
+    var canvas = document.createElement("CANVAS");
+    canvas.width = width || video.videoWidth;
+    canvas.height = height || video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0);
+    var dataUri = canvas.toDataURL("image/" + format);
+    var data = dataUri.split(",")[1];
+    var mimeType = dataUri.split(";")[0].slice(5);
+    var bytes = window.atob(data);
+    var buf = new ArrayBuffer(bytes.length);
+    var arr = new Uint8Array(buf);
+    for (var i = 0; i < bytes.length; i++) {
+        arr[i] = bytes.charCodeAt(i);
+    }
+    var blob = new Blob([arr], {
+        type: mimeType
+    });
+    return {
+        blob: blob,
+        dataUri: dataUri,
+        format: format,
+        width: canvas.width,
+        height: canvas.height
+    };
+}
+
+
     </script>
 
     <style>
-        
+        html,
+body {
+    -webkit-text-size-adjust: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@media screen and (orientation: portrait) {
+    .main-menu {
+        position: fixed;
+        bottom: 0%;
+        transform: translateX(-50%);
+        left: 50%;
+        transform-origin: left top;
+    }
+
+    .main-menu .floating-btn {
+        display: block;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, 0.26);
+        text-align: center;
+        font-size: 7vw;
+        line-height: 2.1em;
+    }
+
+    .main-menu.active .floating-btn {
+        box-shadow: inset 0 0 3px hsla(0, 0%, 0%, 0.3);
+        animation: none;
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .main-menu .floating-btn:active {
+        box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, 0.4);
+    }
+
+    .main-menu .floating-btn i {
+        /*     font-size: 1.3em; */
+        transition: transform 0.2s;
+    }
+
+    .main-menu.active .floating-btn i {
+        transform: rotate(-45deg);
+    }
+
+    .main-menu.active:after {
+        transform: scale3d(5.5, 5.5, 1);
+        transition-timing-function: cubic-bezier(0.68, 1.55, 0.265, 1);
+    }
+
+    .main-menu .main-menu-options {
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-menu .menu-item {
+        position: fixed;
+        top: 0.2em;
+        right: 0.3em;
+        z-index: -1;
+        display: block;
+        text-decoration: none;
+        font-size: 5.5vw;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.1em;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        transition: transform 0.3s ease;
+    }
+
+    .main-menu .menu-item:hover {
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .main-menu.active .menu-item {
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .main-menu.active .menu-item:nth-child(1) {
+        transform: translate3d(3em, 0em, 0);
+    }
+
+    .main-menu.active .menu-item:nth-child(2) {
+        transform: translate3d(0em, -3em, 0);
+        transition-delay: 0.05s;
+    }
+
+    .main-menu.active .menu-item:nth-child(3) {
+        transform: translate3d(-3em, 0em, 0);
+        transition-delay: 0.1s;
+    }
+
+    /*MAINMENU SHARE BUTTON*/
+    .main-menu .share-menu-item {
+        position: fixed;
+        top: 0.2em;
+        right: -2.6em;
+        display: block;
+        text-decoration: none;
+        font-size: 5.5vw;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.1em;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        transition: transform 0.3s ease, visibility 0.1s ease;
+        visibility: hidden;
+    }
+
+    .main-menu .share-menu-item:hover {
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .share-menu-options.active .share-menu-item {
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Set the defaults of the share buttons*/
+    .share-menu-options .share-menu-item:nth-child(2) {
+        z-index: -2;
+    }
+
+    .share-menu-options .share-menu-item:nth-child(3) {
+        z-index: -3;
+        transform: translate3d(-0.9em, -2.1em, 0em);
+    }
+
+    .share-menu-options .share-menu-item:nth-child(4) {
+        z-index: -4;
+        transform: translate3d(-3em, -3em, 0em);
+    }
+
+    .share-menu-options .share-menu-item:nth-child(5) {
+        z-index: -5;
+        transform: translate3d(-5.1em, -2.1em, 0em);
+    }
+
+    /* Place Download to share position */
+    .share-menu-options.active .share-menu-item:nth-child(1) {
+        visibility: visible;
+    }
+
+    /* Move SMS to first position */
+    .share-menu-options.active .share-menu-item:nth-child(2) {
+        transform: translate3d(-0.9em, -2.1em, 0);
+        visibility: visible;
+    }
+
+    /* Move Instagram to second position */
+    .share-menu-options.active .share-menu-item:nth-child(3) {
+        transform: translate3d(-3em, -3em, 0);
+        visibility: visible;
+    }
+
+    /* Move Facebook to thrid position */
+    .share-menu-options.active .share-menu-item:nth-child(4) {
+        transform: translate3d(-5.1em, -2.2em, 0);
+        visibility: visible;
+    }
+
+    /* Move Twitter to last position */
+    .share-menu-options.active .share-menu-item:nth-child(5) {
+        transform: translate3d(-6em, 0em, 0);
+        visibility: visible;
+    }
+
+    /* SOCIAL MEDIA BUTTONS */
+    .social-menu {
+        position: fixed;
+        bottom: 3vw;
+        right: 3vw;
+    }
+
+    .social-menu .floating-btn {
+        display: block;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, 0.26);
+        text-align: center;
+        font-size: 7vw;
+        line-height: 2.1em;
+    }
+
+    .social-menu.active .floating-btn {
+        box-shadow: inset 0 0 3px hsla(0, 0%, 0%, 0.3);
+        animation: none;
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .social-menu .floating-btn:active {
+        box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, 0.4);
+    }
+
+    .social-menu .floating-btn i {
+        font-size: 1.3em;
+        transition: transform 0.2s;
+    }
+
+    .social-menu.active .floating-btn i {
+        transform: rotate(-45deg);
+    }
+
+    .social-menu.active:after {
+        transform: scale3d(5.5, 5.5, 1);
+        transition-timing-function: cubic-bezier(0.68, 1.55, 0.265, 1);
+    }
+
+    .social-menu .main-menu-options {
+        padding: 0;
+        margin: 0;
+    }
+
+    .social-menu .menu-item {
+        position: absolute;
+        top: 0.2em;
+        right: 0.2em;
+        z-index: -1;
+        display: block;
+        text-decoration: none;
+        font-size: 5.5vw;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.1em;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        transition: transform 0.3s ease, background 0.2s ease;
+    }
+
+    .social-menu .menu-item:hover {
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .social-menu.active .menu-item {
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .social-menu.active .menu-item:nth-child(1) {
+        transform: translate3d(0, -4em, 0);
+    }
+
+    .social-menu.active .menu-item:nth-child(2) {
+        transform: translate3d(-2.3em, -3.8em, 0);
+        transition-delay: 0.05s;
+    }
+
+    .social-menu.active .menu-item:nth-child(3) {
+        transform: translate3d(-4em, -2.3em, 0);
+        transition-delay: 0.1s;
+    }
+
+    .social-menu.active .menu-item:nth-child(4) {
+        transform: translate3d(-4.5em, 0, 0);
+        transition-delay: 0.15s;
+    }
+}
+
+/* LANDSCAPE ORIENTATION */
+@media screen and (orientation: landscape) {
+    /*IPHONE XR*/
+    @media only screen and (min-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+        .main-menu {
+            position: fixed;
+            right: 0%;
+            bottom: 53vh;
+            transform: rotate(-90deg);
+        }
+        .main-menu .floating-btn {
+            font-size: 2.7vw;
+        }
+        .main-menu .menu-item {
+            font-size: 2vw;
+        }
+        .main-menu .share-menu-item {
+            font-size: 2vw;
+        }
+        .social-menu .floating-btn {
+            font-size: 2.7vw;
+        }
+        .social-menu .menu-item {
+            font-size: 2vw;
+        }
+    }
+    /*Ipad Pro*/
+    @media only screen and (min-width: 1224px) and (-webkit-min-device-pixel-ratio: 2) {
+        .main-menu {
+            position: fixed;
+            right: 0%;
+            bottom: 43vh;
+            transform: rotate(-90deg);
+        }
+        .main-menu .floating-btn {
+            font-size: 3vw;
+        }
+        .main-menu .menu-item {
+            font-size: 2.5vw;
+        }
+        .main-menu .share-menu-item {
+            font-size: 2.5vw;
+        }
+        .social-menu .floating-btn {
+            font-size: 3vw;
+        }
+        .social-menu .menu-item {
+            font-size: 2.5vw;
+        }
+    }
+    .main-menu .floating-btn {
+        display: block;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, 0.26);
+        text-align: center;
+        line-height: 2.1em;
+    }
+    .main-menu.active .floating-btn {
+        box-shadow: inset 0 0 3px hsla(0, 0%, 0%, 0.3);
+        animation: none;
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .main-menu .floating-btn:active {
+        box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, 0.4);
+    }
+
+    .main-menu .floating-btn i {
+        /*     font-size: 1.3em; */
+        transition: transform 0.2s;
+    }
+
+    .main-menu.active .floating-btn i {
+        transform: rotate(-45deg);
+    }
+
+    .main-menu.active:after {
+        transform: scale3d(5.5, 5.5, 1);
+        transition-timing-function: cubic-bezier(0.68, 1.55, 0.265, 1);
+    }
+
+    .main-menu .main-menu-options {
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-menu .menu-item {
+        position: fixed;
+        transform: rotateZ(90deg);
+        top: 0.16em;
+        right: 0.2em;
+        z-index: -1;
+        display: block;
+        text-decoration: none;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.1em;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        transition: transform 0.3s ease;
+    }
+
+    .main-menu .menu-item:hover {
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .main-menu.active .menu-item {
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .main-menu.active .menu-item:nth-child(1) {
+        transform: translate3d(3em, 0em, 0) rotateZ(90deg);
+    }
+
+    .main-menu.active .menu-item:nth-child(2) {
+        transform: translate3d(0em, -3em, 0) rotateZ(90deg);
+        transition-delay: 0.05s;
+    }
+
+    .main-menu.active .menu-item:nth-child(3) {
+        transform: translate3d(-3em, 0em, 0) rotateZ(90deg);
+        transition-delay: 0.1s;
+    }
+
+    /*MAINMENU SHARE BUTTON*/
+    .main-menu .share-menu-item {
+        position: absolute;
+        transform: rotateZ(90deg);
+        top: 0.2em;
+        right: -2.7em;
+        display: inline-block;
+        text-decoration: none;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.1em;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        transition: transform 0.3s ease, visibility 0.1s ease;
+        visibility: hidden;
+    }
+
+    .main-menu .share-menu-item:hover {
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .share-menu-options.active .share-menu-item {
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Set the defaults of the share buttons*/
+    .share-menu-options .share-menu-item:nth-child(2) {
+        z-index: -2;
+    }
+    .share-menu-options .share-menu-item:nth-child(3) {
+        z-index: -3;
+        transform: translate3d(-0.9em, -2.1em, 0em);
+    }
+    .share-menu-options .share-menu-item:nth-child(4) {
+        z-index: -4;
+        transform: translate3d(-3em, -3em, 0em);
+    }
+    .share-menu-options .share-menu-item:nth-child(5) {
+        z-index: -5;
+        transform: translate3d(-5.1em, -2.1em, 0em);
+    }
+
+    /* Place Download to share position */
+    .share-menu-options.active .share-menu-item:nth-child(1) {
+        transform: rotateZ(90deg);
+        visibility: visible;
+    }
+
+    /* Move SMS to first position */
+    .share-menu-options.active .share-menu-item:nth-child(2) {
+        transform: translate3d(-0.9em, -2.1em, 0) rotateZ(90deg);
+        visibility: visible;
+    }
+
+    /* Move Instagram to second position */
+    .share-menu-options.active .share-menu-item:nth-child(3) {
+        transform: translate3d(-3em, -3em, 0) rotateZ(90deg);
+        visibility: visible;
+    }
+
+    /* Move Facebook to thrid position */
+    .share-menu-options.active .share-menu-item:nth-child(4) {
+        transform: translate3d(-5.1em, -2.2em, 0) rotateZ(90deg);
+        visibility: visible;
+    }
+
+    /* Move Twitter to last position */
+    .share-menu-options.active .share-menu-item:nth-child(5) {
+        transform: translate3d(-6em, 0em, 0) rotateZ(90deg);
+        visibility: visible;
+    }
+
+    /* SOCIAL MEDIA BUTTONS */
+    .social-menu {
+        position: fixed;
+        right: 1vw;
+        top: 2vw;
+        transform: rotate(-90deg);
+    }
+
+    .social-menu .floating-btn {
+        display: block;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, 0.26);
+        text-align: center;
+        line-height: 2.1em;
+    }
+
+    .social-menu.active .floating-btn {
+        box-shadow: inset 0 0 3px hsla(0, 0%, 0%, 0.3);
+        animation: none;
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .social-menu .floating-btn:active {
+        box-shadow: 0 4px 8px 0 hsla(0, 0%, 0%, 0.4);
+    }
+
+    .social-menu .floating-btn i {
+        transform: rotate(90deg);
+        font-size: 1.3em;
+        transition: transform 0.2s;
+    }
+
+    .social-menu.active .floating-btn i {
+        transform: rotate(45deg);
+    }
+
+    .social-menu.active:after {
+        transform: scale3d(5.5, 5.5, 1);
+        transition-timing-function: cubic-bezier(0.68, 1.55, 0.265, 1);
+    }
+
+    .social-menu .main-menu-options {
+        padding: 0;
+        margin: 0;
+    }
+
+    .social-menu .menu-item {
+        transform: rotate(90deg);
+        position: absolute;
+        top: 0.2em;
+        right: 0.2em;
+        z-index: -1;
+        display: block;
+        text-decoration: none;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.1em;
+        background-color: red;
+        color: white;
+        border: 2px solid white;
+        transition: transform 0.3s ease, background 0.2s ease;
+    }
+
+    .social-menu .menu-item:hover {
+        background-color: white;
+        color: red;
+        border: 2px solid red;
+    }
+
+    .social-menu.active .menu-item {
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /*IPHONE XR*/
+    @media only screen and (min-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+        .social-menu.active .menu-item:nth-child(1) {
+            transform: translate3d(0.5em, -3.3em, 0) rotate(90deg);
+        }
+
+        .social-menu.active .menu-item:nth-child(2) {
+            transform: translate3d(-1.7em, -3.3em, 0) rotate(90deg);
+            transition-delay: 0.05s;
+        }
+
+        .social-menu.active .menu-item:nth-child(3) {
+            transform: translate3d(-3.3em, -1.7em, 0) rotate(90deg);
+            transition-delay: 0.1s;
+        }
+
+        .social-menu.active .menu-item:nth-child(4) {
+            transform: translate3d(-3.5em, 0.5em, 0) rotate(90deg);
+            transition-delay: 0.15s;
+        }
+    }
+    /*Ipad Pro*/
+    @media only screen and (min-width: 1224px) and (-webkit-min-device-pixel-ratio: 2) {
+        .social-menu.active .menu-item:nth-child(1) {
+            transform: translate3d(0, -4em, 0) rotate(90deg);
+        }
+
+        .social-menu.active .menu-item:nth-child(2) {
+            transform: translate3d(-2.3em, -3.8em, 0) rotate(90deg);
+            transition-delay: 0.05s;
+        }
+
+        .social-menu.active .menu-item:nth-child(3) {
+            transform: translate3d(-4em, -2.3em, 0) rotate(90deg);
+            transition-delay: 0.1s;
+        }
+
+        .social-menu.active .menu-item:nth-child(4) {
+            transform: translate3d(-4.5em, 0, 0) rotate(90deg);
+            transition-delay: 0.15s;
+        }
+    }
+}
+
+
     </style>
 
 </html>
