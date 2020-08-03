@@ -1,10 +1,3 @@
-
-    <!-- Add Fast Click plugin to prevent delays it click on mobile -->
-    <script src="https://raw.githack.com/ftlabs/fastclick/master/lib/fastclick.js"></script>
-
-    <!-- PREVENT SCROLLING -->
-    <script src="https://raw.githack.com/willmcpo/body-scroll-lock/master/lib/bodyScrollLock.js"></script>
-
 // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav).
 // Specifically, the target element is the one we would like to allow scroll on (NOT a parent of that element).
 // This is also the element to apply the CSS '-webkit-overflow-scrolling: touch;' if desired.
