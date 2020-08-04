@@ -31,7 +31,7 @@ theDownload.style.display = "none";
     } else if (Math.abs(window.orientation) === 0) {
         // Portrait
     }
-
+ 
     isMobileDevice();
 }
 //Hide the Social Menu if Main Menu is opened
