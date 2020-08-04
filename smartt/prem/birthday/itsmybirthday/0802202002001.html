@@ -45,6 +45,10 @@ const targetElement = document.querySelector("#Main");
 
 // 2. ...in some event handler after showing the target element...disable body scroll
 bodyScrollLock.disableBodyScroll(targetElement);
+        
+        var scrollingElement = document.scrollingElement || document.body;
+scrollingElement.scrollTop = 1000;
+
     </script>
     
 <body id="Main" onload="Init()">
