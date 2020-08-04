@@ -75,7 +75,7 @@ function MainClick() {
             theMenu.style.transform = "rotate(-45deg)";
         }
     }
-
+ 
     //Show the share button
     theShare.style.visibility = "visible";
 
