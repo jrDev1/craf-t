@@ -6,10 +6,6 @@ const targetElement = document.querySelector("#Main");
 // 2. ...in some event handler after showing the target element...disable body scroll
 bodyScrollLock.disableBodyScroll(targetElement);
 
-//Hide the Download Button on default
-var theDownload = document.getElementById("download-share");
-theDownload.style.display = "none";
-
 var scrollingElement = document.scrollingElement || document.body;
 scrollingElement.scrollTop = 1000;
 
@@ -21,6 +17,31 @@ document.addEventListener(
     },
     { passive: false }
 );
+
+function Init() {
+    
+//Hide the Download Button on default
+var theDownload = document.getElementById("download-share");
+theDownload.style.display = "none";
+
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.1;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty("--vh", `${vh}%`);
+    
+    //FOR USING CODEPEN WINDOW VIEWPORT - REMOVE IN OFFICIAL
+    var windowWidth = $(window).width();
+    var windowHeight = $(window).height();
+    
+    if (typeof window.orientation === "undefined") {
+    }
+    if (Math.abs(window.orientation) === 90) {
+    } else if (Math.abs(window.orientation) === 0) {
+        // Portrait
+    }
+
+    isMobileDevice();
+}
 //Hide the Social Menu if Main Menu is opened
 function MainClick() {
     //Toggle the state of the Main Menu Button
@@ -112,6 +133,10 @@ function shareClick() {
 
 function socialMenu() {
     var theMenu = document.getElementById("menu");
+    
+//Hide the Download Button on default
+var theDownload = document.getElementById("download-share");
+
     document.getElementById("share").style.transitionDelay = "0s";
     document.getElementById("cart").style.transitionDelay = "0s";
     document.getElementById("camera").style.transitionDelay = "0s";
@@ -163,25 +188,6 @@ function socialMenu() {
     }
 }
 
-function Init() {
-    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
-    let vh = window.innerHeight * 0.1;
-    // Then we set the value in the --vh custom property to the root of the document
-    document.documentElement.style.setProperty("--vh", `${vh}%`);
-    
-    //FOR USING CODEPEN WINDOW VIEWPORT - REMOVE IN OFFICIAL
-    var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-    
-    if (typeof window.orientation === "undefined") {
-    }
-    if (Math.abs(window.orientation) === 90) {
-    } else if (Math.abs(window.orientation) === 0) {
-        // Portrait
-    }
-
-    isMobileDevice();
-}
 //Activate the Fast Click Plugin to prevent delays in buttons activating on click for mobile
 if ("addEventListener" in document) {
     document.addEventListener(
