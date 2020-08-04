@@ -1,6 +1,3 @@
-var scrollingElement = document.scrollingElement || document.body;
-scrollingElement.scrollTop = 1000;
-
 //Prevent finger zooming
 document.addEventListener(
     "touchmove",
