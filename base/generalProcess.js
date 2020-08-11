@@ -332,7 +332,7 @@ function StartUITimer() {
     }, 1000);
 }
 
-document.body.ontouchstart = function () {
+document.querySelector("a-scene").ontouchstart = function () {
     clearInterval(uiTimerInterval);
     uiTimeLeft = UI_TIME_LIMIT;
     uiTimePassed = 0;
