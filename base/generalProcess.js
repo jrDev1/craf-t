@@ -9,9 +9,9 @@ document.addEventListener(
 
 function Init() {
     
-//Hide the Download Button on default
-var theDownload = document.getElementById("download-share");
-theDownload.style.display = "none";
+    //Hide the Download Button on default
+    var theDownload = document.getElementById("download-share");
+    theDownload.style.display = "none";
 
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     let vh = window.innerHeight * 0.1;
@@ -309,3 +309,50 @@ function CaptureVideoFrame(video, format, width, height) {
     };
 }
 
+//TIMER TO SHOW AND HIDE UI AFTER NO TOUCH RECEIVED
+const UI_TIME_LIMIT = 5;
+let uiTimePassed = 0;
+let uiTimeLeft = UI_TIME_LIMIT;
+let uiTimerInterval = null;
+
+function OnUITimeUp() {
+    clearInterval(uiTimerInterval);
+    HideUI();
+}
+
+function StartUITimer() {
+    uiTimerInterval = setInterval(() => {
+        uiTimePassed = uiTimePassed += 1;
+        uiTimeLeft = UI_TIME_LIMIT - uiTimePassed;
+        document.getElementById("base-timer-label").innerHTML = uiTimeLeft;
+
+        if (uiTimeLeft === 0) {
+            OnUITimeUp();
+        }
+    }, 1000);
+}
+
+window.ontouchstart = function () {
+    clearInterval(uiTimerInterval);
+    uiTimeLeft = UI_TIME_LIMIT;
+    uiTimePassed = 0;
+    document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
+    ShowUI();
+    StartUITimer();
+};
+
+function ShowUI() {
+    var theMenu = document.getElementById("mainMenu");
+    var theSocialMenu = document.getElementById("socialMenu");
+
+    theMenu.style.display = "block";
+    theSocialMenu.style.display = "block";
+}
+
+function HideUI() {
+    var theMenu = document.getElementById("mainMenu");
+    var theSocialMenu = document.getElementById("socialMenu");
+
+    theMenu.style.display = "none";
+    theSocialMenu.style.display = "none";
+}
