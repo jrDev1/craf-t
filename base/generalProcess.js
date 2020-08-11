@@ -339,6 +339,7 @@ document.body.ontouchstart = function () {
     document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
     ShowUI();
     StartUITimer();
+    console.log"("Touched");
 };
 
 function ShowUI() {
