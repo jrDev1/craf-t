@@ -32,7 +32,7 @@ function Init() {
     isMobileDevice();
 }
 //Hide the Social Menu if Main Menu is opened
-function MainClick() {
+document.querySelector("#Main").onclick = function MainClick() {
     //Toggle the state of the Main Menu Button
     document.getElementById("mainMenu").classList.toggle("active");
     var theDownload = document.getElementById("download-share");
