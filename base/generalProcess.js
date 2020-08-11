@@ -7,7 +7,7 @@ document.addEventListener(
     { passive: false }
 );
 
-function Init() {
+document.querySelector("#Main").onload = function Init() {
     
     //Hide the Download Button on default
     var theDownload = document.getElementById("download-share");
