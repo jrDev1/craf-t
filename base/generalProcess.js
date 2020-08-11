@@ -339,7 +339,7 @@ document.querySelector("a-scene").ontouchstart = function () {
     document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
     ShowUI();
     StartUITimer();
-    console.log"("Touched");
+    console.log("Touched");
 };
 
 function ShowUI() {
