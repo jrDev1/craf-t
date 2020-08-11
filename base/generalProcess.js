@@ -7,7 +7,7 @@ document.addEventListener(
     { passive: false }
 );
 
-window.onload = function Init() {
+window.onload = function () {
     
     //Hide the Download Button on default
     var theDownload = document.getElementById("download-share");
@@ -32,7 +32,7 @@ window.onload = function Init() {
     isMobileDevice();
 }
 //Hide the Social Menu if Main Menu is opened
-document.querySelector("#Main").onclick = function MainClick() {
+document.querySelector("#Main").onclick = function () {
     //Toggle the state of the Main Menu Button
     document.getElementById("mainMenu").classList.toggle("active");
     var theDownload = document.getElementById("download-share");
