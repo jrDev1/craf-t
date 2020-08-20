@@ -310,50 +310,50 @@ function CaptureVideoFrame(video, format, width, height) {
 }
 
 //TIMER TO SHOW AND HIDE UI AFTER NO TOUCH RECEIVED
-const UI_TIME_LIMIT = 5;
-let uiTimePassed = 0;
-let uiTimeLeft = UI_TIME_LIMIT;
-let uiTimerInterval = null;
+// const UI_TIME_LIMIT = 5;
+// let uiTimePassed = 0;
+// let uiTimeLeft = UI_TIME_LIMIT;
+// let uiTimerInterval = null;
 
-function OnUITimeUp() {
-    clearInterval(uiTimerInterval);
-    HideUI();
-}
+// function OnUITimeUp() {
+//     clearInterval(uiTimerInterval);
+//     HideUI();
+// }
 
-function StartUITimer() {
-    uiTimerInterval = setInterval(() => {
-        uiTimePassed = uiTimePassed += 1;
-        uiTimeLeft = UI_TIME_LIMIT - uiTimePassed;
-        document.getElementById("base-timer-label").innerHTML = uiTimeLeft;
+// function StartUITimer() {
+//     uiTimerInterval = setInterval(() => {
+//         uiTimePassed = uiTimePassed += 1;
+//         uiTimeLeft = UI_TIME_LIMIT - uiTimePassed;
+//         document.getElementById("base-timer-label").innerHTML = uiTimeLeft;
 
-        if (uiTimeLeft === 0) {
-            OnUITimeUp();
-        }
-    }, 1000);
-}
+//         if (uiTimeLeft === 0) {
+//             OnUITimeUp();
+//         }
+//     }, 1000);
+// }
 
-document.querySelector("a-scene").ontouchstart = function () {
-    clearInterval(uiTimerInterval);
-    uiTimeLeft = UI_TIME_LIMIT;
-    uiTimePassed = 0;
-    document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
-    ShowUI();
-    StartUITimer();
-    console.log("Touched");
-};
+// document.querySelector("a-scene").ontouchstart = function () {
+//     clearInterval(uiTimerInterval);
+//     uiTimeLeft = UI_TIME_LIMIT;
+//     uiTimePassed = 0;
+//     document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
+//     ShowUI();
+//     StartUITimer();
+//     console.log("Touched");
+// };
 
-function ShowUI() {
-    var theMenu = document.getElementById("mainMenu");
-    var theSocialMenu = document.getElementById("socialMenu");
+// function ShowUI() {
+//     var theMenu = document.getElementById("mainMenu");
+//     var theSocialMenu = document.getElementById("socialMenu");
 
-    theMenu.style.display = "block";
-    theSocialMenu.style.display = "block";
-}
+//     theMenu.style.display = "block";
+//     theSocialMenu.style.display = "block";
+// }
 
-function HideUI() {
-    var theMenu = document.getElementById("mainMenu");
-    var theSocialMenu = document.getElementById("socialMenu");
+// function HideUI() {
+//     var theMenu = document.getElementById("mainMenu");
+//     var theSocialMenu = document.getElementById("socialMenu");
 
-    theMenu.style.display = "none";
-    theSocialMenu.style.display = "none";
-}
+//     theMenu.style.display = "none";
+//     theSocialMenu.style.display = "none";
+// }
