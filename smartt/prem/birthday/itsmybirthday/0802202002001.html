@@ -98,11 +98,11 @@
 
     </div>
 
-    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: -1;'>
-        <p style="color:red;">Test Mode ver 0.5</p>
+    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: -2;'>
+        <p style="color:red;">Test Mode ver 0.6</p>
 
     </div>
-    <div style='position: fixed; top: 30px; width:100%; text-align: center; z-index: -1;'>
+    <div style='position: fixed; top: 30px; width:100%; text-align: center; z-index: -2;'>
         <p style="color:blue;" id="base-timer-label">Timer</p>
     </div>
     </body>
@@ -125,6 +125,7 @@
 
     function OnUITimeUp() {
         clearInterval(uiTimerInterval);
+        document.getElementById("base-timer-label").innerHTML = uiTimeLeft;
         HideUI();
     }
 
@@ -140,7 +141,7 @@
         }, 1000);
     }
 
-    document.querySelector("a-scene").ontouchstart = function () {
+    document.querySelector("body").ontouchstart = function () {
         clearInterval(uiTimerInterval);
         uiTimeLeft = UI_TIME_LIMIT;
         uiTimePassed = 0;
