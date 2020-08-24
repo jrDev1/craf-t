@@ -39,11 +39,11 @@
 </head>
 
 <body id="Main">
-    <script type="text/javascript" src="https://jrDev1.github.io/craf-t/base/generalProcess.js"></script>
+<!--     <script type="text/javascript" src="https://jrDev1.github.io/craf-t/base/generalProcess.js"></script> -->
     
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
 
-        <a-assets>
+<!--         <a-assets>
             <img id="dog-gif" src="https://raw.githubusercontent.com/jrDev1/craf-t/master/ItsMyBirthdayAnimation.gif">
         </a-assets>
 
@@ -53,7 +53,7 @@
             <a-entity id="MainGIF" rotation="-90 0 0" geometry="primitive:plane" material="shader:gif;src:#dog-gif;" gif="">
                 </entity>
 
-        </a-marker>
+        </a-marker> -->
 
         <a-entity camera></a-entity>
 
@@ -103,7 +103,7 @@
     </div>
 
     <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.7</p>
+        <p style="color:red;">Test Mode ver 0.8</p>
 
     </div>
     <div style='position: fixed; top: 30px; width:100%; text-align: center; z-index: 1;'>
@@ -145,29 +145,29 @@
         }, 1000);
     }
 
-    document.querySelector("body").onclick = function () {
-        clearInterval(uiTimerInterval);
-        uiTimeLeft = UI_TIME_LIMIT;
-        uiTimePassed = 0;
-        document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
-        ShowUI();
-        StartUITimer();
-        console.log("Touched");
-    };
+//     document.querySelector("body").onclick = function () {
+//         clearInterval(uiTimerInterval);
+//         uiTimeLeft = UI_TIME_LIMIT;
+//         uiTimePassed = 0;
+//         document.getElementById("base-timer-label").innerHTML = UI_TIME_LIMIT;
+//         ShowUI();
+//         StartUITimer();
+//         console.log("Touched");
+//     };
 
-    function ShowUI() {
-        var theMenu = document.getElementById("mainMenu");
-        var theSocialMenu = document.getElementById("socialMenu");
+//     function ShowUI() {
+//         var theMenu = document.getElementById("mainMenu");
+//         var theSocialMenu = document.getElementById("socialMenu");
 
-        theMenu.style.display = "block";
-        theSocialMenu.style.display = "block";
-    }
+//         theMenu.style.display = "block";
+//         theSocialMenu.style.display = "block";
+//     }
 
-    function HideUI() {
-        var theMenu = document.getElementById("mainMenu");
-        var theSocialMenu = document.getElementById("socialMenu");
+//     function HideUI() {
+//         var theMenu = document.getElementById("mainMenu");
+//         var theSocialMenu = document.getElementById("socialMenu");
 
-        theMenu.style.display = "none";
-        theSocialMenu.style.display = "none";
-    }
+//         theMenu.style.display = "none";
+//         theSocialMenu.style.display = "none";
+//     }
 </script>
