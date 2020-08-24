@@ -22,7 +22,7 @@ body {
     .main-menu .floating-btn {
         display: block;
         width: 2em;
-/*         height: 2em; */
+        height: 2em;
         border-radius: 50%;
         background-color: red;
         color: white;
