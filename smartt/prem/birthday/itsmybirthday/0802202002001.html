@@ -35,12 +35,12 @@
 
     <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script>
     
-    <script type="text/javascript" src="https://raw.githack.com/jrDev1/craf-t/master/base/generalProcess.js"></script>
+    
 </head>
 
 <body id="Main">
-
-<!--     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+<script type="text/javascript" src="https://raw.githack.com/jrDev1/craf-t/master/base/generalProcess.js"></script>
+    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
 
         <a-assets>
             <img id="dog-gif" src="https://raw.githubusercontent.com/jrDev1/craf-t/master/ItsMyBirthdayAnimation.gif">
@@ -56,7 +56,7 @@
 
         <a-entity camera></a-entity>
 
-    </a-scene> -->
+    </a-scene>
     <!-- Setup the Main Menu -->
     <div id="mainMenu" class="main-menu">
 
@@ -111,13 +111,13 @@
 </html>
 
 <script>
-    // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav).
-    // Specifically, the target element is the one we would like to allow scroll on (NOT a parent of that element).
-    // This is also the element to apply the CSS '-webkit-overflow-scrolling: touch;' if desired.
-//     const targetElement = document.querySelector("#Main");
+//     1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav).
+//     Specifically, the target element is the one we would like to allow scroll on (NOT a parent of that element).
+//     This is also the element to apply the CSS '-webkit-overflow-scrolling: touch;' if desired.
+    const targetElement = document.querySelector("#Main");
 
-//     // 2. ...in some event handler after showing the target element...disable body scroll
-//     bodyScrollLock.disableBodyScroll(targetElement);
+    // 2. ...in some event handler after showing the target element...disable body scroll
+    bodyScrollLock.disableBodyScroll(targetElement);
     
     //TIMER TO SHOW AND HIDE UI AFTER NO TOUCH RECEIVED
     const UI_TIME_LIMIT = 5;
