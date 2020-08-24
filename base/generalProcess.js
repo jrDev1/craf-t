@@ -32,7 +32,7 @@ window.onload = function () {
     isMobileDevice();
 }
 //Hide the Social Menu if Main Menu is opened
-document.getElementById("Main").onclick = function () {
+function MainMenu() {
     //Toggle the state of the Main Menu Button
     document.getElementById("mainMenu").classList.toggle("active");
     var theDownload = document.getElementById("download-share");
@@ -71,8 +71,9 @@ document.getElementById("Main").onclick = function () {
     //Close the Social Menu
     document.getElementById("socialMenu").classList.remove("active");
 }
-//Hide the Social Menu if Main Menu is opened
-function shareClick() {
+
+//Show Share Menu
+function ShareMenu() {
     document.getElementById("cart").style.transitionDelay = "0.2s";
     document.getElementById("camera").style.transitionDelay = "0.25s";
     var theShare = document.getElementById("share");
@@ -120,7 +121,7 @@ function shareClick() {
     }
 }
 
-function socialMenu() {
+function SocialMenu() {
     var theMenu = document.getElementById("menu");
     
 //Hide the Download Button on default
