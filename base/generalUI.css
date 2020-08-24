@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
     -webkit-text-size-adjust: none;
     width: 100%;
@@ -8,7 +8,7 @@ body {
 body {
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+} */
 
 @media screen and (orientation: portrait) {
     .main-menu {
