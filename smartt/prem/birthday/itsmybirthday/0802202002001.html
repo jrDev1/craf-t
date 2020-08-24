@@ -39,7 +39,8 @@
 </head>
 
 <body id="Main">
-<script type="text/javascript" src="https://raw.githack.com/jrDev1/craf-t/master/base/generalProcess.js"></script>
+    <script type="text/javascript" src="https://raw.githack.com/jrDev1/craf-t/master/base/generalProcess.js"></script>
+    
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
 
         <a-assets>
@@ -57,17 +58,18 @@
         <a-entity camera></a-entity>
 
     </a-scene>
+    
     <!-- Setup the Main Menu -->
     <div id="mainMenu" class="main-menu">
 
         <!--Show the Main Menu button with floating animation -->
-        <a class="faa-float animated floating-btn">
+        <a class="faa-float animated floating-btn" onclick="MainMenu();">
             <i id="menu" class="fa fa-plus"></i>
         </a>
 
         <!--Setup Main Menu buttons -->
         <menu class="main-menu-options">
-            <a href="#" id="share" class="menu-item fas fa-share-square" onclick="shareClick();"></a>
+            <a href="#" id="share" class="menu-item fas fa-share-square" onclick="ShareMenu();"></a>
             <a href="#" id="camera" class="menu-item fas fa-camera" onclick="Screenshot();"></a>
             <a href="#" id="cart" class="menu-item fas fa-cart-plus"></a>
         </menu>
@@ -87,7 +89,7 @@
     <!-- Setup the Social Menu -->
     <div id="socialMenu" class="social-menu">
 
-        <a class="faa-float animated floating-btn" onclick="socialMenu();">
+        <a class="faa-float animated floating-btn" onclick="SocialMenu();">
             <i class="fas fa-comments"></i>
         </a>
 
@@ -101,7 +103,7 @@
     </div>
 
     <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.3</p>
+        <p style="color:red;">Test Mode ver 0.4</p>
 
     </div>
     <div style='position: fixed; top: 30px; width:100%; text-align: center; z-index: 1;'>
@@ -111,9 +113,9 @@
 </html>
 
 <script>
-//     1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav).
-//     Specifically, the target element is the one we would like to allow scroll on (NOT a parent of that element).
-//     This is also the element to apply the CSS '-webkit-overflow-scrolling: touch;' if desired.
+    // 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav).
+    // Specifically, the target element is the one we would like to allow scroll on (NOT a parent of that element).
+    // This is also the element to apply the CSS '-webkit-overflow-scrolling: touch;' if desired.
     const targetElement = document.querySelector("#Main");
 
     // 2. ...in some event handler after showing the target element...disable body scroll
