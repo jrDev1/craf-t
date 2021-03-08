@@ -46,7 +46,7 @@
     arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
   >
     <a-assets>
-      <a-asset-item id="shark" src="https://arjs-cors-proxy.herokuapp.com/https://github.com/jrDev1/craf-t/blob/master/GreatWhiteShark.glb"></a-asset-item>
+      <a-asset-item id="shark" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
     </a-assets>
 
     <!-- we use cors proxy to avoid cross-origin problems -->
@@ -59,21 +59,18 @@
       smoothThreshold="5"
     >
         <a-entity
-<!--             gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf" -->
-                 gltf-model="#shark"
-<!--             obj-model=”obj: url(https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.obj);
-                  mtl: url(https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.mtl)” -->
+                  gltf-model="#shark"
                   scale="2 2 2"
                   position="50 5 0"
-            >
-          
+        >
+        
         </a-entity>
       
     </a-nft>
     <a-entity camera></a-entity>
   </a-scene>
   <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.1</p>
+        <p style="color:red;">Test Mode ver 0.2</p>
 
     </div>
 </body>
