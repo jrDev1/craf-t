@@ -39,13 +39,8 @@
   <div class="arjs-loader">
     <div>Loading, please wait...</div>
   </div>
-  <a-scene
-    vr-mode-ui="enabled: false;"
-    patternRatio: 0.9;
-    renderer="logarithmicDepthBuffer: true;"
-    embedded
-    arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
-  >
+  <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+    
     <a-assets>
       <a-asset-item id="shark" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
     </a-assets>
@@ -72,7 +67,7 @@
     <a-entity camera></a-entity>
   </a-scene>
   <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.8</p>
+        <p style="color:red;">Test Mode ver 0.9</p>
 
     </div>
 </body>
