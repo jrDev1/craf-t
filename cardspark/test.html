@@ -55,20 +55,18 @@
       smoothThreshold="5"
     > -->
     <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.patt">
-        <a-entity
-                  gltf-model="#shark"
-                  position="0, 2, 0"
-                  scale="0.25 0.25 0.25"
-                  animation-mixer
-        >
-        
-        </a-entity>
+        <a-gltf-model 
+          src="#shark" 
+            position="0 0 0" 
+                            rotation="0 0 0" 
+                                            scale="0.25 0.25 0.25" 
+                                                                  animation-mixer="clip: Swim; loop:repeat"> </a-gltf-model>
       </a-marker>
 <!--     </a-nft> -->
     <a-entity camera></a-entity>
   </a-scene>
   <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.6</p>
+        <p style="color:red;">Test Mode ver 0.7</p>
 
     </div>
 </body>
