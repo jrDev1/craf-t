@@ -11,6 +11,9 @@
   
   <script src="https://raw.githack.com/jrDev1/craf-t/master/GestureDetection.js"></script>
   
+  <!-- import events.js script -->
+    <script src="https://raw.githack.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-click-events/events.js"></script>
+  
 </head>
 
 <!-- style for the loader -->
@@ -56,11 +59,12 @@
               type="pattern" 
               preset="custom" 
               url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.patt"
-
+              markerhandler
               emitevents="true"
               id="markerA"
               raycaster="objects: .clickable"
-              cursor="fuse: false; rayOrigin: mouse;">
+              cursor="fuse: false; rayOrigin: mouse;"
+              >
               
     
     <a-gltf-model 
@@ -70,7 +74,7 @@
                   rotation="0 0 0" 
                   scale="0.25 0.25 0.25"
                   class="clickable"
-                  gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false">
+                  gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01">
       
     </a-gltf-model>
       
@@ -80,32 +84,52 @@
     <a-entity camera></a-entity>
   </a-scene>
   <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.1</p>
+        <p style="color:red;">Test Mode ver 0.2</p>
 
     </div>
 </body>
 
 </html>
 
+
+
 <script>
   
-      document.querySelector("a-marker").addEventListener("markerFound", function () {
+     var markerFound = false;
+const theMarker = document.querySelector("#markerA");
+const aEntity = document.querySelector("#theShark");
+
+theMarker.addEventListener("markerFound", function () {
               // here you can change also a-scene or a-entity properties, like
               // changing your 3D model source, size, position and so on
               // or you can just open links, trigger actions...
               document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
 
               console.log('marker detected');
-
+markerFound = true;
+  
       }); 
 
-      document.querySelector("a-marker").addEventListener("markerLost", function () {
+      theMarker.addEventListener("markerLost", function () {
 
               document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'TPose'});
 
               console.log('marker lost');
-
+markerFound = false;
       });
 
+        // every click, we make our model grow in size :)
+        window.addEventListener('click', () => {
+            
+            document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
+         
+        });
 
+
+theMarker.addEventListener("animation-finished", function (e) {
+  
+    console.log("animation finished " + e.action);
+  document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
+});
+  
 </script>
