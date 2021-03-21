@@ -5,11 +5,10 @@
     <!-- we import arjs version without NFT but with marker + location based support -->
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-<!--   Enable FBX use -->
-<!--  <script src=”https://raw.githack.com/n5ro/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script> -->
-<!--     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script> -->
+
+
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  
+<!--   <script src="https://rawgit.com/takahirox/aframe-outline/master/build/aframe-outline.min.js"></script> -->
 </head>
 
 <!-- style for the loader -->
@@ -39,36 +38,48 @@
   <div class="arjs-loader">
     <div>Loading, please wait...</div>
   </div>
-  <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
+  <a-scene renderer='antialias: true; alpha: true; logarithmicDepthBuffer: true'; embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false">
     
     <a-assets>
       <a-asset-item id="shark" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
     </a-assets>
 
-    <!-- we use cors proxy to avoid cross-origin problems -->
-<!--     <a-nft
-      type="nft"
-      url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
-      smooth="true"
-      smoothCount="10"
-      smoothTolerance=".01"
-      smoothThreshold="5"
-    > -->
     <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.patt">
-        <a-gltf-model 
-          src="#shark" 
-            position="0 0 0" 
-                            rotation="0 0 0" 
-                                            scale="0.25 0.25 0.25" 
-                                                                  animation-mixer="clip: Swim; loop:repeat"> </a-gltf-model>
+    
+    <a-gltf-model id = "theShark" src="#shark" position="0 0.5 0" rotation="0 0 0" scale="0.25 0.25 0.25" 
+                                         >
+</a-gltf-model>
+<a-entity id="point_light_1" light="type: ambient; intensity: 5.1;" position="0 0 0"></a-entity>
       </a-marker>
-<!--     </a-nft> -->
+
     <a-entity camera></a-entity>
   </a-scene>
   <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.8</p>
+        <p style="color:red;">Test Mode ver 0.9</p>
 
     </div>
 </body>
 
 </html>
+
+<script>
+  
+      document
+        .querySelector("a-marker")
+        .addEventListener("markerFound", function () {
+          // here you can change also a-scene or a-entity properties, like
+          // changing your 3D model source, size, position and so on
+          // or you can just open links, trigger actions...
+          document
+        .querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});  
+console.log('marker detected'); 
+}); 
+
+document.querySelector("a-marker")
+        .addEventListener("markerLost", function () {
+  document
+        .querySelector('#theShark').setAttribute('animation-mixer', {clip: 'TPose'});  
+console.log('marker lost'); 
+}); 
+
+</script>
