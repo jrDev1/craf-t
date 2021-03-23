@@ -25,7 +25,7 @@ AFRAME.registerComponent('outline', {
 
                                         obj.scale.set(s,s,s);
                         
-                        console.log("MODEL LOADED " + obj.scale);
+                        console.log("MODEL LOADED " + obj);
             
                                         node.material.color.set(this.data.color);
                 
