@@ -13,8 +13,6 @@ AFRAME.registerComponent('outline', {
                 // Wait for model to load.
                 this.el.addEventListener('model-loaded', () => {
             
-                        console.log("MODEL LOADED");
-            
                         // Grab the mesh / scene.
                         const obj = this.el.getObject3D('mesh');
             
@@ -27,6 +25,8 @@ AFRAME.registerComponent('outline', {
 
                                         obj.scale.set(s,s,s);
                         
+                        console.log("MODEL LOADED " + obj.scale);
+            
                                         node.material.color.set(this.data.color);
                 
                                         node.material.side = THREE.BackSide
