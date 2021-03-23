@@ -3,7 +3,8 @@
 <head>
   
     <!-- we import arjs version without NFT but with marker + location based support -->
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
 
@@ -16,6 +17,8 @@
   
 </head>
 
+  <script src = "https://raw.githack.com/jrDev1/craf-t/master/Outline.js">
+  </script>
 <!-- style for the loader -->
 <!-- <style>
   .arjs-loader {
@@ -44,7 +47,7 @@
     <div>Loading, please wait...</div>
   </div>
   
-  <a-scene 
+  <a-scene
            id="scene"
            renderer='antialias: true; alpha: true; logarithmicDepthBuffer: true;' 
            embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' 
@@ -54,7 +57,12 @@
     <a-assets>
       <a-asset-item id="shark" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
     </a-assets>
-
+    
+<a-assets>
+      <a-asset-item id="shark2" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
+    </a-assets>
+    
+    
     <a-marker 
               type="pattern" 
               preset="custom" 
@@ -77,14 +85,23 @@
                   gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01">
       
     </a-gltf-model>
+      <a-gltf-model 
+                  id = "theShark2" 
+                  src="#shark2"
+                    position="0 0.5 0" 
+                  rotation="0 0 0" 
+                  
+                  outline
+                    gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01">
       
-<a-entity id="point_light_1" light="type: ambient; intensity: 5.1;" position="0 0 0"></a-entity>
+    </a-gltf-model>
+<a-entity light="type: ambient; intensity: 3;"></a-entity>
       </a-marker>
 
     <a-entity camera></a-entity>
   </a-scene>
   <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.2</p>
+        <p style="color:red;">Test Mode ver 0.3</p>
 
     </div>
 </body>
@@ -94,8 +111,7 @@
 
 
 <script>
-  
-     var markerFound = false;
+  var markerFound = false;
 const theMarker = document.querySelector("#markerA");
 const aEntity = document.querySelector("#theShark");
 
@@ -104,7 +120,8 @@ theMarker.addEventListener("markerFound", function () {
               // changing your 3D model source, size, position and so on
               // or you can just open links, trigger actions...
               document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
-
+  
+  document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
               console.log('marker detected');
 markerFound = true;
   
@@ -112,24 +129,32 @@ markerFound = true;
 
       theMarker.addEventListener("markerLost", function () {
 
-              document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'TPose'});
+               document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'TPose'});
+        document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'TPose'});
 
               console.log('marker lost');
 markerFound = false;
       });
 
+         // if(markerFound){
+
+
         // every click, we make our model grow in size :)
         window.addEventListener('click', () => {
             
-            document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
+             document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
          
+          // document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
         });
-
+// }
 
 theMarker.addEventListener("animation-finished", function (e) {
   
     console.log("animation finished " + e.action);
-  document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
-});
+   document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
   
+  document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
+});
+
+
 </script>
