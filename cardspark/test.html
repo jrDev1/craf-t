@@ -1,160 +1,205 @@
 <html>
   
-<head>
+  <head>
   
-    <!-- we import arjs version without NFT but with marker + location based support -->
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- Handles AFRAME -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   
+    <!-- Handles AR.js with Marker and Location Support -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-
+    <!-- Handles Animations -->
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  
-  <script src="https://raw.githack.com/jrDev1/craf-t/master/GestureDetection.js"></script>
-  
-  <!-- import events.js script -->
+    
+    <!-- Handles Gesture Detection -->
+    <script src="https://raw.githack.com/jrDev1/craf-t/master/GestureDetection.js"></script>
+
+    <!-- Handles Click Events -->
     <script src="https://raw.githack.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-click-events/events.js"></script>
+
+    <!-- Handles Model Outline -->
+    <script src = "https://raw.githack.com/jrDev1/craf-t/master/Outline.js"></script>
+
+  </head>
   
-</head>
-
-  <script src = "https://raw.githack.com/jrDev1/craf-t/master/Outline.js">
-  </script>
-<!-- style for the loader -->
-<!-- <style>
-  .arjs-loader {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .arjs-loader div {
-    text-align: center;
-    font-size: 1.25em;
-    color: white;
-  }
-</style> -->
-
-<body style="margin : 0px; overflow: hidden;">
-  <!-- minimal loader shown until image descriptors are loaded -->
-  <div class="arjs-loader">
-    <div>Loading, please wait...</div>
-  </div>
+  <body style="margin : 0px; overflow: hidden;">
   
-  <a-scene
-           id="scene"
-           renderer='antialias: true; alpha: true; logarithmicDepthBuffer: true;' 
-           embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' 
-           vr-mode-ui="enabled: false"
-           gesture-detector>
+    <!-- minimal loader shown until image descriptors are loaded -->
+    <div class="arjs-loader">
     
-    <a-assets>
-      <a-asset-item id="shark" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
-    </a-assets>
+      <div>Loading, please wait...</div>
+  
+    </div>
+
+    <a-scene id="scene"
+           
+             renderer='antialias: true; alpha: true; logarithmicDepthBuffer: true;' 
+           
+             embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' 
+           
+             vr-mode-ui="enabled: false"
+           
+             gesture-detector
+             
+             >
+ 
+      <a-assets>
+      
+        <a-asset-item id="model" 
+                      
+                      src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"
+                      
+                      >
+        
+        </a-asset-item>
     
-<a-assets>
-      <a-asset-item id="shark2" src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"></a-asset-item>
-    </a-assets>
+      </a-assets>
     
+      <a-assets>
+     
+        <a-asset-item id="outline" 
+                      
+                      src="#model"
+                      
+                      >
+          
+        </a-asset-item>
     
-    <a-marker 
-              type="pattern" 
-              preset="custom" 
-              url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.patt"
-              markerhandler
-              emitevents="true"
-              id="markerA"
-              raycaster="objects: .clickable"
-              cursor="fuse: false; rayOrigin: mouse;"
-              >
+      </a-assets>
+    
+      <a-marker type="pattern" 
+              
+                preset="custom" 
+              
+                url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.patt"
+              
+                markerhandler
+              
+                emitevents="true"
+              
+                id="markerA"
+              
+                raycaster="objects: .clickable"
+              
+                cursor="fuse: false; rayOrigin: mouse;"
+              
+                >
               
     
-    <a-gltf-model 
-                  id = "theShark" 
-                  src="#shark" 
+    <a-gltf-model id = "theModel" 
+                  
+                  src="#model" 
+                  
                   position="0 0.5 0" 
-                  rotation="0 0 0" 
-                  scale="0.25 0.25 0.25"
-                  class="clickable"
-                  gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01">
-      
-    </a-gltf-model>
-      <a-gltf-model 
-                  id = "theShark2" 
-                  src="#shark2"
-                    position="0 0.5 0" 
+                  
                   rotation="0 0 0" 
                   
-                  outline
-                    gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01">
+                  scale="0.25 0.25 0.25"
+                  
+                  class="clickable"
+                  
+                  gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01"
+                  
+                  >
+
+        </a-gltf-model>
       
-    </a-gltf-model>
-<a-entity light="type: ambient; intensity: 3;"></a-entity>
+        <a-gltf-model id = "theOutline" 
+                  
+                      src="#outline"
+                    
+                      position="0 0.5 0" 
+                  
+                      rotation="0 0 0"
+                  
+                      outline
+                    
+                      gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01"
+                      
+                      >
+
+        </a-gltf-model>
+        
+
+        <a-entity light="type: ambient; intensity: 3;"
+                  
+                  >
+        
+        </a-entity>
+      
       </a-marker>
 
-    <a-entity camera></a-entity>
-  </a-scene>
-  <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
-        <p style="color:red;">Test Mode ver 0.3</p>
+      <a-entity camera>
+      
+      </a-entity>
+  
+    </a-scene>
+  
+    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+        
+      <p style="color:red;">Test Mode ver 0.5</p>
 
     </div>
-</body>
+
+  </body>
 
 </html>
 
-
-
 <script>
+  
   var markerFound = false;
-const theMarker = document.querySelector("#markerA");
-const aEntity = document.querySelector("#theShark");
 
-theMarker.addEventListener("markerFound", function () {
-              // here you can change also a-scene or a-entity properties, like
-              // changing your 3D model source, size, position and so on
-              // or you can just open links, trigger actions...
-              document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
+  const theMarker = document.querySelector("#markerA");
+
+  const theModel = document.querySelector("#theModel");
+
+  const theOutline = document.querySelector('#theOutline');
+
+
+  theMarker.addEventListener("markerFound", function () {
+              
+    //Play the Swim Animation - Change to generic animation names later
+    theModel.setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
+
+    theOutline.setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
+              
+    console.log('marker detected');
+
+    markerFound = true;
   
-  document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'}); 
-              console.log('marker detected');
-markerFound = true;
-  
-      }); 
+      
+  }); 
 
-      theMarker.addEventListener("markerLost", function () {
+  theMarker.addEventListener("markerLost", function () {
+    
+    theModel.setAttribute('animation-mixer', {clip: 'TPose'});
+        
+    theOutline.setAttribute('animation-mixer', {clip: 'TPose'});
+    
+    console.log('marker lost');
 
-               document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'TPose'});
-        document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'TPose'});
+    markerFound = false;
+      
+  });
+    
+  //Click plays the Attack animation - Change to generic animation name later   
+  theModel.addEventListener('click', () => {
+        
+    theModel.setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
+   
+    theOutline.setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
+        
+  });
 
-              console.log('marker lost');
-markerFound = false;
-      });
+  theMarker.addEventListener("animation-finished", function (e) {
 
-         // if(markerFound){
-
-
-        // every click, we make our model grow in size :)
-        window.addEventListener('click', () => {
-            
-             document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
-         
-          // document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'Attack*', loop: 'once'});
-        });
-// }
-
-theMarker.addEventListener("animation-finished", function (e) {
-  
     console.log("animation finished " + e.action);
-   document.querySelector('#theShark').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
-  
-  document.querySelector('#theShark2').setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
-});
+   
+    theModel.setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
+
+    theOutline.setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
+
+  });
 
 
 </script>
