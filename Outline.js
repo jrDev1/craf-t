@@ -20,7 +20,9 @@ AFRAME.registerComponent('outline', {
               
                                 if (node.name.indexOf('great_white_shark_exp19') !== -1) {
                 
-                                        const s = new THREE.Vector3( document.querySelector('#theModel').getAttribute('scale').x* this.data.thickness, document.querySelector('#theShark').getAttribute('scale').y* this.data.thickness,document.querySelector('#theShark').getAttribute('scale').z* this.data.thickness) ;
+                                        const s = new THREE.Vector3(document.querySelector('#theModel').getAttribute('scale').x * this.data.thickness, 
+                                                                    document.querySelector('#theModel').getAttribute('scale').y * this.data.thickness,
+                                                                    document.querySelector('#theModel').getAttribute('scale').z * this.data.thickness) ;
 
                                         obj.scale.set(s.x,s.y, s.z);
                         
