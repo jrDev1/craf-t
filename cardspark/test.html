@@ -39,17 +39,13 @@
            
              vr-mode-ui="enabled: false"
            
-             gesture-detector
-             
-             >
+             gesture-detector>
  
       <a-assets>
       
         <a-asset-item id="model" 
                       
-                      src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb"
-                      
-                      >
+                      src="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/jrDev1/craf-t/master/GreatWhiteShark.glb">
         
         </a-asset-item>
     
@@ -59,9 +55,7 @@
      
         <a-asset-item id="outline" 
                       
-                      src="#model"
-                      
-                      >
+                      src="#model">
           
         </a-asset-item>
     
@@ -81,12 +75,9 @@
               
                 raycaster="objects: .clickable"
               
-                cursor="fuse: false; rayOrigin: mouse;"
-              
-                >
-              
-    
-    <a-gltf-model id = "theModel" 
+                cursor="fuse: false; rayOrigin: mouse;">
+
+        <a-gltf-model id = "theModel" 
                   
                   src="#model" 
                   
@@ -98,9 +89,7 @@
                   
                   class="clickable"
                   
-                  gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01"
-                  
-                  >
+                  gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false;">
 
         </a-gltf-model>
       
@@ -114,16 +103,12 @@
                   
                       outline
                     
-                      gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false; crossFadeDuration: 0.01"
-                      
-                      >
+                      gesture-handler="minScale: 1; maxScale: 1; enabledXRotate: false;">
 
         </a-gltf-model>
         
 
-        <a-entity light="type: ambient; intensity: 3;"
-                  
-                  >
+        <a-entity light = "type: ambient; intensity: 3;">
         
         </a-entity>
       
@@ -137,7 +122,7 @@
   
     <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
         
-      <p style="color:red;">Test Mode ver 0.5</p>
+      <p style="color:red;">Test Mode ver 0.6</p>
 
     </div>
 
@@ -154,7 +139,6 @@
   const theModel = document.querySelector("#theModel");
 
   const theOutline = document.querySelector('#theOutline');
-
 
   theMarker.addEventListener("markerFound", function () {
               
@@ -200,6 +184,5 @@
     theOutline.setAttribute('animation-mixer', {clip: 'Swim', loop: 'repeat'});
 
   });
-
 
 </script>
