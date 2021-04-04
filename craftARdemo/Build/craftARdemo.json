@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Craf-T WebAR",
+"productVersion": "1.0",
+"dataUrl": "craftARdemo.data.unityweb",
+"wasmCodeUrl": "craftARdemo.wasm.code.unityweb",
+"wasmFrameworkUrl": "craftARdemo.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.23f1"
+}
