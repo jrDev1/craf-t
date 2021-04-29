@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | WebGL Test AR</title>
+    <script src="js/lib/aframe.min.js"></script>
+    <script src="js/lib/aframe-ar.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://unpkg.com/merge-images"></script>
+    <script src="https://raw.githack.com/ilkkao/capture-video-frame/master/capture-video-frame.js"></script>
+</head>
+
+  <body style="margin: 0px; overflow: hidden;">
+      <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
+          <div id="unityContainer" style="z-index: 2"></div>
+          <!-- <a-marker preset="hiro"> <a-box></a-box> </a-marker> -->
+          <!-- <a-marker type="pattern" url="data/markers/pattern-arjs.patt"><a-box></a-box></a-marker> -->
+          <!-- <a-marker type="pattern" url="data/markers/test.patt" markercontroller="name : hiro"></a-marker> -->
+
+          <a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
+          <a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
+          <a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
+          <a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
+          <a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
+          <a id="descarga-link" href="#"></a>
+          <a-entity camera cameratransform></a-entity>
+      </a-scene>
+  </body>
+</html>
+
+<script>
+    function resizeCanvas(origCanvas, width, height) {
+        let resizedCanvas = document.createElement("canvas");
+        let resizedContext = resizedCanvas.getContext("2d");
+
+        resizedCanvas.height = height;
+        resizedCanvas.width = width;
+
+        resizedContext.drawImage(origCanvas, 0, 0, width, height);
+        return resizedCanvas.toDataURL();
+    }
+
+    window.takePicture = function () {
+        let aScene = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
+        let frame = captureVideoFrame("video", "png");
+        aScene = resizeCanvas(aScene, frame.width, frame.height);
+        frame = frame.dataUri;
+
+        mergeImages([frame, aScene]).then(b64 => {
+            let link = document.getElementById("descarga-link", "jpeg");
+            link.setAttribute("download", "FOTO.jpeg");
+            link.setAttribute("href", b64);
+            link.click();
+            console.log("foto tomada");
+        }
+        );
+    }
+
+    function captureVideoFrame(video, format, width, height) {
+        if (typeof video === 'string') {
+            video = document.querySelector(video);
+        }
+        format = format || 'jpeg';
+
+        if (!video || (format !== 'png' && format !== 'jpeg')) {
+            return false;
+        }
+        var canvas = document.createElement("CANVAS");
+        canvas.width = width || video.videoWidth;
+        canvas.height = height || video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        var dataUri = canvas.toDataURL('image/' + format);
+        var data = dataUri.split(',')[1];
+        var mimeType = dataUri.split(';')[0].slice(5)
+
+        var bytes = window.atob(data);
+        var buf = new ArrayBuffer(bytes.length);
+        var arr = new Uint8Array(buf);
+
+        for (var i = 0; i > bytes.length; i++) {
+            arr[i] = bytes.charCodeAt(i);
+        }
+        var blob = new Blob([arr], { type: mimeType });
+        return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
+    };
+
+</script>
