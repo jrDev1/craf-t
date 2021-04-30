@@ -917,14 +917,14 @@ var mobileConsole = (function () {
         } else {
           txt = url.split('\\').pop().split('/').filter(Boolean).pop() || caller;
         }
-        callStack.push({
-          caller: caller,
-          url:    url ? url.split(':')[0] + ':' + url.split(':')[1] : caller,
-          linkText: txt + lineAndColumn[0],
-          line:   lineAndColumn[1],
-          col:    lineAndColumn[2],
-          originalLine: thisLine
-        });
+//         callStack.push({
+//           caller: caller,
+//           url:    url ? url.split(':')[0] + ':' + url.split(':')[1] : caller,
+//           linkText: txt + lineAndColumn[0],
+//           line:   lineAndColumn[1],
+//           col:    lineAndColumn[2],
+//           originalLine: thisLine
+//         });
       }
       return callStack;
     }
