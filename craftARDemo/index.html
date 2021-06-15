@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | WebGL Test AR</title>
+    <script src="js/lib/aframe.min.js"></script>
+    <script src="js/lib/aframe-ar.js"></script>
+
+    <script src="Build/craftARDemo.loader.js"></script>
+
+    <script>
+
+        let isCameraReady = false;
+        let isDetectionManagerReady = false;
+        let gl = null;
+
+        function cameraReady() {
+            isCameraReady = true;
+            gl = unityInstance.Module.ctx;
+            console.log("Camera Ready Called " + isCameraReady)
+        }
+
+        let isObjectAvailable = false;
+        function objectAvailable() {
+
+            isObjectAvailable = true;
+            console.log("Object Available " + isObjectAvailable)
+        }
+
+        function detectionManagerReady() {
+            isDetectionManagerReady = true;
+        }
+
+        function createUnityMatrix(el) {
+            const m = el.matrix.clone();
+            const zFlipped = new THREE.Matrix4().makeScale(1, 1, -1).multiply(m);
+            const rotated = zFlipped.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+            return rotated;
+        }
+        AFRAME.registerComponent('markercontroller', {
+            schema: {
+                name: { type: 'string' }
+            },
+            tock: function (time, timeDelta) {
+
+                let position = new THREE.Vector3();
+                let rotation = new THREE.Quaternion();
+                let scale = new THREE.Vector3();
+
+                createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
+
+                const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
+
+                if (isDetectionManagerReady) {
+                    unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
+                }
+            }
+        });
+
+        AFRAME.registerComponent('cameratransform', {
+            tock: function (time, timeDelta) {
+
+                let camtr = new THREE.Vector3();
+                let camro = new THREE.Quaternion();
+                let camsc = new THREE.Vector3();
+
+                this.el.object3D.matrix.clone().decompose(camtr, camro, camsc);
+
+                const projection = this.el.components.camera.camera.projectionMatrix.clone();
+                const serializedProj = `${[...projection.elements]}`
+
+                const posCam = `${[...camtr.toArray()]}`
+                const rotCam = `${[...camro.toArray()]}`
+                
+                if (isCameraReady) {
+                    console.log("Camera Transform " + unityInstance);
+                    unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
+                    unityInstance.SendMessage("Main Camera", "setPosition", posCam);
+                    unityInstance.SendMessage("Main Camera", "setRotation", rotCam);
+
+                    let w = window.innerWidth;
+                    let h = window.innerHeight;
+
+                    //const unityCanvas = document.getElementsByTagName('canvas')[0];
+
+                    //const unityCanvas = document.querySelector("#unity-canvas");
+                    console.log("here " + unityCanvas);
+                    const ratio = unityCanvas.width / w;
+
+                    w *= ratio
+                    h *= ratio
+
+                    const size = `${w},${h}`
+
+                    unityInstance.SendMessage("Main Camera", "objectCheck", "Canvas");
+
+                    if (isObjectAvailable) {
+
+                        unityInstance.SendMessage("Canvas", "setSize", size);
+
+                    }
+
+                    console.log(" cHeight-" + unityCanvas.height + " cWidth-" + unityCanvas.width + " wHeight-" + h + " wWidth-" + w);
+
+                }
+
+                if (gl != null) {
+                    gl.dontClearOnFrameStart = true;
+                }
+            }
+        });
+
+        AFRAME.registerComponent('copycanvas', {
+            tick: function (time, timeDelta) {
+                
+                console.log("there " + unityCanvas + " w-" + this.el.canvas.width + " h-" + this.el.canvas.height);
+                
+                unityCanvas.width = this.el.canvas.width;
+                unityCanvas.height = this.el.canvas.height;
+            }
+        });
+    </script>
+</head>
+ 
+<body style="margin: 0px; overflow: hidden;">
+
+    <div id="unity-container" class="unity-desktop" style="z-index: 12">
+        <canvas id="unity-canvas" width=960 height=600></canvas>
+        
+    </div>
+
+    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
+
+			<a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
+			<a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
+			<a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
+			<a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
+
+        <a-entity camera cameratransform></a-entity>
+    </a-scene>
+</body>
+</html>
+
+<script>
+
+    var container = document.querySelector("#unity-container");
+    var unityCanvas = document.querySelector("#unity-canvas");
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/craftARDemo.loader.js";
+    var config = {
+        dataUrl: buildUrl + "/craftARDemo.data.br",
+        frameworkUrl: buildUrl + "/craftARDemo.framework.js.br",
+        codeUrl: buildUrl + "/craftARDemo.wasm.br",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "New Unity Project (1)",
+        productVersion: "0.1",
+    };
+
+    var script = document.createElement("script");
+    var unityInstance;
+
+    script.src = loaderUrl;
+    script.onload = () => {
+        createUnityInstance(unityCanvas, config, (progress) => {
+
+        }).then((ui) => {
+            unityInstance = ui;
+
+            
+        }).catch((message) => {
+            alert(message);
+        });
+    };
+    document.body.appendChild(script);
+
+
+</script>
