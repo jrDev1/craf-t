@@ -1,17 +1,113 @@
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html lang="en-us">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | WebGL Test AR</title>
+    <title>Unity WebGL Player | New Unity Project (1)</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="Build/craftARDemo.loader.js"></script>
     <script src="js/lib/aframe.min.js"></script>
     <script src="js/lib/aframe-ar.js"></script>
+</head>
 
-    <script src="Build/craftARDemo.loader.js"></script>
+<body>
+    <!-- style for the loader -->
+    <style>
+        .arjs-loader {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 1);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .arjs-loader div {
+                text-align: center;
+                font-size: 1.25em;
+                color: white;
+            }
+
+        #splash {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 1);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 0.25rem solid rgba(255, 255, 255, 0.2);
+            border-top-color: white;
+            animation: spin 1s infinite linear;
+        }
+    </style>
+
+    <div id="splash">
+        <div class="loading"></div>
+    </div>
+
+    <div id="unity-container" class="unity-desktop">
+
+        <canvas id="unity-canvas"></canvas>
+
+    </div>
 
     <script>
+
+      var container = document.querySelector("#unity-container");
+      var unityCanvas = document.querySelector("#unity-canvas");
+      
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/craftARDemo.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/craftARDemo.data",
+        frameworkUrl: buildUrl + "/craftARDemo.framework.js",
+        codeUrl: buildUrl + "/craftARDemo.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "New Unity Project (1)",
+        productVersion: "0.1",
+      };
+
+        var script = document.createElement("script");
+        var unityInstance;
+
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(unityCanvas, config, (progress) => {
+
+            }).then((ui) => {
+                unityInstance = ui;
+
+            }).catch((message) => {
+                alert(message);
+            });
+        };
+        document.body.appendChild(script);
 
         let isCameraReady = false;
         let isDetectionManagerReady = false;
@@ -27,7 +123,7 @@
         function objectAvailable() {
 
             isObjectAvailable = true;
-            console.log("Object Available " + isObjectAvailable)
+            //console.log("Object Available " + isObjectAvailable);
         }
 
         function detectionManagerReady() {
@@ -40,6 +136,7 @@
             const rotated = zFlipped.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
             return rotated;
         }
+
         AFRAME.registerComponent('markercontroller', {
             schema: {
                 name: { type: 'string' }
@@ -53,6 +150,7 @@
                 createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
 
                 const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
+                //console.log("Detection " + isDetectionManagerReady);
 
                 if (isDetectionManagerReady) {
                     unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
@@ -74,9 +172,12 @@
 
                 const posCam = `${[...camtr.toArray()]}`
                 const rotCam = `${[...camro.toArray()]}`
-                
+
                 if (isCameraReady) {
                     //console.log("Camera Transform " + unityInstance);
+                    //document.querySelector("#arjs-loader").style.display = "none";
+
+                    document.querySelector("#splash").style.display = "none";
 
                     unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
                     unityInstance.SendMessage("Main Camera", "setPosition", posCam);
@@ -86,16 +187,17 @@
                     let h = window.innerHeight;
 
                     //console.log("here " + unityCanvas);
-                    //const ratio = unityCanvas.width / w;
 
-                    const ratio = unityCanvas.height / h;
+                    const ratio = unityCanvas.width / w;
+
+                    //const ratio = unityCanvas.height / h;
 
                     w *= ratio;
                     h *= ratio;
 
                     const size = `${w},${h}`;
 
-                    unityInstance.SendMessage("Main Camera", "objectCheck", "Canvas");
+                    unityInstance.SendMessage("Main Camera", "ObjectCheck", "Canvas");
 
                     if (isObjectAvailable) {
 
@@ -103,7 +205,7 @@
 
                     }
 
-                    console.log(" cHeight-" + unityCanvas.height + " cWidth-" + unityCanvas.width + " wHeight-" + h + " wWidth-" + w);
+                    //console.log(" cHeight-" + unityCanvas.height + " cWidth-" + unityCanvas.width + " wHeight-" + h + " wWidth-" + w);
 
                 }
 
@@ -115,25 +217,14 @@
 
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
-                
-                console.log("there " + unityCanvas + " w-" + this.el.canvas.width + " h-" + this.el.canvas.height);
-                
-                unityCanvas.width = this.el.canvas.width;
-                unityCanvas.height = this.el.canvas.height;
+
+                //console.log("there " + unityCanvas + " w-" + this.el.canvas.width + " h-" + this.el.canvas.height);
+
+                unityCanvas.style.width = window.innerWidth + 'px';
+                unityCanvas.style.height = window.innerHeight + 'px';
             }
         });
-
     </script>
-
-</head>
- 
-<body style="margin: 0px; overflow: hidden;">
-
-    <div id="unity-container" class="unity-desktop" style="z-index: 2">
-        <canvas id="unity-canvas" width=960 height=600></canvas>
-        
-    </div>
-
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
 
 			<a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
@@ -148,42 +239,6 @@
 
         <a-entity camera cameratransform></a-entity>
     </a-scene>
+
 </body>
 </html>
-
-<script>
-
-    var container = document.querySelector("#unity-container");
-    var unityCanvas = document.querySelector("#unity-canvas");
-
-    var buildUrl = "Build";
-    var loaderUrl = buildUrl + "/craftARDemo.loader.js";
-    var config = {
-        dataUrl: buildUrl + "/craftARDemo.data",
-        frameworkUrl: buildUrl + "/craftARDemo.framework.js",
-        codeUrl: buildUrl + "/craftARDemo.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "New Unity Project (1)",
-        productVersion: "0.1",
-    };
-
-    var script = document.createElement("script");
-    var unityInstance;
-
-    script.src = loaderUrl;
-    script.onload = () => {
-        createUnityInstance(unityCanvas, config, (progress) => {
-
-        }).then((ui) => {
-            unityInstance = ui;
-
-            
-        }).catch((message) => {
-            alert(message);
-        });
-    };
-    document.body.appendChild(script);
-
-
-</script>
