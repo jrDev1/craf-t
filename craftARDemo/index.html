@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
@@ -87,6 +87,7 @@
         dataUrl: buildUrl + "/craftARDemo.data",
         frameworkUrl: buildUrl + "/craftARDemo.framework.js",
         codeUrl: buildUrl + "/craftARDemo.wasm",
+
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "New Unity Project (1)",
@@ -123,7 +124,7 @@
         function objectAvailable() {
 
             isObjectAvailable = true;
-            //console.log("Object Available " + isObjectAvailable);
+
         }
 
         function detectionManagerReady() {
@@ -150,8 +151,7 @@
                 createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
 
                 const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
-                //console.log("Detection " + isDetectionManagerReady);
-
+                
                 if (isDetectionManagerReady) {
                     unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
                 }
@@ -174,7 +174,7 @@
                 const rotCam = `${[...camro.toArray()]}`
 
                 if (isCameraReady) {
-                    //console.log("Camera Transform " + unityInstance);
+
                     //document.querySelector("#arjs-loader").style.display = "none";
 
                     document.querySelector("#splash").style.display = "none";
@@ -186,11 +186,7 @@
                     let w = window.innerWidth;
                     let h = window.innerHeight;
 
-                    //console.log("here " + unityCanvas);
-
                     const ratio = unityCanvas.width / w;
-
-                    //const ratio = unityCanvas.height / h;
 
                     w *= ratio;
                     h *= ratio;
@@ -205,8 +201,6 @@
 
                     }
 
-                    //console.log(" cHeight-" + unityCanvas.height + " cWidth-" + unityCanvas.width + " wHeight-" + h + " wWidth-" + w);
-
                 }
 
                 if (gl != null) {
@@ -218,10 +212,9 @@
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
 
-                //console.log("there " + unityCanvas + " w-" + this.el.canvas.width + " h-" + this.el.canvas.height);
-
                 unityCanvas.style.width = window.innerWidth + 'px';
                 unityCanvas.style.height = window.innerHeight + 'px';
+
             }
         });
     </script>
