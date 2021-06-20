@@ -25,17 +25,17 @@
 [[headers]]
   for = "/Build/*.data.gz"
   [headers.values]
-    Content-Encoding = "gz"
+    Content-Encoding = "gzip"
     Content-Type = "application/octet-stream"
 	
 [[headers]]
   for = "/Build/*.wasm.gz"
   [headers.values]
-    Content-Encoding = "gz"
+    Content-Encoding = "gzip"
     Content-Type = "application/wasm"
 
 [[headers]]                                                                      
   for = "/Build/*.js.gz"                                                             
   [headers.values]
-    Content-Encoding = "gz"
+    Content-Encoding = "gzip"
     Content-Type = "application/javascript"
