@@ -1,7 +1,11 @@
-/*.unityweb
-Content-Encoding: br
-Content-Type: application/octet-stream
+Content-Encoding: gzip
+Content-Type: application/wasm
 
-/*.wasm
 Content-Encoding: br
 Content-Type: application/wasm
+
+Content-Encoding: gzip
+Content-Type: application/javascript
+
+Content-Encoding: br
+Content-Type: application/javascript
