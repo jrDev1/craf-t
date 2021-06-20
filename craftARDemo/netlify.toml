@@ -21,3 +21,21 @@
   [headers.values]
     Content-Encoding = "br"
     Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/Build/*.data.gz"
+  [headers.values]
+    Content-Encoding = "gz"
+    Content-Type = "application/octet-stream"
+	
+[[headers]]
+  for = "/Build/*.wasm.gz"
+  [headers.values]
+    Content-Encoding = "gz"
+    Content-Type = "application/wasm"
+
+[[headers]]                                                                      
+  for = "/Build/*.js.gz"                                                             
+  [headers.values]
+    Content-Encoding = "gz"
+    Content-Type = "application/javascript"
