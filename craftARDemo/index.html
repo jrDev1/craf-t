@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="application/x-gzip">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | New Unity Project (1)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
@@ -14,6 +14,10 @@
 <body>
     <!-- style for the loader -->
     <style>
+        html, body {
+            overflow: hidden;
+        }
+
         .arjs-loader {
             height: 100%;
             width: 100%;
@@ -33,7 +37,7 @@
                 color: white;
             }
 
-        #splash {
+        <!--#splash {
             height: 100%;
             width: 100%;
             position: absolute;
@@ -63,14 +67,19 @@
             border: 0.25rem solid rgba(255, 255, 255, 0.2);
             border-top-color: white;
             animation: spin 1s infinite linear;
-        }
+        }-->
     </style>
 
-    <div id="splash">
+    <!--<div id="splash">
         <div class="loading"></div>
+    </div>-->
+
+    <div class="arjs-loader" id="arjs-loader">
+        <div>Loading, please wait...</div>
     </div>
 
-    <div id="unity-container" class="unity-desktop">
+
+    <div id="unity-container" class="unity-desktop" style="z-index: 2">
 
         <canvas id="unity-canvas"></canvas>
 
@@ -80,13 +89,13 @@
 
       var container = document.querySelector("#unity-container");
       var unityCanvas = document.querySelector("#unity-canvas");
-      
+
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/craftARDemo.loader.js";
       var config = {
-        dataUrl: buildUrl + "/craftARDemo.data.gz",
-        frameworkUrl: buildUrl + "/craftARDemo.framework.js.gz",
-        codeUrl: buildUrl + "/craftARDemo.wasm.gz",
+        dataUrl: buildUrl + "/craftARDemo.data.unityweb",
+        frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
+        codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
 
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
@@ -151,7 +160,7 @@
                 createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
 
                 const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
-                
+
                 if (isDetectionManagerReady) {
                     unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
                 }
@@ -175,9 +184,9 @@
 
                 if (isCameraReady) {
 
-                    //document.querySelector("#arjs-loader").style.display = "none";
+                    document.querySelector("#arjs-loader").style.display = "none";
 
-                    document.querySelector("#splash").style.display = "none";
+                    //document.querySelector("#splash").style.display = "none";
 
                     unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
                     unityInstance.SendMessage("Main Camera", "setPosition", posCam);
