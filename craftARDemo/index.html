@@ -93,9 +93,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/craftARDemo.loader.js";
       var config = {
-        dataUrl: buildUrl + "/craftARDemo.data",
-        frameworkUrl: buildUrl + "/craftARDemo.framework.js",
-        codeUrl: buildUrl + "/craftARDemo.wasm",
+        dataUrl: buildUrl + "/craftARDemo.data.unityweb",
+        frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
+        codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
 
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
@@ -206,7 +206,9 @@
 
                     if (isObjectAvailable) {
 
-                        unityInstance.SendMessage("Canvas", "setSize", size);
+                        //unityInstance.SendMessage("Canvas", "setSize", size);
+
+                        unityInstance.SendMessage("ARWT Controller", "setSize", size);
 
                     }
 
