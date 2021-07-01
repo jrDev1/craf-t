@@ -234,7 +234,7 @@
         });
 
         function takeSnap(url) {
-            //console.log(url);
+            console.log(url);
             function getFormattedTimestamp() {
                 return new Date(Date.now() - 60000 * new Date().getTimezoneOffset()).toISOString().replace(/\..*/g, '').replace(/T/g, ' ').replace(/:/g, '-');
             }
