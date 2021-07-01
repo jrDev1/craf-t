@@ -922,6 +922,7 @@ var mobileConsole = (function () {
       while (i--) {
         thisLine = lines[i].trim();
         lineAndColumn = thisLine.match(/(?::)(\d+)(?::)(\d+)/);
+        console.log(lineAndColumn.length);
         url = urlFromString(thisLine).replace(lineAndColumn[0], '').split('#')[0] || '';
         caller = htmlToString(thisLine.replace(urlFromString(thisLine), '').replace(separator, '').replace('at ', '').trim());
         if (caller === '' || caller === lineAndColumn[0]) { continue; }
