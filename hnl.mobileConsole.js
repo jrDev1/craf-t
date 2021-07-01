@@ -1217,7 +1217,7 @@ var mobileConsole = (function () {
         //==========================================================
         //make sure we still call the original method, if applicable (not window.onerror)
         if (typeof arguments[1].original === 'function') {
-          arguments[1].original.apply(console, arguments[1].originalArguments);
+          //arguments[1].original.apply(console, arguments[1].originalArguments);
         }
       } catch (e) {
         //not logging. why? throw error
