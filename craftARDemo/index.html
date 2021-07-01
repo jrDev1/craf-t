@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
@@ -89,23 +89,21 @@
 
     </div>
 
-    <script>
+    <script>var container = document.querySelector("#unity-container");
+        var unityCanvas = document.querySelector("#unity-canvas");
 
-      var container = document.querySelector("#unity-container");
-      var unityCanvas = document.querySelector("#unity-canvas");
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/craftARDemo.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/craftARDemo.data.unityweb",
+            frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
+            codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/craftARDemo.loader.js";
-      var config = {
-        dataUrl: buildUrl + "/craftARDemo.data.unityweb",
-        frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
-        codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
-
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "New Unity Project (1)",
-        productVersion: "0.1",
-      };
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+            productName: "New Unity Project (1)",
+            productVersion: "0.1",
+        };
 
         var script = document.createElement("script");
         var unityInstance;
@@ -286,26 +284,24 @@
 
             var blob = new Blob([arr], { type: mimeType });
             return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
-        }
-
-    </script>
+        }</script>
 
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
 
-			<a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
-			<a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
-			<a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
-			<a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
+        <a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
+        <a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
+        <a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
+        <a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
+        <a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
+        <a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
+        <a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
+        <a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
+        <a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
 
         <a-entity camera cameratransform></a-entity>
 
     </a-scene>
-
+    <a href="#" id="download-link"></a>
 </body>
 
 </html>
