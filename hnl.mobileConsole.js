@@ -876,26 +876,26 @@ var mobileConsole = (function () {
       });
     }
     function preFilterTrace(array) {
-      var newArray = array.split('\n').filter(Boolean), //filter cleans out empty values
-        isCommandLine = false, stealthThese, i;
-      if (newArray[0].indexOf('http') === -1) { newArray.shift(); } //remove first line if contains no 'http' (Chrome starts with 'Error', Firefox doesn't..)
-      if (newArray[0].indexOf('console.') !== -1 || newArray[0].indexOf('console[method]') !== -1) { newArray.shift(); }
-      if (newArray.length > 0) {
-        isCommandLine = newArray[newArray.length - 1].indexOf('keydown') !== -1;
-        newArray = newArray.filter(function(item){ return item !== ''; });
+//       var newArray = array.split('\n').filter(Boolean), //filter cleans out empty values
+//         isCommandLine = false, stealthThese, i;
+//       if (newArray[0].indexOf('http') === -1) { newArray.shift(); } //remove first line if contains no 'http' (Chrome starts with 'Error', Firefox doesn't..)
+//       if (newArray[0].indexOf('console.') !== -1 || newArray[0].indexOf('console[method]') !== -1) { newArray.shift(); }
+//       if (newArray.length > 0) {
+//         isCommandLine = newArray[newArray.length - 1].indexOf('keydown') !== -1;
+//         newArray = newArray.filter(function(item){ return item !== ''; });
 
-        if (isCommandLine) {
-          stealthThese = ['submitCommand', 'eval', 'setBinds', 'interceptConsole', 'newConsole'];
-          newArray.pop(); //remove last index, as it is the keydown event.
-          i = stealthThese.length;
-          while(i--) {
-            newArray = filterOut(newArray, stealthThese[i]);
-          }
-        }
-      }
-      if (isCommandLine || newArray.length === 0) {
-        newArray.push('(anonymous function) console:1:1');
-      }
+//         if (isCommandLine) {
+//           stealthThese = ['submitCommand', 'eval', 'setBinds', 'interceptConsole', 'newConsole'];
+//           newArray.pop(); //remove last index, as it is the keydown event.
+//           i = stealthThese.length;
+//           while(i--) {
+//             newArray = filterOut(newArray, stealthThese[i]);
+//           }
+//         }
+//       }
+//       if (isCommandLine || newArray.length === 0) {
+//         newArray.push('(anonymous function) console:1:1');
+//       }
       return newArray;
     }
     //core
@@ -917,7 +917,7 @@ var mobileConsole = (function () {
       //stop if no source trace can be determined
       if (!traceToProcess) { return; }
 
-      lines = preFilterTrace(traceToProcess); //pre filters all lines by filtering out all mobileConsole's own methods so mobileConsole runs Stealth and unobtrusive
+      //lines = preFilterTrace(traceToProcess); //pre filters all lines by filtering out all mobileConsole's own methods so mobileConsole runs Stealth and unobtrusive
       i = lines.length;
       while (i--) {
         thisLine = lines[i].trim();
