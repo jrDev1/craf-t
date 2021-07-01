@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
@@ -234,57 +234,62 @@
         });
 
         function takeSnap(url) {
-            console.log(url);
+
             function getFormattedTimestamp() {
                 return new Date(Date.now() - 60000 * new Date().getTimezoneOffset()).toISOString().replace(/\..*/g, '').replace(/T/g, ' ').replace(/:/g, '-');
             }
 
-            /*ar contentType = 'image/png';
-            function fixBinary(bin) {
-                var length = bin.length;
-                var buf = new ArrayBuffer(length);
-                var arr = new Uint8Array(buf);
-                for (var i = 0; i < length; i++) {
-                    arr[i] = bin.charCodeAt(i);
-                }
-                return buf;
-            }
-            var binary = fixBinary(atob(url));
-            var data = new Blob([binary], { type: contentType });
+            document.querySelector("video").pause();
 
-            var link = document.createElement('a');
-            link.download = "Screenshot " + getFormattedTimestamp();
-            link.innerHTML = 'DownloadFile';
-            link.setAttribute('id', 'ImageDownloaderLink');
-            if (window.webkitURL != null) {
-                link.href = window.webkitURL.createObjectURL(data);
-            }
-            else {
-                link.href = window.URL.createObjectURL(data);
-                link.onclick = function () {
-                    var child = document.getElementById('ImageDownloaderLink');
-                    child.parentNode.removeChild(child);
-                };
-                link.style.display = 'none';
-                document.body.appendChild(link);
-            }*/
-            //link.click();
+            let frame = captureVideoFrame("video", "png");
+            frame = frame.dataUri;
 
-            var button = document.createElement("a");
-            button.setAttribute("href", url);
-            button.setAttribute("download", "Screenshot " + getFormattedTimestamp() + ".png");
-            button.style.display = "none";
-            document.body.appendChild(button);
-            button.click();
-            document.body.removeChild(button);
+            mergeImages([frame, url]).then(b64 => {
+                let link = document.getElementById("download-link", "png");
+                link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
+                link.setAttribute("href", b64);
+                link.click();
+            });
 
-            //var img = document.createElement('img');
-            //img.src = "data:image/png;base64, " + url;
-            //document.body.appendChild(img);
-
+            document.querySelector("video").play();
 
         }
+
+        function captureVideoFrame(video, format, width, height) {
+
+            if (typeof video === 'string') {
+                video = document.querySelector(video);
+            }
+
+            format = format || 'jpeg';
+
+            if (!video || (format !== 'png' && format !== 'jpeg')) {
+                return false;
+            }
+
+            var canvas = document.createElement("CANVAS");
+            console.log(video.videoWidth + " " + video.videoHeight + " " + window.innerWidth);
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, window.innerWidth, window.innerHeight);
+            var dataUri = canvas.toDataURL('image/' + format);
+            var data = dataUri.split(',')[1];
+            var mimeType = dataUri.split(';')[0].slice(5)
+
+            var bytes = window.atob(data);
+            var buf = new ArrayBuffer(bytes.length);
+            var arr = new Uint8Array(buf);
+
+            for (var i = 0; i < bytes.length; i++) {
+                arr[i] = bytes.charCodeAt(i);
+            }
+
+            var blob = new Blob([arr], { type: mimeType });
+            return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
+        }
+
     </script>
+
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
 
 			<a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
@@ -298,7 +303,9 @@
 			<a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
 
         <a-entity camera cameratransform></a-entity>
+
     </a-scene>
-    <a href="#" id="download-link"></a>
+
 </body>
+
 </html>
