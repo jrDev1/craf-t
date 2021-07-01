@@ -1,4 +1,4 @@
-/*!
+/*!NEW 1
  * hnl.mobileConsole - javascript mobile console - v1.3.8 - 04/01/2021
  * Adds html console to webpage. Especially useful for debugging JS on mobile devices.
  * Supports 'log', 'trace', 'info', 'warn', 'error', 'group', 'groupEnd', 'table', 'assert', 'clear'
