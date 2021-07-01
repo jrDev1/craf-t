@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | New Unity Project (1)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
@@ -9,6 +10,8 @@
     <script src="Build/craftARDemo.loader.js"></script>
     <script src="js/lib/aframe.min.js"></script>
     <script src="js/lib/aframe-ar.js"></script>
+    <script src="https://unpkg.com/merge-images"></script>
+
 </head>
 
 <body>
@@ -37,7 +40,7 @@
                 color: white;
             }
 
-        <!--#splash {
+        <!-- #splash {
             height: 100%;
             width: 100%;
             position: absolute;
@@ -67,7 +70,8 @@
             border: 0.25rem solid rgba(255, 255, 255, 0.2);
             border-top-color: white;
             animation: spin 1s infinite linear;
-        }-->
+        }
+        -->
     </style>
 
     <!--<div id="splash">
@@ -81,7 +85,7 @@
 
     <div id="unity-container" class="unity-desktop" style="z-index: 2">
 
-        <canvas id="unity-canvas"></canvas>
+        <canvas id="unity-canvas" width=960 height=600></canvas>
 
     </div>
 
@@ -223,21 +227,63 @@
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
 
-                if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                    // Mobile device style: fill the whole browser client area with the game canvas:
-
-                    var meta = document.createElement('meta');
-                    meta.name = 'viewport';
-                    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-                    document.getElementsByTagName('head')[0].appendChild(meta);
-                    container.className = "unity-mobile";
-
-                }
                 unityCanvas.style.width = window.innerWidth + 'px';
                 unityCanvas.style.height = window.innerHeight + 'px';
 
             }
         });
+
+        function takeSnap(url) {
+            //console.log(url);
+            function getFormattedTimestamp() {
+                return new Date(Date.now() - 60000 * new Date().getTimezoneOffset()).toISOString().replace(/\..*/g, '').replace(/T/g, ' ').replace(/:/g, '-');
+            }
+
+            /*ar contentType = 'image/png';
+            function fixBinary(bin) {
+                var length = bin.length;
+                var buf = new ArrayBuffer(length);
+                var arr = new Uint8Array(buf);
+                for (var i = 0; i < length; i++) {
+                    arr[i] = bin.charCodeAt(i);
+                }
+                return buf;
+            }
+            var binary = fixBinary(atob(url));
+            var data = new Blob([binary], { type: contentType });
+
+            var link = document.createElement('a');
+            link.download = "Screenshot " + getFormattedTimestamp();
+            link.innerHTML = 'DownloadFile';
+            link.setAttribute('id', 'ImageDownloaderLink');
+            if (window.webkitURL != null) {
+                link.href = window.webkitURL.createObjectURL(data);
+            }
+            else {
+                link.href = window.URL.createObjectURL(data);
+                link.onclick = function () {
+                    var child = document.getElementById('ImageDownloaderLink');
+                    child.parentNode.removeChild(child);
+                };
+                link.style.display = 'none';
+                document.body.appendChild(link);
+            }*/
+            //link.click();
+
+            var button = document.createElement("a");
+            button.setAttribute("href", url);
+            button.setAttribute("download", "Screenshot " + getFormattedTimestamp() + ".png");
+            button.style.display = "none";
+            document.body.appendChild(button);
+            button.click();
+            document.body.removeChild(button);
+
+            //var img = document.createElement('img');
+            //img.src = "data:image/png;base64, " + url;
+            //document.body.appendChild(img);
+
+
+        }
     </script>
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
 
@@ -253,6 +299,6 @@
 
         <a-entity camera cameratransform></a-entity>
     </a-scene>
-
+    <a href="#" id="download-link"></a>
 </body>
 </html>
