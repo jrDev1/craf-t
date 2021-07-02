@@ -92,21 +92,21 @@
 
     <script>
 
-        var container = document.querySelector("#unity-container");
-        var unityCanvas = document.querySelector("#unity-canvas");
+      var container = document.querySelector("#unity-container");
+      var unityCanvas = document.querySelector("#unity-canvas");
 
-        var buildUrl = "Build";
-        var loaderUrl = buildUrl + "/craftARDemo.loader.js";
-        var config = {
-            dataUrl: buildUrl + "/craftARDemo.data.unityweb",
-            frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
-            codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/craftARDemo.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/craftARDemo.data.unityweb",
+        frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
+        codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
 
-            streamingAssetsUrl: "StreamingAssets",
-            companyName: "DefaultCompany",
-            productName: "New Unity Project (1)",
-            productVersion: "0.1",
-        };
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "New Unity Project (1)",
+        productVersion: "0.1",
+      };
 
         var script = document.createElement("script");
         var unityInstance;
@@ -131,7 +131,7 @@
         function cameraReady() {
             isCameraReady = true;
             gl = unityInstance.Module.ctx;
-            console.log("Camera Ready Called " + isCameraReady)
+            Debug("Camera Ready Called " + isCameraReady)
         }
 
         let isObjectAvailable = false;
@@ -190,7 +190,7 @@
                 if (isCameraReady) {
 
                     //if (!mobileConsole.status.initialized) {
-                      //  mobileConsole.init();
+                    //    mobileConsole.init();
                     //}
 
                     //console.log("Console " + mobileConsole.status.initialized);
@@ -250,10 +250,19 @@
 
             let frame = captureVideoFrame("video", "png");
             
+
             resizeImage(url, frame.width, frame.height).then((result) => {
-                console.log(result);
+                //console.log(result);
                 frame = frame.dataUri;
 
+                /*let link = document.getElementById("download-link", "png");
+                link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
+                link.setAttribute("href", frame);
+                link.click();
+
+                link.setAttribute("download", "Screenshot2 " + getFormattedTimestamp());
+                link.setAttribute("href", result);
+                link.click();*/
                 mergeImages([frame, result]).then(b64 => {
                     let link = document.getElementById("download-link", "png");
                     link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
@@ -268,7 +277,7 @@
         }
 
         function captureVideoFrame(video, format, width, height) {
-            console.log("Capture " + video);
+
             if (typeof video === 'string') {
                 video = document.querySelector(video);
             }
@@ -280,8 +289,8 @@
             }
 
             var canvas = document.createElement("CANVAS");
-            console.log(video.videoWidth + " " + video.videoHeight + " " + window.innerWidth + " " + window.innerHeight);
-            canvas.width = video.videoWidth ;
+
+            canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0);
             var dataUri = canvas.toDataURL('image/' + format);
@@ -295,7 +304,7 @@
             for (var i = 0; i < bytes.length; i++) {
                 arr[i] = bytes.charCodeAt(i);
             }
-            //console.log("Canvas " + canvas.width + " " + canvas.height + " " + dataUri);
+
             var blob = new Blob([arr], { type: mimeType });
             return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
         }
@@ -310,45 +319,53 @@
                     const MAX_HEIGHT = maxHeight;
                     let width = img.width;
                     let height = img.height;
+                    Debug(width + " " + height);
 
                     if (width > height) {
                         if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
+                            height = MAX_HEIGHT;
                             width = MAX_WIDTH;
                         }
                     } else {
                         if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
+                            width = MAX_HEIGHT;
+                            height = MAX_WIDTH;
                         }
                     }
                     canvas.width = width;
                     canvas.height = height;
+                    Debug(canvas.width + " " + canvas.height);
+
                     let ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     resolve(canvas.toDataURL('image/png'));
                 }
             })
         }
-        
+
+        function Debug(log) {
+            unityInstance.SendMessage("Main Camera", "DebugLog", log);
+        }
     </script>
 
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
 
-        <a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
-        <a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
-        <a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
-        <a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
-        <a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
-        <a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
-        <a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
-        <a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
-        <a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
+			<a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
+			<a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
+			<a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
+			<a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
+			<a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
 
         <a-entity camera cameratransform></a-entity>
 
     </a-scene>
+
     <a href="#" id="download-link"></a>
+
 </body>
 
 </html>
