@@ -207,6 +207,8 @@
                     let h = window.innerHeight;
 
                     const ratio = unityCanvas.width / w;
+                    var wr = w;
+                    var hr = h;
 
                     w *= ratio;
                     h *= ratio;
@@ -222,7 +224,11 @@
                         unityInstance.SendMessage("ARWT Controller", "setSize", size);
 
                     }
+                    
+                    wr *= ratio;
+                    hr *= ratio;
 
+                Debug(w + " " + h + " " + wr + " " + hr);
                 }
 
                 if (gl != null) {
@@ -233,6 +239,18 @@
 
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
+                let w = window.innerWidth;
+                let h = window.innerHeight;
+
+                const ratio = unityCanvas.width / w;
+
+                var wr = w;
+                var hr = h;
+
+                wr *= ratio;
+                hr *= ratio;
+
+                //Debug(w + " " + h + " " + wr + " " + hr);
 
                 unityCanvas.style.width = window.innerWidth + 'px';
                 unityCanvas.style.height = window.innerHeight + 'px';
@@ -251,18 +269,10 @@
             let frame = captureVideoFrame("video", "png");
             
 
-            resizeImage(url, frame.width, frame.height).then((result) => {
-                //console.log(result);
+            resizeImage(url, frame.width, frame.height, 'image/png').then((result) => {
+                
                 frame = frame.dataUri;
 
-                /*let link = document.getElementById("download-link", "png");
-                link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
-                link.setAttribute("href", frame);
-                link.click();
-
-                link.setAttribute("download", "Screenshot2 " + getFormattedTimestamp());
-                link.setAttribute("href", result);
-                link.click();*/
                 mergeImages([frame, result]).then(b64 => {
                     let link = document.getElementById("download-link", "png");
                     link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
@@ -309,37 +319,25 @@
             return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
         }
 
-        function resizeImage(base64Str, maxWidth = 400, maxHeight = 350) {
+        function resizeImage(base64Str, width, height, format) {
+
             return new Promise((resolve) => {
+
                 let img = new Image();
                 img.src = base64Str;
+
                 img.onload = () => {
+
                     let canvas = document.createElement('canvas');
-                    const MAX_WIDTH = maxWidth;
-                    const MAX_HEIGHT = maxHeight;
-                    let width = img.width;
-                    let height = img.height;
-                    Debug(width + " " + height);
-
-                    //if (width > height) {
-                        //if (width > MAX_WIDTH) {
-
-                            height = MAX_HEIGHT;
-                            width = MAX_WIDTH;
-                        //}
-                    //} else {
-                        //if (height > MAX_HEIGHT) {
-                            //width = MAX_HEIGHT;
-                            //height = MAX_WIDTH;
-                        //}
-                    //}
+                    
                     canvas.width = width;
                     canvas.height = height;
                     Debug(canvas.width + " " + canvas.height);
 
                     let ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL('image/png'));
+                    resolve(canvas.toDataURL(format));
+
                 }
             })
         }
