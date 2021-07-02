@@ -321,17 +321,18 @@
                     let height = img.height;
                     Debug(width + " " + height);
 
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
+                    //if (width > height) {
+                        //if (width > MAX_WIDTH) {
+
                             height = MAX_HEIGHT;
                             width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width = MAX_HEIGHT;
-                            height = MAX_WIDTH;
-                        }
-                    }
+                        //}
+                    //} else {
+                        //if (height > MAX_HEIGHT) {
+                            //width = MAX_HEIGHT;
+                            //height = MAX_WIDTH;
+                        //}
+                    //}
                     canvas.width = width;
                     canvas.height = height;
                     Debug(canvas.width + " " + canvas.height);
