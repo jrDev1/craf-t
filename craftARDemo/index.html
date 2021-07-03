@@ -239,21 +239,18 @@
 
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
-                let w = window.innerWidth;
-                let h = window.innerHeight;
 
-                const ratio = unityCanvas.width / w;
+                if (window.innerWidth > window.innerHeight) {
 
-                var wr = w;
-                var hr = h;
+                    unityCanvas.style.width = window.innerWidth + 'px';
+                    unityCanvas.style.height = window.innerHeight + 'px';
 
-                wr *= ratio;
-                hr *= ratio;
+                } else {
 
-                //Debug(w + " " + h + " " + wr + " " + hr);
+                    unityCanvas.style.width = window.innerHeight + 'px';
+                    unityCanvas.style.height = window.innerWidth + 'px';
 
-                unityCanvas.style.width = window.innerWidth + 'px';
-                unityCanvas.style.height = window.innerHeight + 'px';
+                }
 
             }
         });
