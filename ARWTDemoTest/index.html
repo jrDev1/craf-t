@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+	<script src="https://jrdev1.github.io/craf-t/hnl.mobileConsole.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -152,7 +153,11 @@
                     setTimeout(() => {
                         document.querySelector("#arjs-loader").style.display = "none";
                     }, 1000);
-
+			
+		if (!mobileConsole.status.initialized) {
+                        mobileConsole.init();
+                    }
+			
                     unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
                     unityInstance.SendMessage("Main Camera", "setPosition", posCam);
                     unityInstance.SendMessage("Main Camera", "setRotation", rotCam);
@@ -188,9 +193,9 @@
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
                 
-                unityCanvas.style.width = window.innerWidth + 'px';
-                unityCanvas.style.height = window.innerHeight + 'px';
-
+                unityCanvas.style.width = screen.width + 'px';
+                unityCanvas.style.height = screen.height + 'px';
+		
             }
         });
 
