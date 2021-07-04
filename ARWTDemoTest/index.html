@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
     <meta charset="utf-8">
@@ -152,7 +152,6 @@
                     setTimeout(() => {
                         document.querySelector("#arjs-loader").style.display = "none";
                     }, 1000);
-                    
 
                     unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
                     unityInstance.SendMessage("Main Camera", "setPosition", posCam);
