@@ -60,9 +60,9 @@
         var buildUrl = "Build";
         var loaderUrl = buildUrl + "/ARWTDemoTest.loader.js";
         var config = {
-            dataUrl: buildUrl + "/ARWTDemoTest.data.gz",
-            frameworkUrl: buildUrl + "/ARWTDemoTest.framework.js.gz",
-            codeUrl: buildUrl + "/ARWTDemoTest.wasm.gz",
+            dataUrl: buildUrl + "/ARWTDemoTest.data.unityweb",
+            frameworkUrl: buildUrl + "/ARWTDemoTest.framework.js.unityweb",
+            codeUrl: buildUrl + "/ARWTDemoTest.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
             productName: "New Unity Project Test 2020",
@@ -93,7 +93,7 @@
         function cameraReady() {
             isCameraReady = true;
             gl = unityInstance.Module.ctx;
-            console.log("Camera Ready Called " + isCameraReady);
+            console.log("Camera Ready");
         }
 
         let isObjectAvailable = false;
