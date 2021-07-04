@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | New Unity Project Test 2020</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="Build/ARWTDemoTest.loader.js"></script>
+    <script src="js/lib/aframe.min.js"></script>
+    <script src="js/lib/aframe-ar.js"></script>
+
+</head>
+
+<body>
+    <!-- style for the loader -->
+    <style>
+        html, body {
+            overflow: hidden;
+        }
+
+        .arjs-loader {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 1);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .arjs-loader div {
+            text-align: center;
+            font-size: 1.25em;
+            color: white;
+        }
+
+    </style>
+
+    <div class="arjs-loader" id="arjs-loader">
+        <div>Loading, please wait...</div>
+    </div>
+
+
+    <div id="unity-container" class="unity-desktop" style="z-index: 2">
+
+        <canvas id="unity-canvas"></canvas>
+
+    </div>
+
+    <script>
+
+        var container = document.querySelector("#unity-container");
+        var unityCanvas = document.querySelector("#unity-canvas");
+
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/ARWTDemoTest.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/ARWTDemoTest.data.gz",
+            frameworkUrl: buildUrl + "/ARWTDemoTest.framework.js.gz",
+            codeUrl: buildUrl + "/ARWTDemoTest.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+            productName: "New Unity Project Test 2020",
+            productVersion: "0.1",
+        };
+        
+
+        var script = document.createElement("script");
+        var unityInstance;
+
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(unityCanvas, config, (progress) => {
+
+            }).then((ui) => {
+                unityInstance = ui;
+
+            }).catch((message) => {
+                alert(message);
+            });
+        };
+        document.body.appendChild(script);
+
+        let isCameraReady = false;
+        let isDetectionManagerReady = false;
+        let gl = null;
+
+        function cameraReady() {
+            isCameraReady = true;
+            gl = unityInstance.Module.ctx;
+            console.log("Camera Ready Called " + isCameraReady);
+        }
+
+        let isObjectAvailable = false;
+        function objectAvailable() {
+
+            isObjectAvailable = true;
+
+        }
+
+        function detectionManagerReady() {
+            isDetectionManagerReady = true;
+        }
+
+        function createUnityMatrix(el) {
+            const m = el.matrix.clone();
+            const zFlipped = new THREE.Matrix4().makeScale(1, 1, -1).multiply(m);
+            const rotated = zFlipped.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+            return rotated;
+        }
+
+        AFRAME.registerComponent('markercontroller', {
+            schema: {
+                name: { type: 'string' }
+            },
+            tock: function (time, timeDelta) {
+
+                let position = new THREE.Vector3();
+                let rotation = new THREE.Quaternion();
+                let scale = new THREE.Vector3();
+
+                createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
+
+                const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
+
+                if (isDetectionManagerReady) {
+                    unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
+                }
+            }
+        });
+
+        AFRAME.registerComponent('cameratransform', {
+            tock: function (time, timeDelta) {
+
+                let camtr = new THREE.Vector3();
+                let camro = new THREE.Quaternion();
+                let camsc = new THREE.Vector3();
+
+                this.el.object3D.matrix.clone().decompose(camtr, camro, camsc);
+
+                const projection = this.el.components.camera.camera.projectionMatrix.clone();
+                const serializedProj = `${[...projection.elements]}`
+
+                const posCam = `${[...camtr.toArray()]}`
+                const rotCam = `${[...camro.toArray()]}`
+
+                if (isCameraReady) {
+
+                    document.querySelector("#arjs-loader").style.display = "none";
+
+                    unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
+                    unityInstance.SendMessage("Main Camera", "setPosition", posCam);
+                    unityInstance.SendMessage("Main Camera", "setRotation", rotCam);
+
+                    let w = window.innerWidth;
+                    let h = window.innerHeight;
+
+                    const ratio = unityCanvas.width / w;
+                    var wr = w;
+                    var hr = h;
+
+                    w *= ratio;
+                    h *= ratio;
+
+                    const size = `${w},${h}`;
+
+                    unityInstance.SendMessage("Main Camera", "ObjectCheck", "Canvas");
+
+                    if (isObjectAvailable) {
+
+                        unityInstance.SendMessage("Canvas", "setSize", size);
+
+                    }
+
+                }
+
+                if (gl != null) {
+                    gl.dontClearOnFrameStart = true;
+                }
+            }
+        });
+
+        AFRAME.registerComponent('copycanvas', {
+            tick: function (time, timeDelta) {
+                
+                unityCanvas.style.width = window.innerWidth + 'px';
+                unityCanvas.style.height = window.innerHeight + 'px';
+
+            }
+        });
+
+    </script>
+
+    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
+
+			<a-marker type="pattern" url="data/markers/Hiro.patt" markercontroller="name : Hiro"></a-marker>
+			<a-marker type="pattern" url="data/markers/Nutty.patt" markercontroller="name : Nutty"></a-marker>
+			<a-marker type="pattern" url="data/markers/NuttyCardboard.patt" markercontroller="name : NuttyCardboard"></a-marker>
+
+        <a-entity camera cameratransform></a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>
