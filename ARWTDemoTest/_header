@@ -6,4 +6,8 @@
 /index.html
   Content-Encoding: gzip
   Content-Type: application/javascript
+  
+  /index.html
+  Content-Encoding: gzip
+  Content-Type: application/octet-stream
 
