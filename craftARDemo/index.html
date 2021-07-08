@@ -1,17 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <!--<script src="https://jrdev1.github.io/craf-t/hnl.mobileConsole.js"></script>-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | New Unity Project (1)</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
     <script src="Build/craftARDemo.loader.js"></script>
     <script src="js/lib/aframe.min.js"></script>
     <script src="js/lib/aframe-ar.js"></script>
-    <script src="https://unpkg.com/merge-images"></script>
 
 </head>
 
@@ -35,78 +31,42 @@
             align-items: center;
         }
 
-            .arjs-loader div {
-                text-align: center;
-                font-size: 1.25em;
-                color: white;
-            }
-
-        <!-- #splash {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 1);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .arjs-loader div {
+            text-align: center;
+            font-size: 1.25em;
+            color: white;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 0.25rem solid rgba(255, 255, 255, 0.2);
-            border-top-color: white;
-            animation: spin 1s infinite linear;
-        }
-        -->
     </style>
-
-    <!--<div id="splash">
-        <div class="loading"></div>
-    </div>-->
 
     <div class="arjs-loader" id="arjs-loader">
         <div>Loading, please wait...</div>
     </div>
 
 
-    <div id="unity-container" class="unity-desktop" style="z-index: 2">
+    <div id="unity-container" class="unity-desktop" style="z-index: 2; position: absolute; top: 0; left: 0;">
 
-        <canvas id="unity-canvas" width=960 height=600></canvas>
+        <canvas id="unity-canvas"></canvas>
 
     </div>
 
     <script>
 
-      var container = document.querySelector("#unity-container");
-      var unityCanvas = document.querySelector("#unity-canvas");
+        var container = document.querySelector("#unity-container");
+        var unityCanvas = document.querySelector("#unity-canvas");
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/craftARDemo.loader.js";
-      var config = {
-        dataUrl: buildUrl + "/craftARDemo.data.unityweb",
-        frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
-        codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
-
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/craftARDemo.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/craftARDemo.data.unityweb",
+            frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
+            codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "New Unity Project (1)",
-        productVersion: "0.1",
-      };
+            companyName: "DefaultCompany",
+            productName: "New Unity Project (1)",
+            productVersion: "0.1",
+        };
+        
 
         var script = document.createElement("script");
         var unityInstance;
@@ -131,7 +91,7 @@
         function cameraReady() {
             isCameraReady = true;
             gl = unityInstance.Module.ctx;
-            Debug("Camera Ready Called " + isCameraReady)
+            console.log("Camera Ready");
         }
 
         let isObjectAvailable = false;
@@ -143,6 +103,11 @@
 
         function detectionManagerReady() {
             isDetectionManagerReady = true;
+        }
+
+        let camName = null;
+        function getCamName(name) {
+            camName = name;
         }
 
         function createUnityMatrix(el) {
@@ -189,46 +154,34 @@
 
                 if (isCameraReady) {
 
-                    //if (!mobileConsole.status.initialized) {
-                    //    mobileConsole.init();
-                    //}
+                    setTimeout(() => {
+                        document.querySelector("#arjs-loader").style.display = "none";
+                    }, 1000);
 
-                    //console.log("Console " + mobileConsole.status.initialized);
+                    unityInstance.SendMessage(camName, "setProjection", serializedProj);
+                    unityInstance.SendMessage(camName, "setPosition", posCam);
+                    unityInstance.SendMessage(camName, "setRotation", rotCam);
 
-                    document.querySelector("#arjs-loader").style.display = "none";
-
-                    //document.querySelector("#splash").style.display = "none";
-
-                    unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
-                    unityInstance.SendMessage("Main Camera", "setPosition", posCam);
-                    unityInstance.SendMessage("Main Camera", "setRotation", rotCam);
-
-                    let w = window.innerWidth;
-                    let h = window.innerHeight;
+                    let w = document.documentElement.clientWidth;
+                    let h = document.documentElement.clientHeight;
 
                     const ratio = unityCanvas.width / w;
-                    var wr = w;
-                    var hr = h;
-
+                    
                     w *= ratio;
                     h *= ratio;
 
                     const size = `${w},${h}`;
+                    let mql = window.matchMedia(window.innerWidth);
 
-                    unityInstance.SendMessage("Main Camera", "ObjectCheck", "Canvas");
-
+                    unityInstance.SendMessage(camName, "ObjectCheck", "Canvas");
+                    //console.log(document.documentElement.clientWidth + " " + unityCanvas.width + " " + ratio);
+                    //console.log("size " + size);
                     if (isObjectAvailable) {
 
                         //unityInstance.SendMessage("Canvas", "setSize", size);
 
-                        unityInstance.SendMessage("ARWT Controller", "setSize", size);
-
                     }
-                    
-                    wr *= ratio;
-                    hr *= ratio;
 
-                Debug(w + " " + h + " " + wr + " " + hr);
                 }
 
                 if (gl != null) {
@@ -239,109 +192,13 @@
 
         AFRAME.registerComponent('copycanvas', {
             tick: function (time, timeDelta) {
-
-                if (window.innerWidth > window.innerHeight) {
-
-                    unityCanvas.style.width = window.innerWidth + 'px';
-                    unityCanvas.style.height = window.innerHeight + 'px';
-
-                } else {
-
-                    unityCanvas.style.width = window.innerHeight + 'px';
-                    unityCanvas.style.height = window.innerWidth + 'px';
-
-                }
+                
+                unityCanvas.style.width = document.documentElement.clientWidth + 'px';
+                unityCanvas.style.height = document.documentElement.clientHeight + 'px';
 
             }
         });
 
-        function takeSnap(url) {
-
-            function getFormattedTimestamp() {
-                return new Date(Date.now() - 60000 * new Date().getTimezoneOffset()).toISOString().replace(/\..*/g, '').replace(/T/g, ' ').replace(/:/g, '-');
-            }
-
-            document.querySelector("video").pause();
-
-            let frame = captureVideoFrame("video", "png");
-            
-
-            resizeImage(url, frame.width, frame.height, 'image/png').then((result) => {
-                
-                frame = frame.dataUri;
-
-                mergeImages([frame, result]).then(b64 => {
-                    let link = document.getElementById("download-link", "png");
-                    link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
-                    link.setAttribute("href", b64);
-                    link.click();
-                });
-
-            });
-
-            document.querySelector("video").play();
-
-        }
-
-        function captureVideoFrame(video, format, width, height) {
-
-            if (typeof video === 'string') {
-                video = document.querySelector(video);
-            }
-
-            format = format || 'jpeg';
-
-            if (!video || (format !== 'png' && format !== 'jpeg')) {
-                return false;
-            }
-
-            var canvas = document.createElement("CANVAS");
-
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-            var dataUri = canvas.toDataURL('image/' + format);
-            var data = dataUri.split(',')[1];
-            var mimeType = dataUri.split(';')[0].slice(5)
-
-            var bytes = window.atob(data);
-            var buf = new ArrayBuffer(bytes.length);
-            var arr = new Uint8Array(buf);
-
-            for (var i = 0; i < bytes.length; i++) {
-                arr[i] = bytes.charCodeAt(i);
-            }
-
-            var blob = new Blob([arr], { type: mimeType });
-            return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
-        }
-
-        function resizeImage(base64Str, width, height, format) {
-
-            return new Promise((resolve) => {
-
-                let img = new Image();
-                img.src = base64Str;
-
-                img.onload = () => {
-
-                    let canvas = document.createElement('canvas');
-                    
-                    canvas.width = width;
-                    canvas.height = height;
-                    Debug(canvas.width + " " + canvas.height);
-
-                    let ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    resolve(canvas.toDataURL(format));
-
-                }
-            })
-        }
-
-        function Debug(log) {
-            unityInstance.SendMessage("Main Camera", "DebugLog", log);
-        }
     </script>
 
     <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
@@ -350,17 +207,18 @@
 			<a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
 			<a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
 			<a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
+			<a-marker type="pattern" url="data/markers/Hiro.patt" markercontroller="name : Hiro"></a-marker>
 			<a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
 			<a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
 			<a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
 			<a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
 			<a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
+			<a-marker type="pattern" url="data/markers/Nutty.patt" markercontroller="name : Nutty"></a-marker>
+			<a-marker type="pattern" url="data/markers/NuttyCardboard.patt" markercontroller="name : NuttyCardboard"></a-marker>
 
         <a-entity camera cameratransform></a-entity>
 
     </a-scene>
-
-    <a href="#" id="download-link"></a>
 
 </body>
 
