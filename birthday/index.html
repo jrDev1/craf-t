@@ -1,97 +1,157 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | New Unity Project (1)</title>
-    <script src="Build/craftARDemo.loader.js"></script>
-<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-<script src="js/lib/aframe-ar-nft.js"></script>
-<script src= "https://unpkg.com/merge-images"></script>
-</head>
-
-<body>
-    <!-- style for the loader -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>New Unity Project (1)</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <script type="text/javascript" src="https://libs.zappar.com/zappar-cv/0.3.8/zappar-cv.js"></script>
     <style>
-        html, body {
-            overflow: hidden;
+        html {
+            box-sizing: border-box;
         }
-
-        .arjs-loader {
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        html, body {
             height: 100%;
+        }
+        canvas {
+            display: block;
+        }
+        body {
+            margin: 0;
+        }
+        #unity-container {
             width: 100%;
+            height: 100%;
+        }
+        #unity-canvas {
+            width: 100%;
+            height: 100%;
+            background: #231F20;
+        }
+        #loading-cover {
             position: absolute;
             top: 0;
             left: 0;
-            background-color: rgba(0, 0, 0, 1);
-            z-index: 9999;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
-            .arjs-loader div {
-                text-align: center;
-                font-size: 1.25em;
-                color: white;
-            }
-    </style>
-
-    <div class="arjs-loader" id="arjs-loader">
-        <div>Loading, please wait...</div>
-    </div>
-
-
-    <div id="unity-container" class="unity-desktop" style="z-index: 2; position: absolute; top: 0; left: 0;">
-
-        <canvas id="unity-canvas"></canvas>
-
-    </div>
-
-    <script>
-
-        var container = document.querySelector("#unity-container");
-        var unityCanvas = document.querySelector("#unity-canvas");
-
-        var buildUrl = "Build";
-        var loaderUrl = buildUrl + "/craftARDemo.loader.js";
-        var config = {
-            dataUrl: buildUrl + "/craftARDemo.data.unityweb",
-            frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
-            codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-            companyName: "DefaultCompany",
-            productName: "New Unity Project (1)",
-            productVersion: "0.1",
-        };
-
-
-        var script = document.createElement("script");
-        var unityInstance;
-
-        script.src = loaderUrl;
-        script.onload = () => {
-            createUnityInstance(unityCanvas, config, (progress) => {
-
-            }).then((ui) => {
-                unityInstance = ui;
-
-            }).catch((message) => {
-                alert(message);
-            });
-        };
-        document.body.appendChild(script);
-
-        let isCameraReady = false;
-        let isDetectionManagerReady = false;
-        let gl = null;
-
-        function cameraReady() {
-            isCameraReady = true;
-            gl = unityInstance.Module.ctx;
-            console.log("Camera Ready");
+        #unity-loading-bar {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+        #unity-progress-bar-empty {
+            width: 80%;
+            height: 24px;
+            margin: 10px 20px 20px 10px;
+            text-align: left;
+            border: 1px solid white;
+            padding: 2px;
+        }
+        #unity-progress-bar-full {
+            width: 0%;
+            height: 100%;
+            background: white;
+        }
+        .light #unity-progress-bar-empty {
+            border-color: black;
+        }
+        .light #unity-progress-bar-full {
+            background: black;
+        }
+
+        .spinner,
+        .spinner:after {
+        border-radius: 50%;
+        width: 5em;
+        height: 5em;
+        }
+        .spinner {
+        margin: 10px;
+        font-size: 10px;
+        position: relative;
+        text-indent: -9999em;
+        border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+        border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+        border-left: 1.1em solid #ffffff;
+        transform: translateZ(0);
+        animation: spinner-spin 1.1s infinite linear;
+        }
+        @keyframes spinner-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+        }
+
+
+
+    </style>
+  </head>
+  <body class="dark">
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+    <div id="loading-cover" style="display:none;">
+      <div id="unity-loading-bar">
+        <div id="unity-progress-bar-empty" style="display: none;">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <script>
+      const buildUrl = "Build";
+      const loaderUrl = buildUrl + "/craftARDemo.loader.js";
+      const config = {
+        dataUrl: buildUrl + "/craftARDemo.data.unityweb",
+        frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
+        codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "New Unity Project (1)",
+        productVersion: "0.1",
+      };
+
+      const container = document.querySelector("#unity-container");
+      const canvas = document.querySelector("#unity-canvas");
+      const loadingCover = document.querySelector("#loading-cover");
+      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+      const progressBarFull = document.querySelector("#unity-progress-bar-full");
+      const spinner = document.querySelector('.spinner');
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        config.devicePixelRatio = 1;
+      }
+      loadingCover.style.display = "";
+
+      const script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          spinner.style.display = "none";
+          progressBarEmpty.style.display = "";
+          progressBarFull.style.width = `${100 * progress}%`;
+        }).then((unityInstance) => {
+          loadingCover.style.display = "none";
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+        document.body.appendChild(script);
 
         let isObjectAvailable = false;
         function objectAvailable() {
@@ -100,199 +160,32 @@
 
         }
 
-        function detectionManagerReady() {
-            isDetectionManagerReady = true;
-        }
-
         let camName = null;
         function getCamName(name) {
             camName = name;
         }
 
-        function createUnityMatrix(el) {
-            const m = el.matrix.clone();
-            const zFlipped = new THREE.Matrix4().makeScale(1, 1, -1).multiply(m);
-            const rotated = zFlipped.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
-            return rotated;
+        function getScreenSize() {
+            let w = window.innerWidth;
+            let h = window.innerHeight;
+
+            const unityCanvas = document.getElementsByTagName('canvas')[0];
+
+            const ratio = unityCanvas.height / h;
+
+            w *= ratio;
+            h *= ratio;
+
+            const size = `${w},${h}`;
+
+            unityInstance.SendMessage(camName, "ObjectCheck", "Canvas");
+
+            if (isObjectAvailable) {
+
+                unityInstance.SendMessage("Canvas", "setSize", size);
+
+            }
         }
-
-        AFRAME.registerComponent('markercontroller', {
-            schema: {
-                name: { type: 'string' }
-            },
-            tock: function (time, timeDelta) {
-
-                let position = new THREE.Vector3();
-                let rotation = new THREE.Quaternion();
-                let scale = new THREE.Vector3();
-
-                createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
-
-                position.x = (position.x / 2) / 1000;
-                position.y = (position.y / 2) / 1000;
-                position.z = 1;
-                console.log(position);
-                const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
-
-                if (isDetectionManagerReady) {
-                    unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
-                }
-            }
-        });
-
-        AFRAME.registerComponent('cameratransform', {
-            tock: function (time, timeDelta) {
-
-                let camtr = new THREE.Vector3();
-                let camro = new THREE.Quaternion();
-                let camsc = new THREE.Vector3();
-
-                this.el.object3D.matrix.clone().decompose(camtr, camro, camsc);
-
-                const projection = this.el.components.camera.camera.projectionMatrix.clone();
-                const serializedProj = `${[...projection.elements]}`
-
-                const posCam = `${[...camtr.toArray()]}`
-                const rotCam = `${[...camro.toArray()]}`
-
-                if (isCameraReady) {
-
-                    //setTimeout(() => {
-                        //document.querySelector("#arjs-loader").style.display = "none";
-                    //}, 1000);
-
-                    unityInstance.SendMessage(camName, "setProjection", serializedProj);
-                    unityInstance.SendMessage(camName, "setPosition", posCam);
-                    unityInstance.SendMessage(camName, "setRotation", rotCam);
-
-                    let w = window.innerWidth;
-                    let h = window.innerHeight;
-
-                    const ratio = unityCanvas.height / h;
-
-                    w *= ratio;
-                    h *= ratio;
-
-                    const size = `${w},${h}`;
-
-                    unityInstance.SendMessage(camName, "ObjectCheck", "Canvas");
-
-                    if (isObjectAvailable) {
-
-                        unityInstance.SendMessage("Canvas", "setSize", size);
-
-                    }
-
-                }
-
-                if (gl != null) {
-                    gl.dontClearOnFrameStart = true;
-                }
-            }
-        });
-
-        AFRAME.registerComponent('copycanvas', {
-            tick: function (time, timeDelta) {
-
-                unityCanvas.style.width = window.innerWidth + 'px';
-                unityCanvas.style.height = window.innerHeight + 'px';
-
-            }
-        });
-
-function takeScreenshot(url) {
-
-    function getFormattedTimestamp() {
-        return new Date(Date.now() - 60000 * new Date().getTimezoneOffset()).toISOString().replace(/\..*/g, '').replace(/T/g, ' ').replace(/:/g, '-');
-    }
-
-    document.querySelector("video").pause();
-
-    let frame = captureVideoFrame("video", "png");
-    
-
-    resizeImage(url, frame.width, frame.height, 'image/png').then((result) => {
-        
-        frame = frame.dataUri;
-
-        mergeImages([frame, result]).then(b64 => {
-            let link = document.getElementById("download-link", "png");
-            link.setAttribute("download", "Screenshot " + getFormattedTimestamp());
-            link.setAttribute("href", b64);
-            link.click();
-        });
-
-    });
-
-    document.querySelector("video").play();
-
-}
-
-function captureVideoFrame(video, format, width, height) {
-
-    if (typeof video === 'string') {
-        video = document.querySelector(video);
-    }
-
-    format = format || 'jpeg';
-
-    if (!video || (format !== 'png' && format !== 'jpeg')) {
-        return false;
-    }
-
-    var canvas = document.createElement("CANVAS");
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0);
-    var dataUri = canvas.toDataURL('image/' + format);
-    var data = dataUri.split(',')[1];
-    var mimeType = dataUri.split(';')[0].slice(5)
-
-    var bytes = window.atob(data);
-    var buf = new ArrayBuffer(bytes.length);
-    var arr = new Uint8Array(buf);
-
-    for (var i = 0; i < bytes.length; i++) {
-        arr[i] = bytes.charCodeAt(i);
-    }
-
-    var blob = new Blob([arr], { type: mimeType });
-    return { blob: blob, dataUri: dataUri, format: format, width: canvas.width, height: canvas.height };
-}
-
-function resizeImage(base64Str, width, height, format) {
-
-    return new Promise((resolve) => {
-
-        let img = new Image();
-        img.src = base64Str;
-
-        img.onload = () => {
-
-            let canvas = document.createElement('canvas');
-            
-            canvas.width = width;
-            canvas.height = height;
-            Debug(canvas.width + " " + canvas.height);
-
-            let ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL(format));
-
-        }
-    })
-}
     </script>
-
-    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
-
-			<a-nft type="nft" url="data/nft markers/Beauty 1" markercontroller="name : Beauty 1"></a-nft>
-
-        <a-entity camera cameratransform></a-entity>
-
-    </a-scene>
-<a href="#" id="download-link"></a>
-</body>
-
+  </body>
 </html>
