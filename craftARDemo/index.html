@@ -1,225 +1,762 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
+
 <head>
+    <script src="https://jrdev1.github.io/craf-t/hnl.mobileConsole.js"></script>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | New Unity Project (1)</title>
-    <script src="Build/craftARDemo.loader.js"></script>
-    <script src="js/lib/aframe.min.js"></script>
-    <script src="js/lib/aframe-ar.js"></script>
-
-</head>
-
-<body>
-    <!-- style for the loader -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>CrafTAR 2022</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <script src="renderer.js"></script>
+    <script src="ua-parser.min.js"></script>
+    <script async src="https://cloud.51degrees.com/api/v4/AQRDVzO_RNzmh5iJ2Ug.js"></script>
+    <script type="text/javascript" src="https://libs.zappar.com/zappar-cv/0.3.11/zappar-cv.js"></script>
+    <script src="https://libs.zappar.com/zappar-snapshot/1.0.1/zappar-snapshot.min.js"></script>
+    <script type="text/javascript" import ZapparWebGLSnapshot from '@zappar/webgl-snapshot'></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <style>
-        html, body {
-            overflow: hidden;
+        html {
+            box-sizing: border-box;
         }
 
-        .arjs-loader {
-            height: 100%;
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        html,
+        body {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #unity-container {
             width: 100%;
+            height: 100%;
+        }
+
+        #unity-canvas {
+            width: 100%;
+            height: 100%;
+            background: #231F20;
+        }
+
+        #loading-cover {
             position: absolute;
             top: 0;
             left: 0;
-            background-color: rgba(0, 0, 0, 1);
-            z-index: 9999;
+            width: 100%;
+            height: 100%;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 1);
+        }
+
+        #loading-logo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            top: 20vh;
+            justify-content: center;
+            align-items: center;
+            background-image: url("craftasTechMainLogo.png");
+            background-repeat: no-repeat;
+            background-size: 30vh;
+            background-position: center top;
+        }
+
+        #unity-loading-bar {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
-        .arjs-loader div {
-            text-align: center;
-            font-size: 1.25em;
-            color: white;
+        #unity-progress-bar-empty {
+            width: 80%;
+            height: 24px;
+            margin: 10px 20px 20px 10px;
+            text-align: left;
+            border: 1px solid white;
+            padding: 2px;
         }
 
-    </style>
+        #unity-progress-bar-full {
+            width: 0%;
+            height: 100%;
+            background: red;
+        }
 
-    <div class="arjs-loader" id="arjs-loader">
-        <div>Loading, please wait...</div>
+        .light #unity-progress-bar-empty {
+            border-color: red;
+        }
+
+        .light #unity-progress-bar-full {
+            background: red;
+        }
+
+        #landscape-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 1);
+        }
+
+        #phone {
+            display: block;
+            position: absolute;
+            top: 23vh;
+            height: 20vh;
+            width: 40vh;
+            border: 3px solid white;
+            border-radius: 3vh;
+            animation: rotate 1.5s ease-in-out infinite alternate;
+            z-index: 1000;
+        }
+
+        #phonetop {
+            display: block;
+            position: absolute;
+            top: 7vh;
+            left: 1vh;
+            height: 5vh;
+            width: 0.3vh;
+            background-color: white;
+            /* display: none; */
+        }
+
+        #message {
+            display: block;
+            position: absolute;
+            color: white;
+            text-align: center;
+            top: 60vh;
+            color: white;
+            font-size: 5vh;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(90deg)
+            }
+
+            50% {
+                transform: rotate(0deg)
+            }
+
+            100% {
+                transform: rotate(0deg)
+            }
+        }
+
+        #long-arrow-left {
+            display: block;
+            position: absolute;
+            width: 2.5vh;
+            height: 2.5vh;
+            border-top: 2px solid white;
+            border-left: 2px solid white;
+            left: -6vh;
+            top: 3vh;
+            transform: rotate(80deg);
+        }
+
+        #long-arrow-right {
+            display: block;
+            position: absolute;
+            width: 2.5vh;
+            height: 2.5vh;
+            border-top: 2px solid white;
+            border-left: 2px solid white;
+            left: 43vh;
+            top: 14vh;
+            transform: rotate(255deg);
+        }
+
+        #long-arrow-right-stem {
+            display: block;
+            position: absolute;
+            width: 20vh;
+            height: 20vh;
+            margin: 1vh;
+            border-radius: 70%;
+            border: 2px solid transparent;
+            border-top-color: white;
+            transform: rotate(-170deg);
+            left: -3.1vh;
+            top: -16.9vh;
+        }
+
+        #long-arrow-left-stem {
+            display: block;
+            position: absolute;
+            width: 20vh;
+            height: 20vh;
+            margin: 1vh;
+            border-radius: 70%;
+            border: 2px solid transparent;
+            border-top-color: white;
+            transform: rotate(-170deg);
+            left: -3.1vh;
+            top: -16.9vh;
+        }
+
+        #loading-text-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        #loading-text span {
+            position: relative;
+            display: table-cell;
+            text-align: center;
+            top: 13vh;
+            margin: 10px;
+            font-size: 3vh;
+            color: white;
+            animation: wave 1.15s infinite;
+        }
+
+            #loading-text span:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            #loading-text span:nth-child(2) {
+                animation-delay: .1s;
+            }
+
+            #loading-text span:nth-child(3) {
+                animation-delay: .2s;
+            }
+
+            #loading-text span:nth-child(4) {
+                animation-delay: .3s;
+            }
+
+            #loading-text span:nth-child(5) {
+                animation-delay: .4s;
+            }
+
+            #loading-text span:nth-child(6) {
+                animation-delay: .5s;
+            }
+
+            #loading-text span:nth-child(7) {
+                animation-delay: .6s;
+            }
+
+        @keyframes wave {
+            0% {
+                transform: translateY(0px)
+            }
+
+            50% {
+                transform: translateY(-2vh);
+            }
+
+            100% {
+                transform: translateY(0px)
+            }
+        }
+    </style>
+</head>
+
+<body class="dark">
+    <!--<input type="text" id="dummyInput">-->
+    <!--<input type="text" id="dummyInput" style="position:fixed;left:-2000px" ;>-->
+    <div>
+        <form onsubmit="FixInputOnSubmit()" autocomplete="off" style="width: 0px; height: 0px; position: absolute; top: -9999px;">
+            <input type="text" id="fixInput" oninput="gameInstance.Module.ccall('FixInputUpdate', null)" onblur="gameInstance.Module.ccall('FixInputOnBlur', null)" style="font-size: 42px;">
+        </form>
+    </div>
+    <div id="unity-container" class="unity-desktop">
+        <canvas id="unity-canvas"></canvas>
+    </div>
+    <div id="loading-text-cover">
+
+        <span id="loading-text">
+            <span>L</span>
+            <span>O</span>
+            <span>A</span>
+            <span>D</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+        </span>
+    </div>
+    <div id="loading-cover" style="display:none;">
+        <div id="unity-loading-bar">
+            <div id="unity-progress-bar-empty" style="display: none;">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+
+        </div>
+        <div id="loading-logo"></div>
     </div>
 
-
-    <div id="unity-container" class="unity-desktop" style="z-index: 2; position: absolute; top: 0; left: 0;">
-
-        <canvas id="unity-canvas"></canvas>
-
+    <div id="landscape-message" style="display:none;">
+        <div id="phone">
+            <div id="phonetop"></div>
+            <div id="long-arrow-right">
+                <div id="long-arrow-right-stem"></div>
+            </div>
+            <div id="long-arrow-left">
+                <div id="long-arrow-left-stem"></div>
+            </div>
+        </div>
+        <div id="message">
+            Please rotate your device to Portrait Mode!
+        </div>
     </div>
 
     <script>
+        var db = indexedDB.open("dummy_indexdb", 1); // iOS 14.6 fix; the call to open indexdb hangs forever otherwise
 
-        var container = document.querySelector("#unity-container");
-        var unityCanvas = document.querySelector("#unity-canvas");
-
-        var buildUrl = "Build";
-        var loaderUrl = buildUrl + "/craftARDemo.loader.js";
-        var config = {
+        const buildUrl = "Build";
+        const loaderUrl = buildUrl + "/craftARDemo.loader.js";
+        const config = {
             dataUrl: buildUrl + "/craftARDemo.data.unityweb",
             frameworkUrl: buildUrl + "/craftARDemo.framework.js.unityweb",
             codeUrl: buildUrl + "/craftARDemo.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
             companyName: "DefaultCompany",
-            productName: "New Unity Project (1)",
+            productName: "CrafTAR 2022",
             productVersion: "0.1",
         };
-        
 
-        var script = document.createElement("script");
+        var parser = new UAParser();
         var unityInstance;
+        var loaded;
 
+        const container = document.querySelector("#unity-container");
+        const canvas = document.querySelector("#unity-canvas");
+        const loadingCover = document.querySelector("#loading-cover");
+        const loadingText = document.querySelector("#loading-text-cover");
+        const loadingLogo = document.querySelector("#loading-logo");
+        const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+        const progressBarFull = document.querySelector("#unity-progress-bar-full");
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            container.className = "unity-mobile";
+            config.devicePixelRatio = window.devicePixelRatio;
+        }
+        loadingCover.style.display = "";
+
+        window.zappar = ZCV.initialize();
+
+        const script = document.createElement("script");
         script.src = loaderUrl;
-        script.onload = () => {
-            createUnityInstance(unityCanvas, config, (progress) => {
+        //script.onload = () => { CreateUnityLoader();   };
+        document.body.appendChild(script);
 
+        //Put in On Load so we don't get error "referenceerror: can't find variable: createUnityInstance"
+        script.onload = () => {
+            WaitForZCVLoad();
+        }
+
+        function WaitForZCVLoad() {
+            if (zappar.loaded()) {
+                //loadingCover.style.display = "none";
+                CreateUnityLoader();
+                return;
+            }
+            setTimeout(WaitForZCVLoad, 500);
+        }
+
+        function CreateUnityLoader() {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarEmpty.style.display = "";
+                progressBarFull.style.width = `${100 * progress}%`;
+
+                if (progress >= 0.9) {
+                    loadingText.style.display = "none";
+                }
+                if (progress >= 1) {
+                    loaded = true;
+                }
             }).then((ui) => {
+
+                document.querySelector("#unity-loading-bar").style.display = "none";
+                document.querySelector("#landscape-message").style.display = "none";
+                loadingLogo.style.display = "none";
+
                 unityInstance = ui;
 
             }).catch((message) => {
                 alert(message);
             });
-        };
-        document.body.appendChild(script);
-
-        let isCameraReady = false;
-        let isDetectionManagerReady = false;
-        let gl = null;
-
-        function cameraReady() {
-            isCameraReady = true;
-            gl = unityInstance.Module.ctx;
-            console.log("Camera Ready");
         }
 
-        let isObjectAvailable = false;
-        function objectAvailable() {
 
-            isObjectAvailable = true;
+        window.addEventListener("load", function () {
+            //console.log(parser.getDevice().type);
+            if (parser.getDevice().type == "mobile" || parser.getDevice().type == "tablet") {
+                //alert(window.orientation);
+                if (window.orientation == 0) {
+                    document.querySelector("#loading-cover").style.display = "flex";
+                    document.querySelector("#landscape-message").style.display = "none";
 
-        }
+                    //Using Portrait!
+                } else {
+                    document.querySelector("#loading-cover").style.display = "none";
+                    document.querySelector("#landscape-message").style.display = "flex";
 
-        function detectionManagerReady() {
-            isDetectionManagerReady = true;
-        }
-
-        let camName = null;
-        function getCamName(name) {
-            camName = name;
-        }
-
-        function createUnityMatrix(el) {
-            const m = el.matrix.clone();
-            const zFlipped = new THREE.Matrix4().makeScale(1, 1, -1).multiply(m);
-            const rotated = zFlipped.multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
-            return rotated;
-        }
-
-        AFRAME.registerComponent('markercontroller', {
-            schema: {
-                name: { type: 'string' }
-            },
-            tock: function (time, timeDelta) {
-
-                let position = new THREE.Vector3();
-                let rotation = new THREE.Quaternion();
-                let scale = new THREE.Vector3();
-
-                createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
-
-                const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
-
-                if (isDetectionManagerReady) {
-                    unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
+                    //Using Landscape!
                 }
             }
         });
 
-        AFRAME.registerComponent('cameratransform', {
-            tock: function (time, timeDelta) {
+        window.addEventListener("orientationchange", function () {
+            // Announce the new orientation number
+            //alert(window.orientation);
 
-                let camtr = new THREE.Vector3();
-                let camro = new THREE.Quaternion();
-                let camsc = new THREE.Vector3();
+            if (parser.getDevice().type == "mobile" || parser.getDevice().type == "tablet") {
 
-                this.el.object3D.matrix.clone().decompose(camtr, camro, camsc);
+                if (!loaded) {
 
-                const projection = this.el.components.camera.camera.projectionMatrix.clone();
-                const serializedProj = `${[...projection.elements]}`
+                    if (window.orientation == 0) {
+                        document.querySelector("#loading-cover").style.display = "flex";
+                        document.querySelector("#landscape-message").style.display = "none";
 
-                const posCam = `${[...camtr.toArray()]}`
-                const rotCam = `${[...camro.toArray()]}`
+                        //Using Portrait!
+                    } else {
+                        document.querySelector("#loading-cover").style.display = "none";
+                        document.querySelector("#landscape-message").style.display = "flex";
 
-                if (isCameraReady) {
-
-                    setTimeout(() => {
-                        document.querySelector("#arjs-loader").style.display = "none";
-                    }, 1000);
-
-                    unityInstance.SendMessage(camName, "setProjection", serializedProj);
-                    unityInstance.SendMessage(camName, "setPosition", posCam);
-                    unityInstance.SendMessage(camName, "setRotation", rotCam);
-
-                    let w = document.documentElement.clientWidth;
-                    let h = document.documentElement.clientHeight;
-
-                    const ratio = unityCanvas.width / w;
-                    
-                    w *= ratio;
-                    h *= ratio;
-
-                    const size = `${w},${h}`;
-                    let mql = window.matchMedia(window.innerWidth);
-
-                    unityInstance.SendMessage(camName, "ObjectCheck", "Canvas");
-                    //console.log(document.documentElement.clientWidth + " " + unityCanvas.width + " " + ratio);
-                    //console.log("size " + size);
-                    if (isObjectAvailable) {
-
-                        //unityInstance.SendMessage("Canvas", "setSize", size);
-
+                        //Using Landscape!
                     }
+                } else {
 
+                    if (window.orientation == 0) {
+                        document.querySelector("#landscape-message").style.display = "none";
+
+                        //Using Portrait!
+                    } else {
+                        document.querySelector("#landscape-message").style.display = "flex";
+
+                        //Using Landscape!
+                    }
                 }
 
-                if (gl != null) {
-                    gl.dontClearOnFrameStart = true;
+            }
+
+        }, false);
+
+        function openKeyboard() {
+            //document.querySelector("#dummyInput").focus();
+        }
+        function FixInputOnSubmit() {
+            document.getElementById("fixInput").blur();
+            event.preventDefault();
+        }
+        function onCameraReady() {
+
+            loadingCover.style.display = "none";
+
+            //Send all device info
+            unityInstance.SendMessage('Html Access', 'SetDeviceInfo', JSON.stringify(parser.getResult()));
+            unityInstance.SendMessage('Html Access', 'SetDevicePixelRatio', window.devicePixelRatio);
+
+            var screenSize = `${screen.width},${screen.height}`;
+
+            unityInstance.SendMessage('Html Access', 'SetDeviceScreenSize', screenSize);
+            unityInstance.SendMessage('Html Access', 'SetDeviceName', JSON.stringify(getiPhoneModel()));
+
+        }
+
+        function emailJSInitialize(userId) {
+
+            emailjs.init(userId);
+            //"user_UUz2LaAazJJwn1Y5sBKOt"
+        }
+
+        function sendEmail(email, body, serviceId, templateId) {
+            var templateParams = {
+                user_email: email,
+                message: body
+            };
+
+            emailjs.send(serviceId, templateId, templateParams)
+                .then(function (response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    unityInstance.SendMessage('Html Access', 'EmailJSSendSuccess', "");
+                }, function (error) {
+                    console.log('FAILED...', error);
+                    unityInstance.SendMessage('Html Access', 'EmailJSSendFail', "");
+                });
+
+        }
+
+        function takeScreenshot() {
+
+            // Get canvas from dom
+            const canvas = document.querySelector('canvas');
+            var gl = canvas.getContext('webgl', { preserveDrawingBuffer: true });
+
+            // Convert canvas data to url
+            const url = getDataUrl(canvas, 'image/jpeg');
+
+            // Take snapshot
+            ZapparWebGLSnapshot({
+                data: url,
+                fileNamePrepend: 'Craf-T',
+                shareUrl: 'www.gocraf-t.com',
+                shareTitle: 'Hello World!',
+                shareText: 'Hello World!',
+                onSave: () => {
+                    console.log(`Image was saved`)
+                },
+                onShare: () => {
+                    console.log('Share button was pressed');
+                },
+                onClose: () => {
+
+                    //Show the default UI after the snapshot UI is closed
+                    unityInstance.SendMessage('Zappar Camera Rear', 'EndScreenshot', "");
+
+                    console.log('Dialog was closed');
                 }
+            }, {
+
+            });
+
+        }
+
+        function getDataUrl(origCanvas, mimeType) {
+
+            var canvas = document.createElement('canvas');
+            canvas.width = origCanvas.width;
+            canvas.height = origCanvas.height;
+            var destCtx = canvas.getContext('2d');
+            if (!destCtx) {
+                console.error("Cannot create context")
+                return ""
             }
-        });
+            destCtx?.drawImage(origCanvas, 0, 0);
+            return destCtx.canvas.toDataURL(mimeType);
+        }
 
-        AFRAME.registerComponent('copycanvas', {
-            tick: function (time, timeDelta) {
-                
-                unityCanvas.style.width = document.documentElement.clientWidth + 'px';
-                unityCanvas.style.height = document.documentElement.clientHeight + 'px';
+        //GPU checks
+        function getGPU() {
 
+            var renderer;
+
+            getRenderer((value) => {
+                if (value == 'Unknown') {
+                    var canvas = document.createElement("canvas");
+                    if (canvas != null) {
+                        var context = canvas.getContext("webgl") ||
+                            canvas.getContext("experimental-webgl");
+                        if (context) {
+                            var info = context.getExtension("WEBGL_debug_renderer_info");
+                            if (info) {
+                                value = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+                            }
+                        }
+                    }
+                }
+                renderer = value;
+
+            });
+
+            return renderer;
+
+        }
+
+        // iPhone model checks.
+        function getiPhoneModel() {
+            var renderer;
+
+            getRenderer(function (value) {
+                if (value == 'Unknown') {
+                    var canvas = document.createElement("canvas");
+                    if (canvas != null) {
+                        var context = canvas.getContext("webgl") ||
+                            canvas.getContext("experimental-webgl");
+                        if (context) {
+                            var info = context.getExtension("WEBGL_debug_renderer_info");
+                            if (info) {
+                                value = context.getParameter(info.UNMASKED_RENDERER_WEBGL);
+                            }
+                        }
+                    }
+                }
+
+                renderer = value;
+            });
+
+            // iPhone X/XS/11 Pro/12 Mini/13 Mini
+            if ((window.screen.height / window.screen.width == 926 / 428) && (window.devicePixelRatio == 3)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 12 Pro Max, iPhone 13 Pro Max";
+                    case "Apple A14 GPU":
+                        return "iPhone 12 Pro Max";
+                    case "Apple A15 GPU":
+                        return "iPhone 13 Pro Max";
+                }
+                // iPhone XS Max/11 Pro Max
+            } else if ((window.screen.height / window.screen.width == 896 / 414) && (window.devicePixelRatio == 3)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 12, iPhone 12 Pro, iPhone 13, iPhone 13 Pro";
+                    case "Apple A14 GPU":
+                        return "iPhone 12, 12 Pro";
+                    case "Apple A15 GPU":
+                        return "iPhone 13, 13 Pro";
+                }
+                // iPhone XS Max/11 Pro Max
+            } else if ((window.screen.height / window.screen.width == 812 / 375) && (window.devicePixelRatio == 3)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone X, iPhone XS, iPhone 12 Mini, iPhone 13 Mini";
+                    case "Apple A11 GPU":
+                        return "iPhone X";
+                    case "Apple A12 GPU":
+                        return "iPhone XS";
+                    case "Apple A13 GPU":
+                        return "iPhone 11";
+                    case "Apple A14 GPU":
+                        return "iPhone 12 Mini";
+                    case "Apple A15 GPU":
+                        return "iPhone 13 Mini";
+                }
+                // iPhone XS Max/11 Pro Max
+            } else if ((window.screen.height / window.screen.width == 896 / 414) && (window.devicePixelRatio == 3)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone XS Max, iPhone 11 Pro Max";
+                    case "Apple A12 GPU":
+                        return "iPhone XS Max";
+                    case "Apple A13 GPU":
+                        return "iPhone 11 Pro Max";
+                }
+                // iPhone XR/11
+            } else if ((window.screen.height / window.screen.width == 896 / 414) && (window.devicePixelRatio == 2)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone XR, iPhone 11";
+                    case "Apple A12 GPU":
+                        return "iPhone XR";
+                    case "Apple A13 GPU":
+                        return "iPhone 11";
+                }
+                // iPhone 6+/6s+/7+/8+
+            } else if ((window.screen.height / window.screen.width == 736 / 414) && (window.devicePixelRatio == 3)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 6 Plus, 6s Plus, 7 Plus or 8 Plus";
+                    case "Apple A8 GPU":
+                        return "iPhone 6 Plus";
+                    case "Apple A9 GPU":
+                        return "iPhone 6s Plus";
+                    case "Apple A10 GPU":
+                        return "iPhone 7 Plus";
+                    case "Apple A11 GPU":
+                        return "iPhone 8 Plus";
+                }
+                // iPhone 6+/6s+/7+/8+ in zoom mode
+            } else if ((window.screen.height / window.screen.width == 667 / 375) && (window.devicePixelRatio == 3)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 6 Plus, 6s Plus, 7 Plus or 8 Plus (display zoom)";
+                    case "Apple A8 GPU":
+                        return "iPhone 6 Plus (display zoom)";
+                    case "Apple A9 GPU":
+                        return "iPhone 6s Plus (display zoom)";
+                    case "Apple A10 GPU":
+                        return "iPhone 7 Plus (display zoom)";
+                    case "Apple A11 GPU":
+                        return "iPhone 8 Plus (display zoom)";
+                }
+                // iPhone 6/6s/7/8/SE 2nd gen
+            } else if ((window.screen.height / window.screen.width == 667 / 375) && (window.devicePixelRatio == 2)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 6, 6s, 7 or 8";
+                    case "Apple A8 GPU":
+                        return "iPhone 6";
+                    case "Apple A9 GPU":
+                        return "iPhone 6s";
+                    case "Apple A10 GPU":
+                        return "iPhone 7";
+                    case "Apple A11 GPU":
+                        return "iPhone 8";
+                    case "Apple A13 GPU":
+                        return "iPhone SE 2nd gen";
+                }
+                // iPhone 5/5C/5s/SE or 6/6s/7 and 8 in zoom mode
+            } else if ((window.screen.height / window.screen.width == 1.775) && (window.devicePixelRatio == 2)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 5, 5C, 5S, SE or 6, 6s, 7 and 8 (display zoom)";
+                    case "PowerVR SGX 543":
+                        return "iPhone 5 or 5c";
+                    case "Apple A7 GPU":
+                        return "iPhone 5s";
+                    case "Apple A8 GPU":
+                        return "iPhone 6 (display zoom)";
+                    case "Apple A9 GPU":
+                        return "iPhone SE or 6s (display zoom)";
+                    case "Apple A10 GPU":
+                        return "iPhone 7 (display zoom)";
+                    case "Apple A11 GPU":
+                        return "iPhone 8 (display zoom)";
+                }
+                // iPhone 4/4s
+            } else if ((window.screen.height / window.screen.width == 1.5) && (window.devicePixelRatio == 2)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 4 or 4s";
+                    case "PowerVR SGX 535":
+                        return "iPhone 4";
+                    case "PowerVR SGX 543":
+                        return "iPhone 4s";
+                }
+                // iPhone 1/3G/3GS
+            } else if ((window.screen.height / window.screen.width == 1.5) && (window.devicePixelRatio == 1)) {
+                switch (renderer) {
+                    default:
+                        return "iPhone 1, 3G or 3GS";
+                    case "ALP0298C05":
+                        return "iPhone 3GS";
+                    case "S5L8900":
+                        return "iPhone 1, 3G";
+                }
+            } else {
+                return "";
             }
-        });
-
+        }
     </script>
-
-    <a-scene embedded arjs='trackingMethod: best; patternRatio: 0.9; debugUIEnabled: false;' vr-mode-ui="enabled: false" copycanvas>
-
-			<a-marker type="pattern" url="data/markers/AFatherWithSon.patt" markercontroller="name : AFatherWithSon"></a-marker>
-			<a-marker type="pattern" url="data/markers/AFatherWithSonAndDaughter.patt" markercontroller="name : AFatherWithSonAndDaughter"></a-marker>
-			<a-marker type="pattern" url="data/markers/CongratsGrad.patt" markercontroller="name : CongratsGrad"></a-marker>
-			<a-marker type="pattern" url="data/markers/DadJokes.patt" markercontroller="name : DadJokes"></a-marker>
-			<a-marker type="pattern" url="data/markers/Hiro.patt" markercontroller="name : Hiro"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart.patt" markercontroller="name : MomsHeart"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart2.patt" markercontroller="name : MomsHeart2"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart3.patt" markercontroller="name : MomsHeart3"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart4.patt" markercontroller="name : MomsHeart4"></a-marker>
-			<a-marker type="pattern" url="data/markers/MomsHeart5.patt" markercontroller="name : MomsHeart5"></a-marker>
-			<a-marker type="pattern" url="data/markers/Nutty.patt" markercontroller="name : Nutty"></a-marker>
-			<a-marker type="pattern" url="data/markers/NuttyCardboard.patt" markercontroller="name : NuttyCardboard"></a-marker>
-
-        <a-entity camera cameratransform></a-entity>
-
-    </a-scene>
-
 </body>
 
 </html>
